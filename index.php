@@ -49,6 +49,11 @@ if(isset($_SESSION['info_login'])) {
   echo  '<hr><div class="alert alert-danger" role="alert">'.$_SESSION['info_login'].'</div>';
   $_SESSION['info_login']=null;
 }
+// wrong pass
+if(isset($_SESSION['wrong_pass'])) {
+  echo  '<hr><div class="alert alert-danger" role="alert">'.$_SESSION['wrong_pass'].'</div>';
+  $_SESSION['wrong_pass']=null;
+}
 
 ?>
 </form>

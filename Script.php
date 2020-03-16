@@ -10,7 +10,7 @@
 session_start();
   date_default_timezone_set('Asia/Shanghai');
 // CONNeCTION
-$con=mysqli_connect("localhost","root","","lrr");
+$con=mysqli_connect("localhost","Ashly","Teecloudy","lrr");
 // Check connection
 if (mysqli_connect_errno())
   {
@@ -113,7 +113,7 @@ if (!empty($_POST["frm_signup_1"])) {
      header("Location: signup.php");
      return;
     }
-   // check if email is taken
+   // check if email is taked
      $result = mysqli_query($con,
         "SELECT * FROM Users_Table WHERE email='$email'");
    if(mysqli_num_rows($result)!=0)
@@ -122,7 +122,7 @@ if (!empty($_POST["frm_signup_1"])) {
         header("Location: signup.php"); 
         return;       
     }
-    //applying password_hash() (first_commit)
+    //applying password_hash()
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
     $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`) VALUES "
             . "('$email','$password_hash','$fullname','Student','$student_id','$passport')";
@@ -144,7 +144,7 @@ if (!empty($_POST["frm_login"])) {
   $user=mysqli_real_escape_string($con,$_POST["user"]);
   $password=mysqli_real_escape_string($con,$_POST["password"]);
   // $hashed_password=hash('sha512', $password); Not necessary in the login
- $result = mysqli_query($con, "SELECT * FROM users_table WHERE (Email='$user' or Student_ID='$user')");
+ $result = mysqli_query($con, "SELECT * FROM users_table WHERE (Email='$user')");
 if(mysqli_num_rows($result)==0)
  {
      $_SESSION["info_login"]="Inavlid login Information.";
@@ -156,8 +156,8 @@ header("Location: index.php");
  else 
  { 
      while($row = mysqli_fetch_assoc($result)) {
-       //  verify the hashed password and unhashed password  
-    if(password_verify($password, $row["Password"]) or ($password = $row["Password"])){
+       //  verify the hashed password and unhashed password
+       if(password_verify($password, $row["Password"]) or $password == $row["Password"]){
       $_SESSION['user_id']=$row['User_ID'];
      $_SESSION['user_email']=$row['Email'];
      $_SESSION['user_student_id']=$row['Student_ID'];
@@ -183,6 +183,13 @@ header("Location: index.php");
      {
        header("Location: Admin.php");
      }
+    //  report wrong pass if not correct
+    }else{
+      $_SESSION["wrong_pass"]="Wrong Password.";
+  
+      echo $_SESSION["wrong_pass"];
+      
+      header("Location: index.php");  
     }
      
     
