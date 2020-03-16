@@ -113,7 +113,7 @@ if (!empty($_POST["frm_signup_1"])) {
      header("Location: signup.php");
      return;
     }
-   // check if email is taked
+   // check if email is taken
      $result = mysqli_query($con,
         "SELECT * FROM Users_Table WHERE email='$email'");
    if(mysqli_num_rows($result)!=0)
@@ -122,7 +122,7 @@ if (!empty($_POST["frm_signup_1"])) {
         header("Location: signup.php"); 
         return;       
     }
-    //applying password_hash()
+    //applying password_hash() (first_commit)
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
     $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`) VALUES "
             . "('$email','$password_hash','$fullname','Student','$student_id','$passport')";
