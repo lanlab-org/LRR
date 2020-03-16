@@ -156,7 +156,7 @@ header("Location: index.php");
  else 
  { 
      while($row = mysqli_fetch_assoc($result)) {
-       //  verify the hashed password and unhashed password
+       //  verify the hashed password and unhashed password 
     if(password_verify($password, $row["Password"]) or ($password = $row["Password"])){
       $_SESSION['user_id']=$row['User_ID'];
      $_SESSION['user_email']=$row['Email'];
