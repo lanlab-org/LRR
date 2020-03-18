@@ -10,7 +10,7 @@
 session_start();
   date_default_timezone_set('Asia/Shanghai');
 // CONNeCTION
-$con=mysqli_connect("localhost","Ashly","Teecloudy","lrr");
+$con=mysqli_connect("localhost","Teecloudy","5q7Ol2e!#!","lrr");
 // Check connection
 if (mysqli_connect_errno())
   {
@@ -123,9 +123,10 @@ if (!empty($_POST["frm_signup_1"])) {
         return;       
     }
     //applying password_hash()
+    $sha512=hash('sha512', $password);
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`) VALUES "
-            . "('$email','$password_hash','$fullname','Student','$student_id','$passport')";
+    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `HashPassword`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`) VALUES "
+            . "('$email','$password_hash','$sha512','$fullname','Student','$student_id','$passport')";
     
    if ($con->query($sql) === TRUE) {
    header("Location: Courses.php"); 
@@ -157,7 +158,8 @@ header("Location: index.php");
  { 
      while($row = mysqli_fetch_assoc($result)) {
        //  verify the hashed password and unhashed password
-       if(password_verify($password, $row["Password"]) or $password == $row["Password"]){
+       $sha512pass = hash('sha512', $password);
+       if(password_verify($password, $row["Password"]) or $sha512pass == $row["HashPassword"] or $password == $row["Password"]){
       $_SESSION['user_id']=$row['User_ID'];
      $_SESSION['user_email']=$row['Email'];
      $_SESSION['user_student_id']=$row['Student_ID'];
