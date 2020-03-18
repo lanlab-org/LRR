@@ -158,7 +158,7 @@ header("Location: index.php");
  { 
      while($row = mysqli_fetch_assoc($result)) {
        //  verify the hashed password and unhashed password
-       $sha512pass = hash('sha512', $password);
+       $sha512pass = hash('sha512', $password); // for backward compatibility.  Old passwords were hashed using SHA512 algorithm.
        if(password_verify($password, $row["Password"]) or $sha512pass == $row["HashPassword"] or $password == $row["Password"]){
       $_SESSION['user_id']=$row['User_ID'];
      $_SESSION['user_email']=$row['Email'];
