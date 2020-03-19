@@ -123,10 +123,9 @@ if (!empty($_POST["frm_signup_1"])) {
         return;       
     }
     //applying password_hash()
-    $sha512=hash('sha512', $password);
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `HashPassword`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`) VALUES "
-            . "('$email','$password_hash','$sha512','$fullname','Student','$student_id','$passport')";
+    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`) VALUES "
+            . "('$email','$password_hash','$fullname','Student','$student_id','$passport')";
     
    if ($con->query($sql) === TRUE) {
    header("Location: Courses.php"); 

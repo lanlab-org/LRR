@@ -187,7 +187,7 @@ CREATE TABLE `students_data` (
 CREATE TABLE `users_table` (
   `User_ID` int(11) NOT NULL,
   `Email` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Password` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `Password` varchar(250) CHARACTER SET utf8 DEFAULT NULL,
   `Full_Name` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `UserType` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
   `Student_ID` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL,
