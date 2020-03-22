@@ -55,6 +55,29 @@ We welcome your participation in this project.  Your participation does not have
 *Last modified on 22 March 2020*
 
 
+
+# How to Contribute
+
+You need to be an invited member of *Lan Laboratory* before you can push your feature branch or bugfix branch to the central reops at https://github.com/lanlab-org 
+
+Send Hui (lanhui at zjnu.edu.cn) an email message including your GitHub account name so that he could invite you to be a member of *Lan Laboratory*.
+
+Currently, there are 9 members in *Lan Laboratory* (https://github.com/orgs/lanlab-org/people).
+
+You will use the feature-branching workflow when interaction with the central repo.  The main point of this workflow is that you work on a branch on your local drive, push that branch
+to the central repo, and create a Pull Request (i.e., Pull Me Request) at GitHub for other people to review your changes.
+
+I believe that *code review* is a very important activity for effectively improving code quality and promoting participation.
+
+
+## The feature-branching workflow
+
+Check the section **The feature-branching workflow** in the following link:
+
+https://github.com/spm2020spring/TeamCollaborationTutorial/blob/master/team.rst
+
+
+
 # Contributor List
 
 *Please put your name and student number below*.
