@@ -53,3 +53,9 @@ We welcome your participation in this project.  Your participation does not have
 
 
 *Last modified on 22 March 2020*
+
+
+# Contributor list
+
+*Please put your name and student number below*.
+
