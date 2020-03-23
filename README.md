@@ -9,7 +9,7 @@ while he was taking his graduate course **Advanced Software Engineering** (http:
 
 # Mission
 
-Our mission is to make the learning experience great for tens of thousands of students around the world.
+Our mission is to make the learning experience great for tens of hundreds of students in the department of computer science.
 
 
 
