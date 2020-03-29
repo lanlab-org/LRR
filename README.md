@@ -2,8 +2,10 @@
 
 LRR (Lab Report Repository) is an online software application for posting assignments, submitting assignments and marking (re-marking) assignments.
 
-This software was originally developed by by Mahomed Nor, a postgraduate student in the Department of Computer Science at the Zhejiang Normal University,
-while he was taking his graduate course **Advanced Software Engineering** (http://lanlab.org/course/2018f/se/homepage.html).
+This software was originally developed by by Mahomed Nor, a graduate student in the Department of Computer Science at the Zhejiang Normal University,
+while he was taking a graduate course called **Advanced Software Engineering** (http://lanlab.org/course/2018f/se/homepage.html).
+
+The LRR's project home page is at http://118.25.96.118/nor/homepage/index.html.
 
 
 
