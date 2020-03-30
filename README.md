@@ -87,5 +87,6 @@ https://github.com/spm2020spring/TeamCollaborationTutorial/blob/master/team.rst
 
 # Contributor List
 
-*Please put your name and student number below*.
+TanakaMichelle - Tanaka Michelle Sandati - 201732120134
+WhyteAsamoah   - Yeboah Martha Asamoah   - 201732120135
 
