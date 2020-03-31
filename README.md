@@ -44,6 +44,8 @@ these bugs.
 
 # The Bug Tracker
 
+We use Bugzilla to track LRR's bugs and feature requests.
+
 Most bugs of this software are recorded on the  bug tracker for LRR:
 http://118.25.96.118/bugzilla/describecomponents.cgi?product=Lab%20Report%20Repository%20%28nor%20houzi%29
 
