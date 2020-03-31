@@ -107,7 +107,8 @@ https://github.com/spm2020spring/TeamCollaborationTutorial/blob/master/team.rst
 
 ## Communications Method
 
-For real-time communication, check our IRC channel `#lrr` at irc.freenode.org.
+For real-time communication, check our IRC channel `#lrr` at irc.freenode.org.  Check this link http://lanlab.org/course/2020s/spm/irc-instruction.txt
+for how to use IRC.
 
 To submit bug reports or improvement ideas, please ask Hui [lanhui at zjnu.edu.cn] to open a Bugzilla account for you.
 
