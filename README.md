@@ -105,7 +105,7 @@ https://github.com/spm2020spring/TeamCollaborationTutorial/blob/master/team.rst
 
 
 
-## Communications method
+## Communications Method
 
 For real-time communication, check our IRC channel `#lrr` at irc.freenode.org.
 
