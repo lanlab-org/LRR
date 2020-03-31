@@ -125,5 +125,10 @@ The original GitHub Repo is at https://github.com/EngMohamedNor/LabReportRepo
 
 # Contributor List
 
+
 (Please put your name and student number below.)
+
+TanakaMichelle - Tanaka Michelle Sandati - 201732120134
+
+WhyteAsamoah   - Yeboah Martha Asamoah   - 201732120135
 
