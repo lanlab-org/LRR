@@ -98,7 +98,7 @@ for both improving code quality and improving team quality.
 ## The Feature-branching Workflow
 
 We will use the feature-branching workflow for collaboration.  The
-idea is that make your own branch, work on it, and push this branch to
+idea is that you make your own branch, work on it, and push this branch to
 the central repo for review.
 
 Check the section **The feature-branching workflow** in the following link for more detail:
