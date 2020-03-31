@@ -93,14 +93,6 @@ team quality.
 
 
 
-## Communications method
-
-For real-time communication, check our IRC channel `#lrr` at irc.freenode.org.
-
-To submit bug reports or improvement ideas, please ask Hui [lanhui at zjnu.edu.cn] to open a Bugzilla account for you.
-
-
-
 ## The Feature-branching Workflow
 
 We will use the feature-branching workflow for collaboration.  The
@@ -110,6 +102,17 @@ the central repo for review.
 Check the section **The feature-branching workflow** in the following link for more detail:
 
 https://github.com/spm2020spring/TeamCollaborationTutorial/blob/master/team.rst
+
+
+
+## Communications method
+
+For real-time communication, check our IRC channel `#lrr` at irc.freenode.org.
+
+To submit bug reports or improvement ideas, please ask Hui [lanhui at zjnu.edu.cn] to open a Bugzilla account for you.
+
+
+
 
 
 ## Frequently Asked Questions
