@@ -61,6 +61,7 @@ http://118.25.96.118/bugzilla/describecomponents.cgi?product=Lab%20Report%20Repo
 
 -  [SOLVED] A new user could not login immediately after sign up.
 
+- A more complete list of TODO's is at http://lanlab.org/course/2020s/spm/decide-areas-for-improvement-review.html
 
 
 # How to Contribute
