@@ -77,7 +77,7 @@ Send Hui (lanhui at zjnu.edu.cn) an email message including your
 GitHub account name so that he could invite you to be a member of *Lan
 Laboratory*.
 
-Currently, there are 9 members in *Lan Laboratory* (https://github.com/orgs/lanlab-org/people).
+As of March 31 2020, there are 30 members in *Lan Laboratory* (https://github.com/orgs/lanlab-org/people).
 
 You will use the feature-branching workflow (see below) when
 interacting with the central repo.  The main point of this workflow is
