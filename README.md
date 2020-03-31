@@ -87,12 +87,11 @@ interacting with the central repo.  The main point of this workflow is
 that you work on a branch on your local drive, push that branch to the
 central repo, and create a Pull Request (i.e., Pull Me Request) at
 GitHub for other people to review your changes.  When everything is
-OK, then you could merge your changes to the master branch in the
+OK, then *someone* could merge your changes to the master branch in the
 central repo.
 
-I believe that *code review* at the Pull Request stage is a very
-important activity for effectively improving both code quality and
-team quality.
+I believe that *code review* at the Pull Request stage is important
+for both improving code quality and improving team quality.
 
 
 
