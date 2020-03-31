@@ -11,7 +11,7 @@ The LRR's project home page is at http://118.25.96.118/nor/homepage/index.html.
 
 # Mission
 
-Our mission is to make the learning experience great for tens of hundreds of students in the department of computer science.
+Our mission is to make the experience of submitting assignments great for tens of hundreds of students in the department of computer science at the Zhejiang Normal University (Jinhua City, Zhejiang Province).
 
 
 
