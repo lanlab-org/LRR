@@ -139,3 +139,5 @@ TanakaMichelle - Tanaka Michelle Sandati - 201732120134
 WhyteAsamoah   - Yeboah Martha Asamoah   - 201732120135
 
 xiaoyusoil - ZhengXiaoyu - 201732120110
+Samrusike  - Samantha Rusike  - 201632120140
+Teecloudy  - Ashly Tafadzwa Dhani - 201632120150
