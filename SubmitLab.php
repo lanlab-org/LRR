@@ -26,7 +26,7 @@ if(mysqli_num_rows($result1)==0)
     } else { while($row = mysqli_fetch_assoc($result1)) {
         
                      $Course_ID=$row['Course_ID'];
-			$title=$row['Title'];
+			                $title=$row['Title'];
                         $ins=$row['Instructions'];
                          $posted=$row['Posted_Date'];	
                          $deadline=$row['Deadline'];
@@ -37,11 +37,14 @@ if(mysqli_num_rows($result1)==0)
                                      $labid=$row['Lab_Report_ID'];
                                      
                                      $type=$row['Type'];
-        if($type=="Group"){
-        $resultx1 = mysqli_query($con,"SELECT Course_Group_id  FROM `course_groups_table` WHERE Group_Leader=$student_id and Course_id=$Course_ID");
-                while($row = mysqli_fetch_assoc($resultx1)) {$group_id=$row['Course_Group_id'];}  
+        
+        //----------------------------------Giving both Group Admin and Group Members same priviledges to submit assignment--------------------------------------
+                                     if($type=="Group"){
+        $resultx1 = mysqli_query($con,"SELECT Course_Group_id  FROM `course_groups_table` WHERE (Course_id=$Course_ID) and ((Group_Member=$student_id ) or (Group_Member2=$student_id ) or (Group_Member3=$student_id ) or (Group_Member4=$student_id ) or(Group_Leader=$student_id))");
+                while($row = mysqli_fetch_assoc($resultx1)) {
+                  $_SESSION["Group_ID"]=$row['Course_Group_id'];}  
       
-      if($group_id<1) 
+      if($_SESSION["Group_ID"]<1) 
       {
          echo" <center><h3> This Lab report can only be submitted by Group Admin  </h3> </center> ";
          return;
@@ -93,6 +96,7 @@ if(mysqli_num_rows($result1)==0)
      
    
   }
+  $Group_ID=$_SESSION["Group_ID"];
 ?>
 
 
@@ -117,7 +121,7 @@ if(mysqli_num_rows($result1)==0)
                       <input type='hidden' name='lab_id' value='<?php echo $id; ?>' required=''/>
                             <input type='hidden' name='student_id' value='<?php echo $student_id; ?>' required=''/>
                             
-                              <input type='hidden' name='group_id' value='0' required=''/>
+                              <input type='hidden' name='group_id' value='<?php echo $Group_ID; ?>' required=''/>
                              <input type='hidden' name='url' value='<?php echo $url; ?>' required=''/>
                               
  

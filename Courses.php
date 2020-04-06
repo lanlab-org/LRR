@@ -106,27 +106,121 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
  ";
                
                  echo "<div class='col-md-5'>";
-                 
-                 
-                 
-             if( $_SESSION['user_type']=="Lecturer"){    
-                echo "<h3> Post new Lab Assignment </h3><form method='post'   enctype='multipart/form-data' action='Script.php'>
-                   <input type='hidden' name='frm_uploadlab' value='true' required=''/>
-                      <input type='hidden' name='course_id' value='".$id."' required=''/>
-                            <input type='hidden' name='url' value='".$course_url."' required=''/>
-                     
- Dealine Date/Time
- <div class='row'> 
- <div class='col-md-7'><input type='date' id='date' name='deadlinedate' placeholder='' class='form-control' required=''> </div>
-<div class='col-md-5'> <input type='time' class='form-control' name='deadlinetime'> </div> 
+                }
+    
+// ------------------------------Editing Lab Assignment by Lecture------------------------------------
+
+
+    if($_GET['act']=="edit"){ 
+    $getid = $_GET["cid"];
+    $result1 = mysqli_query($con, "SELECT * from lab_reports_table WHERE Lab_Report_ID = '$getid'");
+
+    while($row1 = mysqli_fetch_assoc($result1)) {
+      $Deadline=$row1['Deadline'];
+      $_SESSION['Date'] = strstr($Deadline, ' ', true);
+      $_SESSION['Time'] = strstr($Deadline, ' ');
+      $_SESSION['Instructions']=$row1['Instructions'];
+      $_SESSION['Title']=$row1['Title'];
+      $_SESSION['Marks']=$row1['Marks'];
+
+    }
+  if(isset($_POST['frm_uploadlab'])){
+    $deadlinedate=$_POST["deadlinedate"];
+    $deadlinetime=$_POST["deadlinetime"];
+    $instructions=$_POST["instructions"];
+    $title=$_POST["title"];
+    $marks=$_POST["marks"];
+    $Deadline = $deadlinedate." ".$deadlinetime;
+    $date=  date("Y-m-d H:i");
+    
+    $sql = "UPDATE `lab_reports_table` SET `Deadline` = ('" . $Deadline . "'), `Instructions` = ('" . $instructions . "'), `Title` = ('" . $title . "'), `Marks` = ('" . $marks . "') WHERE `lab_reports_table`.`Lab_Report_ID` = '$getid'";
+    if ($con->query($sql) === TRUE) {
+      $_SESSION["info_Updated"]="Information Updated Successfull";
+       
+   } else {
+       echo "Error: " . $sql . "<br>" . $con->error;
+   }
+  }
+  if( $_SESSION['user_type']=="Lecturer"){   
+    $Date=$_SESSION['Date'];
+    $Time=$_SESSION['Time'];
+    $Instructions=$_SESSION['Instructions'];
+    $Title=$_SESSION['Title'];
+    $Marks=$_SESSION['Marks'];
+
+     
+   echo "  <h3><a href='Courses.php?course=".$url."'> Editing Lab Assignment </a></h3>";
+      ?> 
+      <form method='post'   enctype='multipart/form-data' action=''>
+         <input type='hidden' name='frm_uploadlab' value='true' required=''/>
+            <input type='hidden' name='course_id' value='<?php echo ".$id." ?>' required=''/>
+                  <input type='hidden' name='url' value='<?php echo ".$course_url." ?>' required=''/>
+           
+Dealine Date/Time
+<div class='row'> 
+<div class='col-md-7'><input type='date' id='date' name='deadlinedate' placeholder='' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Date : ""; ?>"> </div>
+<div class='col-md-5'> <input type='time' class='form-control' name='deadlinetime' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Time : ""; ?>"> </div> 
 </div>
 
 Title
-<input type='text'  name='title' placeholder='Ttle' class='form-control' required=''>
- Instructions
-<textarea  name='instructions' placeholder='Assignment Instructions' class='form-control' required=''></textarea>
+<input type='text'  name='title' placeholder='Ttle' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Title : ""; ?>">
+Instructions
+<textarea  name='instructions' placeholder='Assignment Instructions' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=='edit' ? $Instructions : ''; ?>"></textarea>
 Marks
-<input type='text'  name='marks' placeholder='Marks' class='form-control' required=''>
+<input type='text'  name='marks' placeholder='Marks' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Marks : ""; ?>">
+Attachment 1
+<input type='file'  name='attachment1' placeholder='Attachment 1' class='form-control'>
+
+Attachment 2
+<input type='file' name='attachment2' placeholder='Attachment 1' class='form-control'>
+
+Attachment 3
+<input type='file'  name='attachment3' placeholder='Attachment 1' class='form-control' >
+
+
+Attachment 4
+<input type='file'  name='attachment4' placeholder='Attachment 4' class='form-control' >
+<br>
+Submission Type  <input type='radio' name='type' value='Individual' required=''> Invidual
+
+<input type='radio' name='type' value='Group' required=''> Group
+<hr>
+<input type='submit' class='btn btn-primary' value='Post Lab Assignment'><br>
+</form><br><br><br><br>
+<?php
+  }}else{
+
+// ------------------------------Posting New Lab Assignment------------------------------------
+
+// Mysql to split 1 string into 2 similar to the tsrstr in php
+// SELECT SUBSTRING_INDEX(Deadline, ' ', 1) as Date, SUBSTRING_INDEX(Deadline, ' ', -1) as Time from lab_reports_table
+
+             if( $_SESSION['user_type']=="Lecturer"){   
+
+              ?> 
+        
+              <h3> Post new Lab Assignment </a></h3>
+                
+                <form method='post'   enctype='multipart/form-data' action='Script.php'>
+                <?php
+                $_SESSION['url']=$url;
+                ?>
+                   <input type='hidden' name='frm_uploadlab' value='true' required=''/>
+                      <input type='hidden' name='course_id' value='<?php echo ".$id." ?>' required=''/>
+                            <input type='hidden' name='url' value='<?php echo ".$course_url." ?>' required=''/>
+                     
+ Dealine Date/Time
+ <div class='row'> 
+ <div class='col-md-7'><input type='date' id='date' name='deadlinedate' placeholder='' class='form-control' required='' value=""> </div>
+<div class='col-md-5'> <input type='time' class='form-control' name='deadlinetime' value=""> </div> 
+</div>
+
+Title
+<input type='text'  name='title' placeholder='Ttle' class='form-control' required='' value="">
+ Instructions
+<textarea  name='instructions' placeholder='Assignment Instructions' class='form-control' required='' value=""></textarea>
+Marks
+<input type='text'  name='marks' placeholder='Marks' class='form-control' required='' value="">
  Attachment 1
 <input type='file'  name='attachment1' placeholder='Attachment 1' class='form-control'>
 
@@ -146,16 +240,20 @@ Submission Type  <input type='radio' name='type' value='Individual' required=''>
 <hr>
   <input type='submit' class='btn btn-primary' value='Post Lab Assignment'><br>
 </form><br><br><br><br>
-   ";
-                
-             }          
-    }
+  <?php
+  }            
+}              
+    
     }      
        echo "</div>"; 
        
             echo "<div class='col-md-7'>  <h3> Lab Report Assignment list </h3>";  
                   
  error_reporting(0);
+ if(isset($_SESSION["info_Updated"])){
+  echo '<hr><div class="alert alert-info" role="alert">' . $_SESSION['info_Updated'] . '</div>';
+  $_SESSION['info_Updated'] = null;
+ }
 if (isset($_SESSION['info_courses'])) {
     echo '<hr><div class="alert alert-info" role="alert">' . $_SESSION['info_courses'] . '</div>';
     $_SESSION['info_courses'] = null;
@@ -171,7 +269,7 @@ if (isset($_SESSION['info_courses'])) {
             $result = mysqli_query($con," SELECT `Lab_Report_ID`,Type,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, `Title`, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, "
                     . "`Attachment_link_4` FROM `lab_reports_table` WHERE Course_ID=$id ORDER by Lab_Report_ID DESC");
  
-            
+           
              if( $_SESSION['user_type']=="TA")
         {
             echo "<b style='color:orange'>* Only Lecturers can Post new Lab report Assignments </b><br>";
@@ -191,6 +289,7 @@ if (isset($_SESSION['info_courses'])) {
                                    $att3=$row['Attachment_link_3'];
                                     $att4=$row['Attachment_link_4'];
                                      $id=$row['Lab_Report_ID'];
+                                     $cours_id=$row['Course_ID'];
                              $as_type=$row['Type'];
                                      $full_link="<a href='~\..\Lab_Report_Assignments\\$att1'>$att1</a>";      
                                      
@@ -219,10 +318,11 @@ if (isset($_SESSION['info_courses'])) {
                                      
                 echo "      <div class='break-word btn btn-default' style='word-wrap: break-word;border-color:grey;'>
   $title ($as_type) <br> $ins
+  
    <br> <span style='font-size:8pt'>Posted : $posted  Deadline :  <b> $deadline </b> &nbsp; ($marks Marks)      &nbsp;    &nbsp; &nbsp; &nbsp; &nbsp;   "
                         . "<br>"
 
-                        . "<span class='btn-default'> &nbsp;&nbsp; $count_subs Submissions ( $count_marked Marked ) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='~\..\Submissions.php?id=$id&header=$header&total=$marks' onclick=''> View </a>     &nbsp;&nbsp; |&nbsp;&nbsp;         <a href='#'  onclick='extend_deadline($id)'> Extend Deadline </a>  </span>         <hr> Attachments : $full_link </span>"
+                        . "<span class='btn-default'> &nbsp;&nbsp; $count_subs Submissions ( $count_marked Marked ) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='Courses.php?course=".$url."&act=edit&cid=".$id."'>Edit</a>&nbsp;&nbsp; |&nbsp;&nbsp;<a href='~\..\Submissions.php?id=$id&header=$header&total=$marks' onclick=''> View </a>     &nbsp;&nbsp; |&nbsp;&nbsp;         <a href='#'  onclick='extend_deadline($id)'> Extend Deadline </a>  </span>         <hr> Attachments : $full_link </span>"
                                                     . "&nbsp;&nbsp;</div>
                         ";
                 
