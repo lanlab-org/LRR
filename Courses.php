@@ -116,12 +116,16 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
     $result1 = mysqli_query($con, "SELECT * from lab_reports_table WHERE Lab_Report_ID = '$getid'");
 
     while($row1 = mysqli_fetch_assoc($result1)) {
-      $Deadline=$row1['Deadline'];
+      $Deadline = $row1['Deadline'];
+      // $datetime = explode(" ", $Deadline);  explode() is another famous way of spliting a string from the database
+      // $_SESSION['Date'] = $datetime[0];
+      // $_SESSION['Time'] = $datetime[1];
       $_SESSION['Date'] = strstr($Deadline, ' ', true);
       $_SESSION['Time'] = strstr($Deadline, ' ');
       $_SESSION['Instructions']=$row1['Instructions'];
       $_SESSION['Title']=$row1['Title'];
       $_SESSION['Marks']=$row1['Marks'];
+      $_SESSION['Type']=$row1['Type'];
 
     }
   if(isset($_POST['frm_uploadlab'])){
@@ -147,7 +151,6 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
     $Instructions=$_SESSION['Instructions'];
     $Title=$_SESSION['Title'];
     $Marks=$_SESSION['Marks'];
-
      
    echo "  <h3><a href='Courses.php?course=".$url."'> Editing Lab Assignment </a></h3>";
       ?> 
@@ -159,13 +162,13 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
 Dealine Date/Time
 <div class='row'> 
 <div class='col-md-7'><input type='date' id='date' name='deadlinedate' placeholder='' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Date : ""; ?>"> </div>
-<div class='col-md-5'> <input type='time' class='form-control' name='deadlinetime' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Time : ""; ?>"> </div> 
+<div class='col-md-5'> <input type='text' id='time' class='form-control' name='deadlinetime' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Time : ""; ?>"> </div> 
 </div>
 
 Title
 <input type='text'  name='title' placeholder='Ttle' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Title : ""; ?>">
 Instructions
-<textarea  name='instructions' placeholder='Assignment Instructions' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=='edit' ? $Instructions : ''; ?>"></textarea>
+<textarea  name='instructions' placeholder='Assignment Instructions' class='form-control' required='' ><?php echo isset($_GET['act']) && $_GET['act']=='edit' ? $Instructions : ''; ?></textarea>
 Marks
 <input type='text'  name='marks' placeholder='Marks' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Marks : ""; ?>">
 Attachment 1
@@ -183,7 +186,7 @@ Attachment 4
 <br>
 Submission Type  <input type='radio' name='type' value='Individual' required=''> Invidual
 
-<input type='radio' name='type' value='Group' required=''> Group
+<input type='radio' name='type' required='' value='Group'> Group
 <hr>
 <input type='submit' class='btn btn-primary' value='Post Lab Assignment'><br>
 </form><br><br><br><br>

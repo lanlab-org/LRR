@@ -724,17 +724,17 @@ $count=0;
 //check zise
  if(!checksize("attachment1"))
 {
-   echo "20 MB is the maximum file size allowed";
+   echo "2 MB is the maximum file size allowed";
    return;
 }
  if(!checksize("attachment2") && $_FILES["attachment2"]["name"]!="")
 {
-    echo "20 MB is the maximum file size allowed";
+    echo "2 MB is the maximum file size allowed";
    return;
 }
  if(!checksize("attachment3") && $_FILES["attachment3"]["name"]!="")
 {
-  echo "20 MB is the maximum file size allowed";
+  echo "2 MB is the maximum file size allowed";
    return;
 }
 
