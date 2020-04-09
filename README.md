@@ -41,7 +41,6 @@ these bugs.
 
 
 
-
 # The Bug Tracker
 
 We use Bugzilla to track LRR's bugs and feature requests.
@@ -123,10 +122,11 @@ To submit bug reports or improvement ideas, please ask Hui [lanhui at zjnu.edu.c
 Check FAQ.md (TBA) for details.
 
 
-
 # The Original GitHub Repo
 
 The original GitHub Repo is at https://github.com/EngMohamedNor/LabReportRepo
+
+
 
 
 # Contributor List
@@ -139,7 +139,6 @@ TanakaMichelle - Tanaka Michelle Sandati - 201732120134
 WhyteAsamoah   - Yeboah Martha Asamoah   - 201732120135
 
 xiaoyusoil - ZhengXiaoyu - 201732120110
-
 
 Benny123-cell - ZhangBin - 201732120127
 
@@ -156,5 +155,10 @@ Richard1427 - XieJiacong - 201732120123
 yutengYing - YingYuteng - 201732120126
 
 Samrusike  - Samantha Rusike  - 201632120140
+
 Teecloudy  - Ashly Tafadzwa Dhani - 201632120150
 
+ngounou92 - ngounou bernard - 201925800180
+
+pipafrica - mohamed moumou - 201925800178
+>>>>>>> 8f7191061de9c185b0e7ee9db30d712b75a55479
