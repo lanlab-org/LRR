@@ -41,7 +41,6 @@ these bugs.
 
 
 
-
 # The Bug Tracker
 
 We use Bugzilla to track LRR's bugs and feature requests.
@@ -139,9 +138,3 @@ TanakaMichelle - Tanaka Michelle Sandati - 201732120134
 WhyteAsamoah   - Yeboah Martha Asamoah   - 201732120135
 
 xiaoyusoil - ZhengXiaoyu - 201732120110
-
-
-ngounou92 - ngounou bernard-201925800180
-
-
-pipafrica - mohamed moumou- 201925800178
