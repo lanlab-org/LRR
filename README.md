@@ -7,7 +7,9 @@ while he was taking a graduate course called **Advanced Software Engineering** (
 
 The LRR's project home page is at http://118.25.96.118/nor/homepage/index.html.
 
+### If you want to get the local deployment version, clone the following
 
+`git clone https://github.com/dzr201732120115/LRR.git`
 
 # Mission
 
@@ -129,6 +131,20 @@ Check FAQ.md (TBA) for details.
 The original GitHub Repo is at https://github.com/EngMohamedNor/LabReportRepo
 
 
+### Steps of local test deployment
+1.download **xampp** <br>
+2.follow the website to do: 
+> https://blog.csdn.net/qing666888/article/details/81914389 <br>
+
+**note:** don't change mysql's **port** and don't set its **password** <br>
+3.put LRR file in .\xampp\htdocs\LRR <br>
+4.run http://localhost:8081/ (if you change apache's port from 80 to 8081),login phpMyAdmin <br>
+5.create database lrr in phpMyAdmin and import lrr(1).sql (or lrr_database.sql). <br>
+6.ensure apache and xampp server is running on Xampp-control,
+run http://localhost:8081/LRR/script.php first,then run http://localhost:8081/LRR/index.php. <br>
+7.use account and password in phpMyAdmin's lrr.users_table to login. <br>
+8.begin your test
+
 # Contributor List
 
 
@@ -164,3 +180,5 @@ GuedaliaBonheurSPM - Guedalia Youma - 201925800221
 ACorneille - Alimasi Corneille - 201925800168
 
 Tabithakipanga - Kipanga Dorcas - 201925800170
+
+Daizerong - 201732120115
