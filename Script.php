@@ -396,7 +396,7 @@ if($user_token==$token)
    header("Location: Admin.php"); 
     
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br>" . $con->error;
 }
  }
  
@@ -641,7 +641,7 @@ $targetfile2="";
    header("Location: Courses.php?course=".$url); 
    
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br>" . $con->error;
 }
  }
  
