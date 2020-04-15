@@ -28,7 +28,7 @@ else
  
    
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-
+<link href="./css/webfonts/all.min.css" rel="stylesheet" type="text/css"/>
 <!--<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/fontawesome.min.css" />
 <script src="http://118.25.96.118/nor/css/jquery.min.js" type="text/javascript"></script>
