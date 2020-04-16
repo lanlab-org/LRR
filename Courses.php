@@ -30,11 +30,11 @@ $user_d=$_SESSION['user_id'];
 <div class="row" style="width:80%;margin:auto; text-align:left;">
    
   
-  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="./css/jquery-1.11.1.min.js"></script>
  
-<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="./css/jquery-ui.min.js"></script>
 
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="./css/jquery-ui.css" />
 <script>
     
 

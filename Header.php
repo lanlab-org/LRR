@@ -27,12 +27,12 @@ else
 <header>
  
    
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<script src="http://118.25.96.118/nor/css/jquery.min.js" type="text/javascript"></script>
-<script src="http://118.25.96.118/nor/css/bootsrap.min.js" type="text/javascript"></script>
-<link href="http://118.25.96.118/nor/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<script src="http://118.25.96.118/nor/css/jquery.datetimepicker.min.js" type="text/javascript"></script>
+<script src="./css/jquery.min.js" type="text/javascript"></script>
+<script src="./css/bootsrap.min.js" type="text/javascript"></script>
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script src="./css/jquery.datetimepicker.min.js" type="text/javascript"></script>
 
 
 
