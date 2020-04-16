@@ -396,7 +396,7 @@ if($user_token==$token)
    header("Location: Admin.php"); 
     
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br>" . $con->error;
 }
  }
  
@@ -622,7 +622,7 @@ $targetfile2="";
    header("Location: Courses.php?course=".$url); 
    
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br>" . $con->error;
 }
  }
  
@@ -688,8 +688,11 @@ if (!empty($_POST["frm_submitlab"])) {
     
   
 
-      $labName = mysqli_query($con,"SELECT Title FROM `lab_reports_table` WHERE Lab_Report_ID=$lab_id");
-  while($row = mysqli_fetch_assoc($labName)) {$lab_name=$row['Title'];} 
+      $labName = mysqli_query($con,"SELECT * FROM `lab_reports_table` WHERE Lab_Report_ID=$lab_id");
+  while($row = mysqli_fetch_assoc($labName)) 
+  {$lab_name=$row['Title'];
+  $_SESSION['Sub_Type']=$row['Type'];
+  } 
 
 
     $target_dir =Create_dir("Lab_Report_Submisions/".$student_id."/".$lab_name."/");
@@ -824,10 +827,6 @@ if(strlen($_FILES['attachment1']['name']) > 2 ) {
      if ($con->query($sql1) === TRUE) {
      }
      
-     if($group_id>0)
-     {
-      $student_id=0;   
-     }
     
     $sql="INSERT INTO `lab_report_submissions`(`Submission_Date`, `Lab_Report_ID`, `Student_id`,"
             . " `Course_Group_id`, `Attachment1`, `Notes`, `Attachment2`, `Attachment3`, `Attachment4`, `Status`, `Title`,`Remarking_Reason`)"
@@ -837,11 +836,19 @@ if(strlen($_FILES['attachment1']['name']) > 2 ) {
    
  
 if ($con->query($sql) === TRUE) {
+    if($_SESSION['Sub_Type']=='Individual')
+  // {
+  //   // $con->query($sql = "UPDATE `lab_report_submissions` SET `Student_id` = ('".$student_id."') WHERE `lab_report_submissions`.`Course_Group_id` = '$group_id'");
+  // }
+  // else
+  {
+    $con->query($sql = "UPDATE `lab_report_submissions` SET `Course_Group_id` = '0' WHERE `lab_report_submissions`.`Lab_Report_ID` = '$lab_id'");
+  }
     
     $_SESSION["info_courses"]=$type." Lab Report Assignment Submitted successfully.";
 header("Location: Course.php?url=".$url); 
 
-} else {
+    } else {
  echo "Error: <br>" . $con->error;
 }
 }
@@ -1077,7 +1084,7 @@ header("Location: Course.php?url=".$url);
                $courseid=$_GET["courseid"];
                 $groupid=$_GET["groupid"];
                
-  if(($_SESSION['Group_Member4']!='0') or ($_SESSION['Group_Member3']!='0') or ($_SESSION['Group_Member2']!='0') or ($_SESSION['Group_Member']!='0')){
+  // if(($_SESSION['Group_Member4']=='0') or ($_SESSION['Group_Member3']=='0') or ($_SESSION['Group_Member2']=='0') or ($_SESSION['Group_Member']=='0')){
              $sql="INSERT INTO `course_group_members_table`( `Course_Group_id`, `Student_ID`, `Status`) 
                           VALUES ($groupid,$student_id,'Invited')";
    if ($con->query($sql) === TRUE) {
@@ -1117,7 +1124,7 @@ header("Location: Course.php?url=".$url);
      
     }
   }
-  }
+  // }
     
    } }
 

@@ -295,7 +295,8 @@ lab_report_submissions.Student_id sub_std, lab_report_submissions.Course_Group_i
 FROM `lab_report_submissions`
 Left JOIN users_table  on users_table.Student_ID=lab_report_submissions.Student_id
 left JOIN course_group_members_table on course_group_members_table.Course_Group_id=lab_report_submissions.Course_Group_id
-where Lab_Report_ID=$lab_repo_id and lab_report_submissions.Student_id='$student_id' or lab_report_submissions.Course_Group_id='$group_id'"); 
+where Lab_Report_ID=$lab_repo_id and (lab_report_submissions.Student_id='$student_id')"); 
+//  or lab_report_submissions.Course_Group_id='$group_id'
 
 if(mysqli_num_rows($Sub_result)==0)
     {
@@ -343,25 +344,33 @@ if(mysqli_num_rows($Sub_result)==0)
           
           
           
-          
-          
-          
-          
-          
-          
-          
+          <?php
+$sqli=mysqli_query($con, "SELECT * from course_groups_table WHERE Course_Group_id=$group_id and Course_id=$course_id");
+while($row = mysqli_fetch_assoc($sqli)) 
+{ $Group_Leader=$row['Group_Leader'];
+  $Group_Member=$row['Group_Member'];
+  $Group_Member2=$row['Group_Member2'];
+  $Group_Member3=$row['Group_Member3'];
+  $Group_Member4=$row['Group_Member4'];
+}
+          ?>
           
           
           
           <div id="menu4" class="container tab-pane"><br>
          <?php
-      $group_id=$_SESSION['group_id'];
 $resultx  = mysqli_query($con,"SELECT `Submission_ID`, `Submission_Date`, lab_reports_table.`Lab_Report_ID`, `Student_id`, "
         . "`Course_Group_id`, `Notes`, lab_report_submissions.`Marks`,
         lab_report_submissions.Remarking_Reason,
         `Status`, lab_reports_table.Title Lab_Title,lab_reports_table.Marks Original_marks FROM `lab_report_submissions` "
         . "INNER JOIN lab_reports_table on lab_reports_table.Lab_Report_ID=lab_report_submissions.Lab_Report_ID "
-        . "WHERE lab_report_submissions.Student_id='$student_id' or lab_report_submissions.Course_Group_id='$group_id'and" 
+        . "WHERE (lab_report_submissions.Student_id='$student_id' 
+        or (lab_report_submissions.Student_id='$Group_Leader' and lab_report_submissions.Course_Group_id='$group_id')
+        or (lab_report_submissions.Student_id='$Group_Member' and lab_report_submissions.Course_Group_id='$group_id')
+        or (lab_report_submissions.Student_id='$Group_Member2' and lab_report_submissions.Course_Group_id='$group_id')
+        or (lab_report_submissions.Student_id='$Group_Member3' and lab_report_submissions.Course_Group_id='$group_id')
+        or (lab_report_submissions.Student_id='$Group_Member4' and lab_report_submissions.Course_Group_id='$group_id')
+        )and" 
         . ""
         . ""
         . ""
