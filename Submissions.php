@@ -556,11 +556,11 @@ where course_group_members_table.Course_Group_id=$id");
 
 
 
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="./jquery-1.11.1.min.js"></script>
  
-<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="./jquery-ui.min.js"></script>
 
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="./jquery-ui.css" />
 <script>
     function mark(id,title,marks) {
     

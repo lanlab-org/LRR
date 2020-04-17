@@ -641,11 +641,11 @@ where course_group_members_table.Course_Group_id=$id");
         ?>
 
 
-<script src="./css/jquery-1.11.1.min.js"></script>
+<script src="./jquery-1.11.1.min.js"></script>
  
-<script src="./css/jquery-ui.min.js"></script>
+<script src="./jquery-ui.min.js"></script>
 
-<link rel="stylesheet" href="./css/jquery-ui.css" />
+<link rel="stylesheet" href="jquery-ui.css" />
 <script>
     function CreateGroup() {
     
