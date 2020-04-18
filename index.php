@@ -112,7 +112,7 @@ if(isset($_SESSION['info_signup1'])) {
 <hr>
 
 <div style="" id="footer">
-Developed by : Mohamed Nor (201825800050)-houzi you can submit your suggestions & bug reports to  mohamednor@qq.com  <small>Last Update : 16/04/2020 by <i>Ashly</i> </small>
+Developed by : Mohamed Nor (201825800050)-houzi you can submit your suggestions & bug reports to  mohamednor@qq.com  <small>Last Update : 18/04/2020 by <i>Ashly</i> </small>
 
 </div>
 

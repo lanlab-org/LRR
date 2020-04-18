@@ -156,7 +156,7 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
       ?> 
       <form method='post'   enctype='multipart/form-data' action=''>
          <input type='hidden' name='frm_uploadlab' value='true' required=''/>
-            <input type='hidden' name='course_id' value='<?php echo ".$id." ?>' required=''/>
+            <input type='hidden' name='course_id' value='<?php echo "$id" ?>' required=''/>
                   <input type='hidden' name='url' value='<?php echo ".$course_url." ?>' required=''/>
            
 Dealine Date/Time
@@ -209,7 +209,7 @@ Submission Type  <input type='radio' name='type' value='Individual' required=''>
                 $_SESSION['url']=$url;
                 ?>
                    <input type='hidden' name='frm_uploadlab' value='true' required=''/>
-                      <input type='hidden' name='course_id' value='<?php echo ".$id." ?>' required=''/>
+                      <input type='hidden' name='course_id' value='<?php echo "$id" ?>' required=''/>
                             <input type='hidden' name='url' value='<?php echo ".$course_url." ?>' required=''/>
                      
  Dealine Date/Time
