@@ -139,7 +139,7 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
     
     $sql = "UPDATE `lab_reports_table` SET `Deadline` = ('" . $Deadline . "'), `Instructions` = ('" . $instructions . "'), `Title` = ('" . $title . "'), `Marks` = ('" . $marks . "') WHERE `lab_reports_table`.`Lab_Report_ID` = '$getid'";
     if ($con->query($sql) === TRUE) {
-      $_SESSION["info_Updated"]="Information Updated Successfull";
+      $_SESSION["info_Updated"]="Assignment information updated successfully.";
        
    } else {
        echo "Error: " . $sql . "<br>" . $con->error;
