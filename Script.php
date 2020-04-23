@@ -830,7 +830,7 @@ if(strlen($_FILES['attachment1']['name']) > 2 ) {
 
     // When $group_id is not properly initialized, use integer 0 as its value.
     // This temporarily fixed the "Students unable to submit assignment after a recent change" bug at http://118.25.96.118/bugzilla/show_bug.cgi?id=65
-    if (trim($group_id) === '') {
+    if (trim($group_id) === '') { // when $group_id is an empty string or contains only whitespace characters.
          $group_id = 0; // FIXME
     }
 
