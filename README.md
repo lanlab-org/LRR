@@ -146,6 +146,6 @@ Benny123-cell - ZhangBin - 201732120127
 
 zhenghongyu-david - ZhengHongyu - 201732120128
 
-Mary-AK    - Mary Akussah Doe = 201925800173
+Mary-AK    - Mary Akussah Doe - 201925800173
 
 pkkumson   - Kumson Princewill Kum - 201925800166
