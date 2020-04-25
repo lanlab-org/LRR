@@ -103,11 +103,11 @@ WHERE course_group_members_table.Student_ID=$student_id and course_groups_table.
  
 $resultx1 = mysqli_query($con,$sql);
     
-while($row = mysqli_fetch_assoc($resultx1)) {$group_id=$row['Course_Group_id'];}  
+while($row = mysqli_fetch_assoc($resultx1)) {$_SESSION['group_id']=$row['Course_Group_id'];}  
  
 if($group_id==""){$group_id=-1;}
 
- 
+ $group_id=$_SESSION['group_id'];
 
 
 $var="SELECT Type,Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
@@ -169,6 +169,7 @@ if(mysqli_num_rows($result1)==0)
     
        <div id="menu2" class="container tab-pane"><br>
          <?php
+         $group_id=$_SESSION['group_id'];
       $result  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
           FROM `lab_reports_table`
           where 
@@ -236,6 +237,7 @@ if(mysqli_num_rows($result)==0)
        </div>
    <div id="menu3" class="container tab-pane"><br>
          <?php
+         $group_id=$_SESSION['group_id'];
 $resultx  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
          FROM `lab_reports_table`
          
@@ -293,7 +295,8 @@ lab_report_submissions.Student_id sub_std, lab_report_submissions.Course_Group_i
 FROM `lab_report_submissions`
 Left JOIN users_table  on users_table.Student_ID=lab_report_submissions.Student_id
 left JOIN course_group_members_table on course_group_members_table.Course_Group_id=lab_report_submissions.Course_Group_id
-where Lab_Report_ID=$lab_repo_id and lab_report_submissions.Student_id='$student_id'"); 
+where Lab_Report_ID=$lab_repo_id and (lab_report_submissions.Student_id='$student_id')"); 
+//  or lab_report_submissions.Course_Group_id='$group_id'
 
 if(mysqli_num_rows($Sub_result)==0)
     {
@@ -341,30 +344,38 @@ if(mysqli_num_rows($Sub_result)==0)
           
           
           
-          
-          
-          
-          
-          
-          
-          
+          <?php
+$sqli=mysqli_query($con, "SELECT * from course_groups_table WHERE Course_Group_id=$group_id and Course_id=$course_id");
+while($row = mysqli_fetch_assoc($sqli)) 
+{ $Group_Leader=$row['Group_Leader'];
+  $Group_Member=$row['Group_Member'];
+  $Group_Member2=$row['Group_Member2'];
+  $Group_Member3=$row['Group_Member3'];
+  $Group_Member4=$row['Group_Member4'];
+}
+          ?>
           
           
           
           <div id="menu4" class="container tab-pane"><br>
          <?php
-      
 $resultx  = mysqli_query($con,"SELECT `Submission_ID`, `Submission_Date`, lab_reports_table.`Lab_Report_ID`, `Student_id`, "
         . "`Course_Group_id`, `Notes`, lab_report_submissions.`Marks`,
         lab_report_submissions.Remarking_Reason,
         `Status`, lab_reports_table.Title Lab_Title,lab_reports_table.Marks Original_marks FROM `lab_report_submissions` "
         . "INNER JOIN lab_reports_table on lab_reports_table.Lab_Report_ID=lab_report_submissions.Lab_Report_ID "
-        . "WHERE lab_report_submissions.Student_id='$student_id' and" 
+        . "WHERE (lab_report_submissions.Student_id='$student_id' 
+        or (lab_report_submissions.Student_id='$Group_Leader' and lab_report_submissions.Course_Group_id='$group_id')
+        or (lab_report_submissions.Student_id='$Group_Member' and lab_report_submissions.Course_Group_id='$group_id')
+        or (lab_report_submissions.Student_id='$Group_Member2' and lab_report_submissions.Course_Group_id='$group_id')
+        or (lab_report_submissions.Student_id='$Group_Member3' and lab_report_submissions.Course_Group_id='$group_id')
+        or (lab_report_submissions.Student_id='$Group_Member4' and lab_report_submissions.Course_Group_id='$group_id')
+        )and" 
         . ""
         . ""
         . ""
         . " lab_reports_table.Lab_Report_ID  in (select Lab_Report_ID from lab_report_submissions"
-         . " where  (Status='Marked' or Status='Remarking') and (Student_id=$student_id)  and Course_ID=$course_id) ORDER by Submission_ID DESC");
+         . " where  (Status='Marked' or Status='Remarking') and (Student_id=$student_id or Course_Group_id=$group_id)  and Course_ID=$course_id) ORDER by Submission_ID DESC");
 
     
 
@@ -641,11 +652,11 @@ where course_group_members_table.Course_Group_id=$id");
         ?>
 
 
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="css/jquery-1.11.1.min.js"></script>
  
-<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="css/jquery-ui.min.js"></script>
 
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="css/jquery-ui.css" />
 <script>
     function CreateGroup() {
     
