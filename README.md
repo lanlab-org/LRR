@@ -164,3 +164,7 @@ GuedaliaBonheurSPM - Guedalia Youma - 201925800221
 ACorneille - Alimasi Corneille - 201925800168
 
 Tabithakipanga - Kipanga Dorcas - 201925800170
+
+Mary-AK    - Mary Akussah Doe - 201925800173
+
+pkkumson   - Kumson Princewill Kum - 201925800166
