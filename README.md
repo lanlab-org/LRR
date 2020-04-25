@@ -164,3 +164,8 @@ GuedaliaBonheurSPM - Guedalia Youma - 201925800221
 ACorneille - Alimasi Corneille - 201925800168
 
 Tabithakipanga - Kipanga Dorcas - 201925800170
+
+Twizere  -  Twizere Pacifique  -  201925800174
+
+Nicole-Rutagengwa  - Nicole Rutagengwa  - 201925800169
+
