@@ -168,3 +168,7 @@ Tabithakipanga - Kipanga Dorcas - 201925800170
 Mary-AK  - Mary Akussah Doe - 201925800173
 
 pkkumson  - Kumson Princewill Kum - 201925800166
+
+Twizere  -  Twizere Pacifique  -  201925800174
+
+Nicole-Rutagengwa  - Nicole Rutagengwa  - 201925800169
