@@ -1,13 +1,8 @@
-
 <?php
-
-
 $page='Update Password';
 include 'Header.php';
-
+//getting the user id
 $user_d=$_SESSION['user_id'];
-
-
 ?>
 
 <style>
@@ -17,8 +12,7 @@ $user_d=$_SESSION['user_id'];
 </style>
 
 <br>
-<!-- <div style="width: 80%;margin: auto;"> <h2> Account Management </h2> </div>
--->
+
 <div class="row" style="width:80%;margin:auto; text-align:left;">
   <div class="col-md-6">
     <br>  Course Portal &gt; Students <br>
@@ -42,68 +36,39 @@ $user_d=$_SESSION['user_id'];
             <label for="old_pwd">Old password</label>
             <input type="password" class="form-control" id="old_pwd"  name="old_pwd"  placeholder="Enter old password" required="">
           </div>
-        
-        <div class="form-group">
+
+          <div class="form-group">
             <label for="old_pwd">New password</label>
             <input type="password" class="form-control" id="new_pwd"  name="new_pwd"  placeholder="Enter new password" required="">
-        </div>
+          </div>
 
-        <div class="form-group">
+          <div class="form-group">
             <label for="old_pwd">Confirm password</label>
             <input type="password" class="form-control" id="conf_pwd"  name="conf_pwd"  placeholder="Confirm new password" required="">
-        </div>
-        <div class="form-text text-danger">
-              <?php 
-                  if(isset($_SESSION['info_update_password'])) 
-                  {
-                    echo  $_SESSION['info_update_password'];
-                  }
-              ?>
-        </div>
-        <div class="form-group">
-             <input type="submit" class="btn btn-primary" value="Submit"><br>
-        </div>  
-         
-          <?php 
-          error_reporting(E_ALL);
+          </div>
+          <div class="form-text text-danger">
+            <?php 
+                //displaying error information returned by the backend
+            if(isset($_SESSION['info_update_password'])) 
+            {
+              echo  $_SESSION['info_update_password'];
+            }
+            ?>
+          </div>
+          <div class="form-group">
+           <input type="submit" class="btn btn-primary" value="Submit"><br>
+         </div>  
+       </form>
 
-          ?>
-
-        </form>
-
-        <hr>
+       <hr>
 
 
 
-      </div>
+     </div>
 
 
 
-    </div>
-  </div>
-
-
+   </div>
+   <!--  Tab panes -->
+ </div>
 </div>
-
-
-
-<script>
-  function updatePass(id,pass)
-  {
-    if(!confirm('Are you to Reset User Password'))
-    {
-      return;  
-    }
-
-    window.location.href="\Script.php\?action=passchange&uid="+id+"&pass="+pass;
-  }
-
-  function blockUser(id,status)
-  {
-    if(!confirm('Are you to change User Status'))
-    {
-      return;  
-    }
-    window.location.href="\Script.php\?action=statuschange&uid="+id+"&status="+status;
-  }
-</script>
