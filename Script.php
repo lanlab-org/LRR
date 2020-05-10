@@ -40,7 +40,7 @@ if (!empty($_POST["frm_signup_1"])) {
       //  Just removed this condition from the above command and (Passport_Number='$passport' or Passport_Number = '')
      if(mysqli_num_rows($result)==0)
     {
-        $_SESSION["info_signup1"]="Student Information could not be verified ! Plaese contact student Management Office.";
+        $_SESSION["info_signup1"]="Student Information could not be verified ! Please contact Student Management Office.";
         header("Location: index.php");     
         return;		
     }
@@ -61,7 +61,7 @@ if (!empty($_POST["frm_signup_1"])) {
     }
     else
     { 
-        $_SESSION["info_signup1"]="Student ID already Used ! Please contact student Management Office if you could not login to your account.";
+        $_SESSION["info_signup1"]="Student ID already in use ! Please contact Student Management Office if you failed to login to your account.";
         header("Location: index.php");
         return;		
     } 
@@ -118,7 +118,7 @@ if (!empty($_POST["frm_signup_1"])) {
         "SELECT * FROM Users_Table WHERE email='$email'");
    if(mysqli_num_rows($result)!=0)
     {
-        $_SESSION["info_signup2"]="Email adress : ".$email." is already used.";
+        $_SESSION["info_signup2"]="Email adress : ".$email."  already in use.";
         header("Location: signup.php"); 
         return;       
     }
@@ -241,7 +241,7 @@ $msg=urlencode(" <h3>Lab Report Repository System - ZJNU</h3>  <br>  Hi <b>"
 .$name. 
 " </b> Here is your password recovery link , "
 .$link.
-"   to reset your password , <br> please ignore this message if you did not requested password recovery.<br><br> <hr><br><br>  
+"   to reset your password , <br> please ignore this message if you did not request password recovery.<br><br> <hr><br><br>  
 您好 $name, 这是你的密码恢复链接，点击上面的链接 重置你的密码，
 如果您没有请求密码恢复，请忽略此消息。  <br><br><br><br><br> <small>LRR System by Mohamed Nor. </small><hr>");
     
@@ -380,12 +380,12 @@ if($user_token==$token)
      $fullname=mysqli_real_escape_string($con,$_POST["fullname"]);
        $type=mysqli_real_escape_string($con,$_POST["type"]);
        $password=$passport;
-   // check if email is taked
+   // check if email is taken
      $result = mysqli_query($con,
         "SELECT * FROM Users_Table WHERE email='$email'");
    if(mysqli_num_rows($result)!=0)
     {
-        $_SESSION["info_Admin_Users"]="Email adress : ".$email." is already used.";
+        $_SESSION["info_Admin_Users"]="Email adress : ".$email." is already in use.";
         header("Location: Admin.php");        
     }
     $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Passport_Number`) VALUES "
