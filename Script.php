@@ -10,7 +10,8 @@
 session_start();
   date_default_timezone_set('Asia/Shanghai');
 // CONNeCTION
-$con=mysqli_connect("localhost","Teecloudy","5q7Ol2e!#!","lrr");
+//$con=mysqli_connect("localhost","Teecloudy","5q7Ol2e!#!","lrr");
+$con=mysqli_connect("localhost","root","","lrr");
 // Check connection
 if (mysqli_connect_errno())
   {
