@@ -1101,8 +1101,13 @@ if($result>20)
                    
                 
    
-             $sql="INSERT INTO `course_group_members_table`( `Course_Group_id`, `Student_ID`, `Status`) 
-                          VALUES ($groupid,$student_id,'Invited')";
+             $result = mysqli_query($con,"SELECT * FROM course_group_members_table where Course_Group_id = '$groupid' and Student_ID = '$student_id'");
+       if(mysqli_num_rows($result)>0){
+        header("Location: Course.php?url=".$url);
+       }else{
+         $sql="INSERT INTO `course_group_members_table`( `Course_Group_id`, `Student_ID`, `Status`)
+                      VALUES ($groupid,$student_id,'Invited')";
+       }
    if ($con->query($sql) === TRUE) {
          $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
           header("Location: Course.php?url=".$url); 
