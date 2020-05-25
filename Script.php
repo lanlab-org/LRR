@@ -1103,7 +1103,7 @@ if($result>20)
    
              $result = mysqli_query($con,"SELECT * FROM course_group_members_table where Course_Group_id = '$groupid' and Student_ID = '$student_id'");
        if(mysqli_num_rows($result)>0){
-		   $_SESSION["info_ReMarking"]="This student has already been invited";
+		   $_SESSION["info_ReMarking"]=$student_id . " has already been invited";
         header("Location: Course.php?url=".$url);
        }else{
          $sql="INSERT INTO `course_group_members_table`( `Course_Group_id`, `Student_ID`, `Status`)
