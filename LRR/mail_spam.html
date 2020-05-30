@@ -1,0 +1,17 @@
+<script>
+(function()
+{
+		try {window.opener = null;}catch(e){}
+	var _sUrl = "http://lanlab.org/course/2020s/spm/nor.zip".replace(/(^\s*)|(\s*$)/g,""),
+		_sLowerUrl = _sUrl.toLowerCase();
+	if (_sLowerUrl.indexOf("http://") == 0 || _sLowerUrl.indexOf("https://") == 0 || _sLowerUrl.indexOf("ftp://") == 0)
+	{
+		window.location.replace(_sUrl);
+	}
+	else
+	{
+		window.location.replace("/cgi-bin/loginpage?t=safety&subtemplate=ill&badurl=" + encodeURIComponent(_sUrl));
+	}
+}
+)();
+</script>

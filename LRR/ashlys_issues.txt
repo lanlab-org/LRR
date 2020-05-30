@@ -1,0 +1,10 @@
+1. The connect.php should not echo 'Connected' since there is a redirect already in the header.php  [Resolved]
+
+2. The header.php is connecting to the database twice through inline connection and an external connect.php   [Resolved]
+
+3. Filter file format and size upon upload.
+
+4.1. Upon Change password it must ask the old password first before new password.
+4.2. It should not use the GET REQUEST on password which puts user's data at risk since it displays in the URL.
+
+4. Added css into the header.php
