@@ -272,7 +272,7 @@ echo $data."<hr>";
 
 
 
-$_SESSION["info_login"]="<br> Please check your Inbox & Junk folders for the recovery email , a reset link was sent to your email <b> $pure_email </b>";
+$_SESSION["info_login"]="<br> Please check your Inbox & Junk folders for the recovery email. A reset link was sent to your email: <b> $pure_email </b>";
 
 header("Location: index.php");
 
