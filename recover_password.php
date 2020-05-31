@@ -29,7 +29,7 @@ include 'Header.php';
 
   <br>
 <input type="submit" class="btn btn-primary" value="Recover">
-<br> * You will reeive an email with password recovery information.
+<br> * You will receive an email with password recovery information.
 <?php 
 
 
