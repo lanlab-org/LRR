@@ -17,3 +17,5 @@ After that, issue the following commands in the mysql prompt.
 
 The first one uses a database called lrr in MySQL.  The second one deletes a record from `users_table` where the student number is 201131129138.
 
+
+*Last modified on 1 June 2020 by Hui*
