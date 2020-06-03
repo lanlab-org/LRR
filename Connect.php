@@ -1,23 +1,23 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
+//$servername = "localhost";
+//$username = "root";
+//$password = "";
 
-
-// $servername = "sql202.epizy.com";
-// $username = "epiz_23626301";
-// $password = "wtn2rmj3";
 // Create connection
-$con = new mysqli($servername, $username, $password,'lrr');
+$dsn = 'mysql:dbname=ngounou;host=127.0.0.1;port=3306';
+$user = 'root';
+$password = '';
 
-// Check connection
-if ($con->connect_error) {
-    die("Database Connection failed: " . $conn->connect_error);
-} 
-// else
-// {
+try {
+    $dbh = new PDO($dsn, $user, $password);
 
-// echo "Connected";
-// }
+	}
+catch (PDOException $e) {
+    echo 'connexion has failed : ' . $e->getMessage();
+}
+ $stmt = $dbh->query("SELECT * FROM course_students_table");
+	while ($row = $stmt->fetch()) {
+    $tablel_user[] = $row['Student_ID']."<br />\n";
+}
 session_start();
