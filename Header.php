@@ -25,7 +25,7 @@ else
 
 <html>
 <header>
- 
+<title>Lab Report Repository System</title>
    
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -33,6 +33,7 @@ else
 <script src="http://118.25.96.118/nor/css/bootsrap.min.js" type="text/javascript"></script>
 <link href="http://118.25.96.118/nor/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <script src="http://118.25.96.118/nor/css/jquery.datetimepicker.min.js" type="text/javascript"></script>
+<link rel = "shortcut icon" href = "logo_text.png">
 
 
 
