@@ -113,7 +113,7 @@ if (!empty($_POST["frm_signup_1"])) {
      header("Location: signup.php");
      return;
     }
-   // check if email is taked
+   // check if email exists in the database
      $result = mysqli_query($con,
         "SELECT * FROM Users_Table WHERE email='$email'");
    if(mysqli_num_rows($result)!=0)
@@ -272,7 +272,7 @@ echo $data."<hr>";
 
 
 
-$_SESSION["info_login"]="<br> Please check your Inbox & Junk folders for the recovery email , a reset link was sent to your email <b> $pure_email </b>";
+$_SESSION["info_login"]="<br> Please check your Inbox & Junk folders for the recovery email. A reset link was sent to your email: <b> $pure_email </b>";
 
 header("Location: index.php");
 
@@ -392,7 +392,7 @@ if($user_token==$token)
             . "('$email','$password','$fullname','$type','$passport')";
     
    if ($con->query($sql) === TRUE) {
-         $_SESSION["info_Admin_Users"]=$type." user Created successfully : email ".$email." and $password as Password.";
+         $_SESSION["info_Admin_Users"]=$type." user created successfully : email ".$email." and $password as Password.";
    header("Location: Admin.php"); 
     
 } else {
@@ -910,7 +910,7 @@ header("Location: Course.php?url=".$url);
   
          if($joining==0)
          {
-         $_SESSION["info_Courses_student"]="You enroll in this Course successfully.";
+         $_SESSION["info_Courses_student"]="You have successfully enrolled in this course.";
          }
  else {
       $_SESSION["info_Courses_student"]="Course enrollment request was sent to the lecturer.";
@@ -951,7 +951,7 @@ header("Location: Course.php?url=".$url);
             
             if($marks>$total)
             {
-                echo " Marks could not be greater than total";
+                echo " Marks cannot be greater than total";
                 return;
             }
           $date=  date("Y-m-d H:i");
@@ -1512,7 +1512,7 @@ header("Location: Course.php?url=".$url);
     
     
    if ($con->query($sql) === TRUE) {
-         $_SESSION["info_Admin_Courses"]="Course portal was Created successfully.";
+         $_SESSION["info_Admin_Courses"]="Course portal was created successfully.";
  if($who=="l")
  {
   header("Location: Courses.php");    

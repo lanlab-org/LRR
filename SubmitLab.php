@@ -69,7 +69,7 @@ if(mysqli_num_rows($result1)==0)
                
                                      
                                                      echo    "  <div class='alert' style='margin-left:20px;border-bottom:2px solid #1D91EF;'> <a href='~\..\Courses.php?course=$url'>
-  Courses > $url > Submlit Lab Report > $title 
+  Courses > $url > Submit Lab Report > $title 
    <br> 
 </a></div>
  ";
@@ -127,7 +127,7 @@ if(mysqli_num_rows($result1)==0)
  
                               
 Title
-<input type='text'  name='title' placeholder='Ttle' class='form-control' required=''>
+<input type='text'  name='title' placeholder='Title' class='form-control' required=''>
  Attachment 1
 <input type='file'  name='attachment1' placeholder='Attachment 1' class='form-control' required=''>
 

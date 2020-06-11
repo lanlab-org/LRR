@@ -10,7 +10,7 @@ include 'Header.php';
 <div class="row" style="width:80%;margin:auto;">
    
     <div class="col-md-6">
-     <h1> STUEDNT Account Created , Now you can Browse Course Portals </h1>   
+     <h1> STUDENT account created, now you can browse Course Portals. </h1>   
     </div>
     
     
