@@ -105,9 +105,9 @@ $resultx1 = mysqli_query($con,$sql);
     
 while($row = mysqli_fetch_assoc($resultx1)) {$_SESSION['group_id']=$row['Course_Group_id'];}  
  
-if($group_id==""){$group_id=-1;}
-
  $group_id=$_SESSION['group_id'];
+
+if($group_id==""){$group_id=-1;}
 
 
 $var="SELECT Type,Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
@@ -170,6 +170,9 @@ if(mysqli_num_rows($result1)==0)
        <div id="menu2" class="container tab-pane"><br>
          <?php
          $group_id=$_SESSION['group_id'];
+
+         if($group_id==""){$group_id=-1;}
+
       $result  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
           FROM `lab_reports_table`
           where 
@@ -224,9 +227,10 @@ if(mysqli_num_rows($result)==0)
                                      }
   ;   
    
-           echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
+          echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
   $title <br> <span style='font-size:8pt'> $ins</span> 
-   <br> <span style='font-size:8pt'>Posted : $posted  &nbsp; &nbsp; &nbsp; Deadline :   $deadline  &nbsp; &nbsp; &nbsp; ($marks Marks) &nbsp; &nbsp; <span class='btn-sm btn-warning' style='margin-left:50px;'><i class='fa fa-times-circle'></i>  Missed !</span><br> Attachments : $full_link </span>
+   <br> <span style='font-size:8pt'>Posted : $posted  &nbsp; &nbsp; &nbsp; Deadline :   $deadline  &nbsp; &nbsp; &nbsp; ($marks Marks) &nbsp; &nbsp; <span class='btn-sm btn-warning' style='margin-left:50px;'><i class='fa fa-times-circle'></i>  Missed !</span>  &nbsp; &nbsp; &nbsp; &nbsp;<a  href='~\..\SubmitLab.php?id=$id' class='btn-sm btn-default'><i class='fa fa-check-circle'></i> Re-Submit </a>
+   <br> Attachments : $full_link </span>
 </div></k>";
                 
                                       }}
@@ -238,6 +242,8 @@ if(mysqli_num_rows($result)==0)
    <div id="menu3" class="container tab-pane"><br>
          <?php
          $group_id=$_SESSION['group_id'];
+         if($group_id==""){$group_id=-1;}
+
 $resultx  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
          FROM `lab_reports_table`
          
