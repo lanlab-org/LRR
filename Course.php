@@ -105,9 +105,9 @@ $resultx1 = mysqli_query($con,$sql);
     
 while($row = mysqli_fetch_assoc($resultx1)) {$_SESSION['group_id']=$row['Course_Group_id'];}  
  
-if($group_id==""){$group_id=-1;}
-
  $group_id=$_SESSION['group_id'];
+
+if($group_id==""){$group_id=-1;}
 
 
 $var="SELECT Type,Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
@@ -170,6 +170,9 @@ if(mysqli_num_rows($result1)==0)
        <div id="menu2" class="container tab-pane"><br>
          <?php
          $group_id=$_SESSION['group_id'];
+
+         if($group_id==""){$group_id=-1;}
+
       $result  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
           FROM `lab_reports_table`
           where 
@@ -239,6 +242,8 @@ if(mysqli_num_rows($result)==0)
    <div id="menu3" class="container tab-pane"><br>
          <?php
          $group_id=$_SESSION['group_id'];
+         if($group_id==""){$group_id=-1;}
+
 $resultx  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
          FROM `lab_reports_table`
          
