@@ -224,9 +224,10 @@ if(mysqli_num_rows($result)==0)
                                      }
   ;   
    
-           echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
+          echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
   $title <br> <span style='font-size:8pt'> $ins</span> 
-   <br> <span style='font-size:8pt'>Posted : $posted  &nbsp; &nbsp; &nbsp; Deadline :   $deadline  &nbsp; &nbsp; &nbsp; ($marks Marks) &nbsp; &nbsp; <span class='btn-sm btn-warning' style='margin-left:50px;'><i class='fa fa-times-circle'></i>  Missed !</span><br> Attachments : $full_link </span>
+   <br> <span style='font-size:8pt'>Posted : $posted  &nbsp; &nbsp; &nbsp; Deadline :   $deadline  &nbsp; &nbsp; &nbsp; ($marks Marks) &nbsp; &nbsp; <span class='btn-sm btn-warning' style='margin-left:50px;'><i class='fa fa-times-circle'></i>  Missed !</span>  &nbsp; &nbsp; &nbsp; &nbsp;<a  href='~\..\SubmitLab.php?id=$id' class='btn-sm btn-default'><i class='fa fa-check-circle'></i> Re-Submit </a>
+   <br> Attachments : $full_link </span>
 </div></k>";
                 
                                       }}
