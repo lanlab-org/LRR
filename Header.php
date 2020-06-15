@@ -25,18 +25,21 @@ else
 
 <html>
 <header>
- 
+<title>Lab Report Repository System</title>
    
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-
-<!--<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/fontawesome.min.css" />
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <script src="http://118.25.96.118/nor/css/jquery.min.js" type="text/javascript"></script>
 <script src="http://118.25.96.118/nor/css/bootsrap.min.js" type="text/javascript"></script>
 <link href="http://118.25.96.118/nor/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <script src="http://118.25.96.118/nor/css/jquery.datetimepicker.min.js" type="text/javascript"></script>
+
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
 <script src="https://cdn.bootcdn.net/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+
+<link rel = "shortcut icon" href = "logo_text.png">
+
+
 
 
 </header>
