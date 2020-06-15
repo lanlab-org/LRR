@@ -1607,4 +1607,57 @@ print "$header\n$data";
 
    }
    
+// ################################ Update Password  #####################################
 
+if (!empty($_POST["frm_update_password"])) {
+  //If it fails go back to this location
+  header("Location: ~/../UpdatePassword.php");
+  $_SESSION['info_update_password'] ="";
+  // Getting information form the webpage
+  $user_id=$_SESSION["user_id"]; // using session is more secure than using forms
+  $old_password=mysqli_real_escape_string($con,$_POST["old_pwd"]);
+  $new_password=mysqli_real_escape_string($con,$_POST["new_pwd"]);
+  $conf_password=mysqli_real_escape_string($con,$_POST["conf_pwd"]);
+  // Check if the passwords matches 
+  if($conf_password != $new_password){
+     $_SESSION['info_update_password'] = "Passwords do not match";
+      return;
+  }
+  // Check if the user id exists
+  $result = mysqli_query($con,
+    "SELECT * FROM Users_Table WHERE User_ID='$user_id'");
+  if(mysqli_num_rows($result)==0)
+   {   
+    $_SESSION['info_update_password'] = "Invalid user information, Please Login again";
+    return;   
+   }
+  
+    while($row = mysqli_fetch_assoc($result)) {
+        
+        $db_password=$row['Password'];
+        $db_hashed_password=$row['HashPassword'];
+        $hashed_password=hash('sha512', $old_password);
+        // Check if the old password is incorect
+        if (($db_password != $old_password) &&($db_hashed_password != $hashed_password)) {
+         $_SESSION['info_update_password'] =  "The old password is Incorrect";
+         return;
+        }
+        
+        // Update the Password
+        $hashed_password=hash('sha512', $new_password);
+        $sql= "UPDATE users_table set HashPassword='$hashed_password' , Password = '$new_password' where User_ID=$user_id;";
+        
+
+        if ($con->query($sql) === TRUE) 
+        {
+          //Notify Password change
+          error_reporting(0);
+          $_SESSION["info_login"]=" Password changed successfully , you can login now with your new password ";
+
+          //Force the user to login again 
+          header("Location: ~/../logout.php");
+        } else {
+          echo "Error: " . $sql . "<br>" . $con->error;
+        }     
+     }
+    }
