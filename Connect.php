@@ -13,7 +13,7 @@ $con = new mysqli($servername, $username, $password,'lrr');
 
 // Check connection
 if ($con->connect_error) {
-    die("Database Connection failed: " . $conn->connect_error);
+    die("Database Connection failed: " . $con->connect_error);
 } 
 // else
 // {
