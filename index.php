@@ -40,7 +40,7 @@ Student ID / Email
   Password
 <input type="password" class="form-control"  name="password" placeholder="password">
   <br> 
-  <input type="submit" class="btn btn-primary" value="Login"><br> <a href="recover_password.php" style="font-weight:bold;color:orange">Recover lost password</a>
+  <input type="submit" class="btn btn-primary" value="Login"><br> <a href="forgot_form.php" style="font-weight:bold;color:orange">Forgot password</a>
 
 <?php 
 
