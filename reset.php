@@ -29,7 +29,7 @@
     or die("Could not select to mysql because " . mysqli_error());
 
     $query = mysqli_real_escape_string($con, $_GET["Status"]);
-    if ($query=='Active') {
+    if (!empty($query)) {
 
         //query database to check status of the user
         $query = "select * from " . $table_name . " where Status='Active'";
