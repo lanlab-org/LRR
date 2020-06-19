@@ -28,9 +28,8 @@
     mysqli_select_db($con, "lrr") //select the database
     or die("Could not select to mysql because " . mysqli_error());
 
-    $key = mysqli_real_escape_string($con, $_GET["k"]);
-    $key = htmlspecialchars($key, ENT_COMPAT);
-    if (!empty($key)) {
+    $query = mysqli_real_escape_string($con, $_GET["Status"]);
+    if ($query=='Active') {
 
         //query database to check status of the user
         $query = "select * from " . $table_name . " where Status='Active'";
