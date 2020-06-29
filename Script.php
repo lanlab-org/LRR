@@ -144,10 +144,10 @@ if (!empty($_POST["frm_login"])) {
   $user=mysqli_real_escape_string($con,$_POST["user"]);
   $password=mysqli_real_escape_string($con,$_POST["password"]);
   // $hashed_password=hash('sha512', $password); Not necessary in the login
- $result = mysqli_query($con, "SELECT * FROM users_table WHERE (Email='$user')");
+ $result = mysqli_query($con, "SELECT * FROM users_table WHERE (Student_ID='$user') OR (Email='$user')");
 if(mysqli_num_rows($result)==0)
  {
-     $_SESSION["info_login"]="Inavlid login Information.";
+     $_SESSION["info_login"]="Inavlid login information.";
   
 echo $_SESSION["info_login"];
 
@@ -826,21 +826,18 @@ if(strlen($_FILES['attachment1']['name']) > 2 ) {
       $sql1="Delete from  lab_report_submissions where Lab_Report_ID=$lab_id and Student_id=$student_id and Course_Group_id=$group_id";
      if ($con->query($sql1) === TRUE) {
      }
-     
+
 
     // When $group_id is not properly initialized, use integer 0 as its value.
     // This temporarily fixed the "Students unable to submit assignment after a recent change" bug at http://118.25.96.118/bugzilla/show_bug.cgi?id=65
     if (trim($group_id) === '') { // when $group_id is an empty string or contains only whitespace characters.
          $group_id = 0; // FIXME
     }
-
     $sql="INSERT INTO `lab_report_submissions`(`Submission_Date`, `Lab_Report_ID`, `Student_id`,"
             . " `Course_Group_id`, `Attachment1`, `Notes`, `Attachment2`, `Attachment3`, `Attachment4`, `Status`, `Title`,`Remarking_Reason`)"
             . " VALUES ('$date',$lab_id,$student_id,$group_id,'$targetfile','$instructions','$targetfile2','$targetfile3','$targetfile4',"
             . "'Pending','$title','')";
-    
-   
- 
+
 if ($con->query($sql) === TRUE) {
     if($_SESSION['Sub_Type']=='Individual')
   // {
