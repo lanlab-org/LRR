@@ -10,7 +10,7 @@
 session_start();
   date_default_timezone_set('Asia/Shanghai');
 // CONNeCTION
-$con=mysqli_connect("localhost","Teecloudy","5q7Ol2e!#!","lrr");
+$con=mysqli_connect("localhost","username","password","lrr");
 // Check connection
 if (mysqli_connect_errno())
   {
@@ -30,17 +30,30 @@ if (mysqli_connect_errno())
 
 error_reporting(0);
 if (!empty($_POST["frm_signup_1"])) {
-     $student_id=mysqli_real_escape_string($con,$_POST["student_id"]);
-     $passport=mysqli_real_escape_string($con,$_POST["passport"]);
-    
-    echo $student_id.' and '.$passport;
+     $student_id = mysqli_real_escape_string($con,$_POST["student_id"]);
+     $passport = mysqli_real_escape_string($con,$_POST["passport"]);
+
+    // validate student number
+    if (strlen($student_id) != 12  || is_numeric($student_id) == FALSE) {
+       $_SESSION["info_signup1"] = "Invalid student number.";
+       header("Location: index.php");
+       return;       
+    }
+
+   // passport should be empty (not used)
+   if (strcmp(trim($passport), '') != 0) {
+       $_SESSION["info_signup1"] = "Passport is disused.  Please leave it empty.";
+       header("Location: index.php");
+       return;       
+   }
+
 
    $result = mysqli_query($con,
        "SELECT * FROM `students_data` WHERE Student_ID='$student_id'");
       //  Just removed this condition from the above command and (Passport_Number='$passport' or Passport_Number = '')
      if(mysqli_num_rows($result)==0)
     {
-        $_SESSION["info_signup1"]="Student Information could not be verified ! Please contact Student Management Office.";
+        $_SESSION["info_signup1"]="Student number could not be verified! Please contact Student Management Office (lanhui at zjnu.edu.cn).  Thanks.";
         header("Location: index.php");     
         return;		
     }
@@ -61,7 +74,7 @@ if (!empty($_POST["frm_signup_1"])) {
     }
     else
     { 
-        $_SESSION["info_signup1"]="Student ID already in use ! Please contact Student Management Office if you failed to login to your account.";
+        $_SESSION["info_signup1"]="Student ID already in use! Please contact Student Management Office (lanhui at zjnu.edu.cn).";
         header("Location: index.php");
         return;		
     } 
@@ -83,35 +96,40 @@ if (!empty($_POST["frm_signup_1"])) {
     
     // ############################### CREATE STUDENT USER ##################################
     if (!empty($_POST["frm_signup_2"])) {
-     $email=mysqli_real_escape_string($con,$_POST["email"]);
-     $password=mysqli_real_escape_string($con,$_POST["password"]);
-      $confirmpassword=mysqli_real_escape_string($con,$_POST["confirmpassword"]);
-    $fullname=mysqli_real_escape_string($con,$_POST["fullname"]);
-         $student_id=$_SESSION['user_student_id'];   
-    $passport= $_SESSION['user_passport'];
-    $_SESSION['user_fullname']=$fullname;
-    $_SESSION['user_type']="Student";
-      $_SESSION['user_email']=$email;
+       $email = mysqli_real_escape_string($con,$_POST["email"]);
+       $password = mysqli_real_escape_string($con,$_POST["password"]);
+       $confirmpassword = mysqli_real_escape_string($con,$_POST["confirmpassword"]);
+       $fullname = mysqli_real_escape_string($con,$_POST["fullname"]);
+       $student_id = $_SESSION['user_student_id'];   
+       $passport =  $_SESSION['user_passport'];
+       $_SESSION['user_fullname'] = $fullname;
+       $_SESSION['user_type'] = "Student";
+       $_SESSION['user_email'] = $email;
     // check confirmed password
     if ( strcasecmp( $password, $confirmpassword ) != 0 ){
-        $_SESSION['info_signup2']="Incorrect Password confirmation";
-       header("Location: signup.php");
-       return;
+        $_SESSION['info_signup2']="Password confirmation failed.";
+        header("Location: signup.php");
+        return;
     }
-  //  $containsLetter  = preg_match('/[a-zA-Z]/',    $password);
-  //  $containsDigit   = preg_match('/\d/',          $password);
-  //  $containsSpecial = preg_match('/[^a-zA-Z\d]/', $password);
-  $upperLetter  = preg_match('@[A-Z]@',    $password);
-  $smallLetter  = preg_match('@[a-z]@',    $password);
-  $containsDigit   = preg_match('@[0-9]@', $password);
-  $containsSpecial = preg_match('@[^\w]@', $password);
+
+   // validate email
+   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $_SESSION['info_signup2']="Invalid email address.";
+      header("Location: signup.php");
+      return;
+   }
+   
+   $upperLetter  = preg_match('@[A-Z]@',    $password);
+   $smallLetter  = preg_match('@[a-z]@',    $password);
+   $containsDigit   = preg_match('@[0-9]@', $password);
+   $containsSpecial = preg_match('@[^\w]@', $password);
    $containsAll = $upperLetter && $smallLetter && $containsDigit && $containsSpecial;
- // check for strong password
-     if($containsAll < 8)
-   {
-      $_SESSION['info_signup2']="Password should contain Letters , Numbers and sepcial characters";
-     header("Location: signup.php");
-     return;
+
+   // check for strong password
+   if($containsAll < 8) {
+      $_SESSION['info_signup2']="Password must have at least characters that include letters, numbers and sepcial characters.";
+      header("Location: signup.php");
+      return;
     }
    // check if email is taked
      $result = mysqli_query($con,
@@ -128,12 +146,12 @@ if (!empty($_POST["frm_signup_1"])) {
             . "('$email','$password_hash','$fullname','Student','$student_id','$passport')";
     
    if ($con->query($sql) === TRUE) {
-   header("Location: Courses.php"); 
-    
-} else {
-    echo "Error: " . $sql . "<br>" . $con->error;
+       header("Location: Courses.php");    
+   } else {
+      // echo "Error: " . $sql . "<br>" . $con->error;
+      echo "Something really bad happend during sign up.";
+   }
 }
- }
     
     
 
@@ -142,23 +160,41 @@ if (!empty($_POST["frm_signup_1"])) {
 
 if (!empty($_POST["frm_login"])) {
   $user=mysqli_real_escape_string($con,$_POST["user"]);
+
+  $is_student_number = 0;
+  
+  // Validate student number
+  if (is_numeric($user) && strlen($user) != 12) {
+     $_SESSION["info_login"] = "Invalid student number:"."$user";
+     header("Location: index.php");
+     return;       
+  }  else {
+     $is_student_number = 1;
+  }
+
+  if ($is_student_number == 0 && !filter_var($user, FILTER_VALIDATE_EMAIL)) {
+     $_SESSION["info_login"] = "Invalid email address: "."$user";
+     header("Location: index.php");
+     return;       
+  }
+
   $password=mysqli_real_escape_string($con,$_POST["password"]);
   // $hashed_password=hash('sha512', $password); Not necessary in the login
- $result = mysqli_query($con, "SELECT * FROM users_table WHERE (Email='$user')");
+ $result = mysqli_query($con, "SELECT * FROM users_table WHERE (Student_ID='$user') OR (Email='$user')");
 if(mysqli_num_rows($result)==0)
  {
-     $_SESSION["info_login"]="Inavlid login Information.";
+     $_SESSION["info_login"]="Inavlid login information.";
   
-echo $_SESSION["info_login"];
+     echo $_SESSION["info_login"];
 
-header("Location: index.php");        
+     header("Location: index.php");        
  }
  else 
  { 
      while($row = mysqli_fetch_assoc($result)) {
        //  verify the hashed password and unhashed password
        $sha512pass = hash('sha512', $password); // for backward compatibility.  Old passwords were hashed using SHA512 algorithm.
-       if(password_verify($password, $row["Password"]) or $sha512pass == $row["HashPassword"] or $password == $row["Password"]){
+       if(password_verify($password, $row["Password"]) or $sha512pass == $row["HashPassword"]) {
       $_SESSION['user_id']=$row['User_ID'];
      $_SESSION['user_email']=$row['Email'];
      $_SESSION['user_student_id']=$row['Student_ID'];
@@ -205,85 +241,39 @@ header("Location: index.php");
 
 
 
-
 // ################################ Recover Password  #####################################
 
 if (!empty($_POST["frm_recover_password"])) {
-  $email=mysqli_real_escape_string($con,$_POST["email"]);
- 
 
- $result = mysqli_query($con,
-     "SELECT * FROM Users_Table WHERE email='$email'");
-if(mysqli_num_rows($result)==0)
- {
-     $_SESSION["info_recover_password"]="Email address is not recognised.";
-  
+  $student_id = mysqli_real_escape_string($con,$_POST["sno"]);
+  $email = mysqli_real_escape_string($con,$_POST["email"]);
 
-echo "Email address was not recognised";
-return;
-header("Location: recover_password.php");        
- }
- else 
- { 
-     while($row = mysqli_fetch_assoc($result)) {
+  // validate student number
+  if (strlen($student_id) != 12  || is_numeric($student_id) == FALSE) {
+     echo "Invalid student number.";
+     return;       
+  }
 
-      $userid=$row['User_ID'];
-
-     $email=urlencode($row['Email']);
-     $pure_email=$row['Email'];
-     $id=$row['Student_ID'];
-    
-     $token=$userid*$userid*$userid+$userid*0.00343;
-
-    $name=$row['Full_Name'];
-$link="<a href='http://118.25.96.118/nor/Reset_password.php?token=$token&email=$email'>Click Here (点击这里) </a>";
-$msg=urlencode(" <h3>Lab Report Repository System - ZJNU</h3>  <br>  Hi <b>"
-.$name. 
-" </b> Here is your password recovery link , "
-.$link.
-"   to reset your password , <br> please ignore this message if you did not request password recovery.<br><br> <hr><br><br>  
-您好 $name, 这是你的密码恢复链接，点击上面的链接 重置你的密码，
-如果您没有请求密码恢复，请忽略此消息。  <br><br><br><br><br> <small>LRR System by Mohamed Nor. </small><hr>");
-    
-
-$title=urlencode("Password recovery Request for LRR system - ZJNU ");
-
-
-$url="http://sms.samesoftware.com/email/send/?Subject=$title&Body=$msg&ToAddress=$email&token=s1234";
-
-//$response = file_get_contents($url);
-
-
-$ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $url);
-
-    $data = curl_exec($ch);
-  
-    if(curl_errno($ch))
-    echo 'Curl error: '.curl_error($ch);
-curl_close ($ch); 
-
-
-
-echo $data."<hr>";
-
-
-
-$_SESSION["info_login"]="<br> Please check your Inbox & Junk folders for the recovery email , a reset link was sent to your email <b> $pure_email </b>";
-
-header("Location: index.php");
-
-
-     }
-    }
+  // validate email
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      echo "Invalid email address.";
+      return;
   }
 
 
-
-
+  $result = mysqli_query($con, "SELECT * FROM users_table WHERE Email='$email' and Student_ID='$student_id'");
+  if(mysqli_num_rows($result)==0)
+  {
+     $_SESSION["info_recover_password"]="Email address is not recognised.";
+     $_SESSION["info_recover_password"] = "Identity not recognized.  Try again or send an inquiry email message to lanhui at zjnu.edu.cn.";
+     header("Location: recover_password.php");        
+  } else 
+  {
+     $result = mysqli_query($con, "DELETE FROM users_table WHERE Email='$email' and Student_ID='$student_id'");
+     $_SESSION["info_recover_password"] = "<b>Reset done.  Please go to the sign up page and sign up again</b>.";
+     header("Location: recover_password.php");
+  }
+}
 
 
 
@@ -826,21 +816,18 @@ if(strlen($_FILES['attachment1']['name']) > 2 ) {
       $sql1="Delete from  lab_report_submissions where Lab_Report_ID=$lab_id and Student_id=$student_id and Course_Group_id=$group_id";
      if ($con->query($sql1) === TRUE) {
      }
-     
+
 
     // When $group_id is not properly initialized, use integer 0 as its value.
     // This temporarily fixed the "Students unable to submit assignment after a recent change" bug at http://118.25.96.118/bugzilla/show_bug.cgi?id=65
     if (trim($group_id) === '') { // when $group_id is an empty string or contains only whitespace characters.
          $group_id = 0; // FIXME
     }
-
     $sql="INSERT INTO `lab_report_submissions`(`Submission_Date`, `Lab_Report_ID`, `Student_id`,"
             . " `Course_Group_id`, `Attachment1`, `Notes`, `Attachment2`, `Attachment3`, `Attachment4`, `Status`, `Title`,`Remarking_Reason`)"
             . " VALUES ('$date',$lab_id,$student_id,$group_id,'$targetfile','$instructions','$targetfile2','$targetfile3','$targetfile4',"
             . "'Pending','$title','')";
-    
-   
- 
+
 if ($con->query($sql) === TRUE) {
     if($_SESSION['Sub_Type']=='Individual')
   // {
@@ -1402,47 +1389,54 @@ header("Location: Course.php?url=".$url);
  
  //action=passchange&uid=1&pass=1929
  
-   if (!empty($_GET["action"])) {
+if (!empty($_GET["action"])) {
 	   
-	   $action=$_GET["action"];
-	    $uid=$_GET["uid"];
-		
-		 $pass=$_GET["pass"];
-		 $status=$_GET["status"];
+    $action=$_GET["action"];
+    $uid=$_GET["uid"];
+
+    
+    $pass = $_GET["pass"];
+    $pass = password_hash($pass, PASSWORD_DEFAULT);
+
+
+    $status=$_GET["status"];
+
+
+    // validate uid
+    if (intval($uid) < 0) {
+       header("Location: index.php");
+       return;       
+    }
+
 		 
-	   if($action=="passchange")
-	   {
-		 $sql= "UPDATE users_table set Password='$pass' where User_ID=$uid;";
-   if ($con->query($sql) === TRUE) {
-       
-       error_reporting(0);
-       
-       echo "Password has been changed";
-       return;
-	    $_SESSION["info_Admin_Users"]=$type." User  Password was Reset to his/her Passport/ID successfully ";
-   header("Location: Admin.php");
-                                   }
-	   }
-	   else {
-    echo "Error: " . $sql . "<br>" . $con->error;
-}
-	   
-	   if($action=="statuschange")
-	   {
-		   $sql= "UPDATE users_table set Status='$status' where User_ID=$uid;";
-   if ($con->query($sql) === TRUE) {
-	   
-	       $_SESSION["info_Admin_Users"]=$type." user  Status updated successfully ";
-		      header("Location: Admin.php");
+    if($action=="passchange")
+    {
+	 $sql= "UPDATE users_table set Password='$pass' where User_ID=$uid;";
+         if ($con->query($sql) === TRUE) {
+            error_reporting(0);
+            echo "Password has been changed";
+            // return;
+	    $_SESSION["infoChangePassword"]=$type." User password was changed successfully.";
+            header("Location: index.php");
+	} else {
+            // echo "Error: " . $sql . "<br>" . $con->error;
+	    echo "Something really bad happened while changing password.  Contact lanhui at zjnu.edu.cn.  Thanks!";
+        }
+    }
+
+
+    if($action=="statuschange")
+    {
+        $sql= "UPDATE users_table set Status='$status' where User_ID=$uid;";
+       if ($con->query($sql) === TRUE) {
+           $_SESSION["info_Admin_Users"]=$type." user  Status updated successfully ";
+	   header("Location: Admin.php");
+       } else {
+          // echo "Error: " . $sql . "<br>" . $con->error;
+          echo "Something really bad happened while changing status.  Contact lanhui at zjnu.edu.cn.  Thanks!";	  
+       }  	   
    }
-	   }else {
-    echo "Error: " . $sql . "<br>" . $con->error;
-}
-	   
-	   
-	   
-   }
- 
+ }
    
    
    

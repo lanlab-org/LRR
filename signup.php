@@ -22,7 +22,7 @@ include 'Header.php';
 
     <div class="panel-body">
 <form method="post" action="Script.php" >
-      <input type="hidden" value="true"/>
+      <input type="hidden" name="frm_signup_2" value="true"/>
        Full Name
        <input type="text" name="fullname" placeholder="Your Full Name" class="form-control" value="<?php echo $_SESSION['user_fullname']; ?>">
 
@@ -34,7 +34,7 @@ include 'Header.php';
  Confirm Password
 <input type="password" class="form-control"  name="confirmpassword" placeholder="Confirm password">
   <br>
-<input type="submit" name="frm_signup_2" class="btn btn-primary" value="Sign up">
+<input type="submit" class="btn btn-primary" value="Sign up">
 
 <?php 
 

@@ -15,7 +15,9 @@ include 'Header.php';
          . " ON users_table.User_ID=courses_table.Lecturer_User_ID where URL='$course_url' ");
  
  if(mysqli_num_rows($result)==0)
-    {} else { while($row = mysqli_fetch_assoc($result)) {
+    {echo "should not be here";} else {
+
+                   while($row = mysqli_fetch_assoc($result)) {
 			$name=$row['Course_Name'];
                         $code=$row['Course_Code'];
                          $faculty=$row['Faculty'];	
@@ -27,7 +29,7 @@ include 'Header.php';
                          
                 echo    "  <div class='alert' style='margin-left:20px;border-bottom:2px solid #1D91EF;'> <a href='~\..\Courses.php?course=$url'>
   Courses > $name ($code) > Lab Reports
-   <br> <span style='font-size:8pt'>Faculty : $faculty  Year :   $academic  Lecturer  :$lecturer  </span>
+   <br> <span style='font-size:8pt'>Faculty: $faculty  | Year: $academic | Lecturer: $lecturer  </span>
        
 
 </a></div>
@@ -75,7 +77,7 @@ if( $_SESSION['user_type']=="Student")
     <!-- Nav tabs -->
  <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#menu1">New Labs Reports</a>
+      <a class="nav-link active" data-toggle="tab" href="#menu1">New Lab Reports</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#menu2">Missed Lab Reports </a>
@@ -100,20 +102,18 @@ course_groups_table  on course_group_members_table.Course_Group_id = course_grou
 WHERE course_group_members_table.Student_ID=$student_id and course_groups_table.Course_id=$course_id";
  
  
- 
-$resultx1 = mysqli_query($con,$sql);
+ $resultx1 = mysqli_query($con,$sql);
     
 while($row = mysqli_fetch_assoc($resultx1)) {$_SESSION['group_id']=$row['Course_Group_id'];}  
  
+$group_id=$_SESSION['group_id'];
+
 if($group_id==""){$group_id=-1;}
-
- $group_id=$_SESSION['group_id'];
-
 
 $var="SELECT Type,Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
       FROM `lab_reports_table` WHERE Course_ID=$course_id  "
          . ""
-         . "and (deadline > '$c_date' or Lab_Report_ID in (SELECT `Lab_Report_ID` FROM `extended_deadlines_table`"
+         . "and (Deadline > '$c_date' or Lab_Report_ID in (SELECT `Lab_Report_ID` FROM `extended_deadlines_table`"
          . " WHERE  Lab_Report_ID in (select Lab_Report_ID from lab_reports_table where Course_ID=$course_id) and Student_ID=$student_id and Extended_Deadline_Date > '$c_date')       ) "   
          . ""
          . ""
@@ -124,9 +124,7 @@ $var="SELECT Type,Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `
          . ""
          . " ORDER by Lab_Report_ID DESC";
 
-
-
- $result1 = mysqli_query($con,$var);
+$result1 = mysqli_query($con,$var);
    
 if(mysqli_num_rows($result1)==0)
     {
@@ -652,11 +650,10 @@ where course_group_members_table.Course_Group_id=$id");
         ?>
 
 
-<script src="css/jquery-1.11.1.min.js"></script>
- 
-<script src="css/jquery-ui.min.js"></script>
+<script src="./css/jquery-1.11.1.min.js"></script>
+<script src="./css/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="./css/jquery-ui.css" />
 
-<link rel="stylesheet" href="css/jquery-ui.css" />
 <script>
     function CreateGroup() {
     

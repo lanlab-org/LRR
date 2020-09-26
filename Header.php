@@ -5,7 +5,7 @@ error_reporting(0);
   date_default_timezone_set('Asia/Shanghai');
 
 
-$con=mysqli_connect("localhost","root","","lrr");
+$con=mysqli_connect("localhost","username","password","lrr");
 // Check connection
 if (mysqli_connect_errno())
   {
@@ -25,15 +25,14 @@ else
 
 <html>
 <header>
-<title>Lab Report Repository System</title>
+ 
    
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<script src="http://118.25.96.118/nor/css/jquery.min.js" type="text/javascript"></script>
-<script src="http://118.25.96.118/nor/css/bootsrap.min.js" type="text/javascript"></script>
-<link href="http://118.25.96.118/nor/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<script src="http://118.25.96.118/nor/css/jquery.datetimepicker.min.js" type="text/javascript"></script>
-<link rel = "shortcut icon" href = "logo_text.png">
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<script src="./css/jquery.min.js" type="text/javascript"></script>
+<script src="./css/bootsrap.min.js" type="text/javascript"></script>
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script src="./css/jquery.datetimepicker.min.js" type="text/javascript"></script>
 
 
 
@@ -60,7 +59,7 @@ else
       <li class="nav-item active">
           
              <li class="nav-item active">
-                <a class='nav-link' href='~\..\Visitors.php'>     <i class='fa fa-globe'></i>  Visitor Portal <span class='sr-only'>(current)</span></a>
+                <!-- <a class='nav-link' href='~\..\Visitors.php'>     <i class='fa fa-globe'></i>  Visitor Portal <span class='sr-only'>(current)</span></a> -->
             </li>
             <?php
             if(isset($_SESSION["user_fullname"]))
@@ -83,11 +82,17 @@ else
         
         ?>
         
-        
-        
+<?php
+if ($_SESSION['user_type'] == "Lecturer") {
+   echo  "&nbsp;&nbsp;&nbsp;  <i class=\"fa fa-cog\" style=\"color:#fff;\"> </i> &nbsp;<a style='color:#fff !important' href=\"~\..\Admin.php\">Admin </a>";
+}
+?>
+	        
+         
+      &nbsp;&nbsp;&nbsp;  <i class="fa fa-user" style="color:#fff;"> </i>
+      &nbsp;<a href="#" style='color:#fff !important' onclick="updatePass(<?php echo $_SESSION['user_id'];?>)">Update password</a>
+
       &nbsp;&nbsp;&nbsp;  <i class="fa fa-lock" style="color:#fff;"> </i> &nbsp;<a style='color:#fff !important' href="~\..\logout.php">Logout </a>
-   
-      &nbsp; |  &nbsp;<a href="#" style='color:#fff !important' onclick="updatePass(<?php echo $_SESSION['user_id'];?>)">Update Password</a>
    
     <?php
             }
@@ -162,9 +167,9 @@ else
     function updatePass(id)
     {
  
-       var pass=  prompt("Enter your New Password : ", "...");
+       var pass=  prompt("Enter your new password : ", "...");
         
-      if(!confirm('Are you  sure to Reset your  Password?'))
+      if(!confirm('Are you sure to reset your password?'))
       {
         return;  
       }
