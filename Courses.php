@@ -29,12 +29,12 @@ $user_d=$_SESSION['user_id'];
 
 <div class="row" style="width:80%;margin:auto; text-align:left;">
    
-  
-  <script src="css/jquery-1.11.1.min.js"></script>
- 
-<script src="css/jquery-ui.min.js"></script>
 
-<link rel="stylesheet" href="css/jquery-ui.css" />
+<script src="./css/jquery-1.11.1.min.js"></script>
+<script src="./css/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="./css/jquery-ui.css" />
+
+
 <script>
     
 
@@ -139,7 +139,7 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
     
     $sql = "UPDATE `lab_reports_table` SET `Deadline` = ('" . $Deadline . "'), `Instructions` = ('" . $instructions . "'), `Title` = ('" . $title . "'), `Marks` = ('" . $marks . "') WHERE `lab_reports_table`.`Lab_Report_ID` = '$getid'";
     if ($con->query($sql) === TRUE) {
-      $_SESSION["info_updated"]="Assignment information updated successfully.";
+      $_SESSION["info_Updated"]="Information Updated Successfull";
        
    } else {
        echo "Error: " . $sql . "<br>" . $con->error;
@@ -253,9 +253,9 @@ Submission Type  <input type='radio' name='type' value='Individual' required=''>
             echo "<div class='col-md-7'>  <h3> Lab Report Assignment list </h3>";  
                   
  error_reporting(0);
- if(isset($_SESSION["info_updated"])){
-  echo '<hr><div class="alert alert-info" role="alert">' . $_SESSION['info_updated'] . '</div>';
-  $_SESSION['info_updated'] = null;
+ if(isset($_SESSION["info_Updated"])){
+  echo '<hr><div class="alert alert-info" role="alert">' . $_SESSION['info_Updated'] . '</div>';
+  $_SESSION['info_Updated'] = null;
  }
 if (isset($_SESSION['info_courses'])) {
     echo '<hr><div class="alert alert-info" role="alert">' . $_SESSION['info_courses'] . '</div>';

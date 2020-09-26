@@ -40,20 +40,30 @@ Student ID / Email
   Password
 <input type="password" class="form-control"  name="password" placeholder="password">
   <br> 
-  <input type="submit" class="btn btn-primary" value="Login"><br> <a href="recover_password.php" style="font-weight:bold;color:orange">Recover lost password</a>
+  <input type="submit" class="btn btn-primary" value="Login"><br> <a href="recover_password.php" style="font-weight:normal;color:orange">Reset my password</a>
 
 <?php 
 
 error_reporting(E_ALL);
+
 if(isset($_SESSION['info_login'])) {
   echo  '<hr><div class="alert alert-danger" role="alert">'.$_SESSION['info_login'].'</div>';
   $_SESSION['info_login']=null;
 }
+
+
 // wrong pass
 if(isset($_SESSION['wrong_pass'])) {
   echo  '<hr><div class="alert alert-danger" role="alert">'.$_SESSION['wrong_pass'].'</div>';
   $_SESSION['wrong_pass']=null;
 }
+
+
+if(isset($_SESSION['infoChangePassword'])) {
+  echo  '<hr><div class="alert alert-danger" role="alert">'.$_SESSION['infoChangePassword'].'</div>';
+  $_SESSION['infoChangePassword']=null;
+}
+
 
 ?>
 </form>
@@ -67,7 +77,7 @@ if(isset($_SESSION['wrong_pass'])) {
     
 
     <br>
-<h4 class="list-group-item active"> Student Sign up </h4>
+<h4 class="list-group-item active"> Student sign up </h4>
 <div class="list-group-item">
 
 <form method="post" action="Script.php" name="frm_signup_1">
@@ -79,7 +89,7 @@ if(isset($_SESSION['wrong_pass'])) {
 Your Passport / National ID
   <input type="text" class="form-control"  name="passport" placeholder="(Optional)">
   <br>
-  <input type="submit" name="frm_signup_1" class="btn btn-primary" value="Next"> <br>
+  <input type="submit" name="frm_signup_1" class="btn btn-primary" value="Next"> <br> Click Next to set up password
 <?php 
 
 error_reporting(E_ALL);
@@ -112,8 +122,7 @@ if(isset($_SESSION['info_signup1'])) {
 <hr>
 
 <div style="" id="footer">
-Developed by : Mohamed Nor (201825800050)-houzi you can submit your suggestions & bug reports to  mohamednor@qq.com  <small>Last Update : 18/04/2020 by <i>Ashly</i> </small>
-
+LRRS was originally developed as a <a href="http://lanlab.org/course/2018f/se/homepage.html" style="color:white;">software engineering course project</a> by Mohamed Nor and Elmahdi Houzi.  Please submit your suggestions or bug reports to  lanhui _at_ zjnu.edu.cn.  Last updated on 18/04/2020 by Ashly. <a href="./homepage" style="color:white;">More information ...</a>
 </div>
 
 </body>

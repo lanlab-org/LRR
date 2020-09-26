@@ -1,7 +1,14 @@
 <?php
 $page="admin";
 include 'Header.php';
+?>
 
+<?php
+if ($_SESSION['user_type'] != "Lecturer") {
+    $_SESSION["info_login"]="You must log in first.";
+    echo $_SESSION["info_login"];
+    header("Location: index.php");
+}
 ?>
 
 <style>
@@ -35,19 +42,29 @@ include 'Header.php';
         
         
         <div class="container">
+
+
+
  <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
+
     <li class="nav-item">
       <a class="nav-link active" data-toggle="tab" href="#home">Create New Account</a>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu2">Batch Create New Student Accounts</a>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#menu1">Existing Accounts</a>
     </li>
-  
+      
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
+
     <div id="home" class="container tab-pane active"><br>
  
         <b>Create Lecturer/TA Accounts </b>
@@ -89,16 +106,14 @@ if(isset($_SESSION['info_Admin_Users'])) {
       
       <div id="menu1" class="container tab-pane fade"><br>
    
-
-
 <table class="table-bordered" style="font-size: 10pt;">
     <tr style="font-size:10pt;">
         <th>ID</th>
-		<th>Name</th>
+        <th>Name</th>
         <th>Email</th>
-            <th>Passport / ID </th>
-               <th>Reset Password </th>
-               <th>Block/Activate </th>
+        <th>Passport / ID </th>
+        <th>Reset Password </th>
+        <th>Block/Activate </th>
     </tr>
 <?php
 
@@ -122,7 +137,19 @@ if(isset($_SESSION['info_Admin_Users'])) {
            
      </div>
    
-      
+
+        <!-- code contributed by Xu Xiaopeng (https://github.com/xxp1999) -->
+	
+   	<div id="menu2"  class="container tab-pane fade" style="margin-top:10px" >
+		<b>Please separate student numbers with spaces.</b><br>
+		<form action="batch_insert.php" method="post">
+		    <p>
+			<textarea cols="80" rows="16" name="users" required=""></textarea>
+	            </p>
+			<input type="submit" class="btn btn-primary" value="Create All"><br>
+		</form>	
+   	</div>
+	
   
   </div>
 </div>

@@ -1,7 +1,5 @@
 <?php
 
-
-
 // Destory sessions & refiret to index
 
    session_destroy();   
@@ -21,4 +19,4 @@ $session_id = session_id();
     unset( $_SESSION['user_type']);
     unset( $_SESSION['user_student_id']);
        unset( $_SESSION['user_fullname']); 
-  header("Location: index.php");
+header("Location: index.php");
