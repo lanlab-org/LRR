@@ -1,8 +1,8 @@
 <?php
 
-// Destory sessions & refiret to index
+// Destory sessions & redirect to index
 
-   session_destroy();   
+    session_destroy();   
     session_unset();
     // Start a new session
 session_start();

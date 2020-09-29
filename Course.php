@@ -1,4 +1,3 @@
-
 <?php
 $page='Courses+';
 include 'Header.php';
@@ -235,7 +234,12 @@ if(mysqli_num_rows($result)==0)
        </div>
    <div id="menu3" class="container tab-pane"><br>
          <?php
-         $group_id=$_SESSION['group_id'];
+
+
+$group_id = $_SESSION['group_id'];
+if($group_id==""){$group_id=-1;}  // This fixes "Submitted report not shown" http://118.25.96.118/bugzilla/show_bug.cgi?id=176
+
+
 $resultx  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
          FROM `lab_reports_table`
          
@@ -243,7 +247,7 @@ $resultx  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_
          . " where Status='Pending' and (Student_id=$student_id or Course_Group_id=$group_id)  and Course_ID=$course_id) ORDER by Lab_Report_ID DESC");
 if(mysqli_num_rows($resultx)==0)
     {
-     echo "You have  no Lab report submissions in this course";
+     echo "You have no lab report submissions in this course.";
      
     } else { while($row = mysqli_fetch_assoc($resultx)) {
       $lab_repo_id=$row['Lab_Report_ID'];

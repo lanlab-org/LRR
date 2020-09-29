@@ -35,10 +35,10 @@ session_start();
 <form method="post" action="Script.php" name="frm_login">
        <input type="hidden" name="frm_login" value="true"/>
 Student ID / Email
-<input type="text" name="user" placeholder="Email / Student Number" class="form-control">
+<input type="text" name="user" placeholder="Email / Student Number" class="form-control" required="required" />
  
   Password
-<input type="password" class="form-control"  name="password" placeholder="password">
+<input type="password" class="form-control"  name="password" placeholder="password" required="required" />
   <br> 
   <input type="submit" class="btn btn-primary" value="Login"><br> <a href="recover_password.php" style="font-weight:normal;color:orange">Reset my password</a>
 

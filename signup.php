@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 
-
 include 'Header.php';
 
 ?>
@@ -21,27 +20,30 @@ include 'Header.php';
 <div class="list-group-item">
 
     <div class="panel-body">
+
+
 <form method="post" action="Script.php" >
       <input type="hidden" name="frm_signup_2" value="true"/>
        Full Name
-       <input type="text" name="fullname" placeholder="Your Full Name" class="form-control" value="<?php echo $_SESSION['user_fullname']; ?>">
+       <input type="text" name="fullname" placeholder="Your Full Name" class="form-control" value="<?php echo $_SESSION['user_fullname']; ?>"  required="required"/>
 
- Email
-<input type="text" name="email" placeholder="Email" class="form-control" value="<?php echo $_SESSION['user_email']; ?>">
+       Email
+       <input type="text" name="email" placeholder="Email" class="form-control" value="<?php echo $_SESSION['user_email']; ?>"  required="required" />
  
-  Password
-<input type="password" class="form-control"  name="password" placeholder="password">
- Confirm Password
-<input type="password" class="form-control"  name="confirmpassword" placeholder="Confirm password">
-  <br>
-<input type="submit" class="btn btn-primary" value="Sign up">
+       Password
+       <input type="password" class="form-control"  name="password" placeholder="password" required="required" />
 
+       Confirm Password
+       <input type="password" class="form-control"  name="confirmpassword" placeholder="Confirm password" required="required" />
+       <br>
+       <input type="submit" class="btn btn-primary" value="Sign up">
 <?php 
+
 
 error_reporting(E_ALL);
 if(isset($_SESSION['info_signup2'])) {
   echo  '<hr><div class="alert alert-danger" role="alert">'.$_SESSION['info_signup2'].'</div>';
-  $_SESSION['info_signup2']=null;
+  $_SESSION['info_signup2'] = null;
 }
 
 ?>
