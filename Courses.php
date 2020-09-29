@@ -1,6 +1,3 @@
-
-
-
 <?php
 
 
@@ -100,7 +97,7 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
                   
                         <div class='alert> <a href='~\..\Courses.php?course=$url'>   <div class='panel'>
   ($code) - $name 
-   <br> <span style='font-size:8pt'>Faculty : $faculty  Year :   $academic  Lecturer  :$lecturer </span>
+   <br> <span style='font-size:8pt'>Faculty: $faculty | Year: $academic | Lecturer: $lecturer </span>
 </div></a>
                         <hr></div></div> <div class='row' style='width:80%;margin:auto; text-align:left;'>
  ";
@@ -108,7 +105,7 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
                  echo "<div class='col-md-5'>";
                 }
     
-// ------------------------------Editing Lab Assignment by Lecture------------------------------------
+// ------------------------------Editing Lab Assignment by Lecturer ------------------------------------
 
 
     if($_GET['act']=="edit"){ 
@@ -117,41 +114,42 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
 
     while($row1 = mysqli_fetch_assoc($result1)) {
       $Deadline = $row1['Deadline'];
-      // $datetime = explode(" ", $Deadline);  explode() is another famous way of spliting a string from the database
-      // $_SESSION['Date'] = $datetime[0];
-      // $_SESSION['Time'] = $datetime[1];
-      $_SESSION['Date'] = strstr($Deadline, ' ', true);
-      $_SESSION['Time'] = strstr($Deadline, ' ');
-      $_SESSION['Instructions']=$row1['Instructions'];
-      $_SESSION['Title']=$row1['Title'];
-      $_SESSION['Marks']=$row1['Marks'];
-      $_SESSION['Type']=$row1['Type'];
-
+      $_SESSION['Date'] = trim( strstr($Deadline, ' ', true) );
+      $_SESSION['Time'] = trim( strstr($Deadline, ' ') );
+      $_SESSION['Instructions'] = $row1['Instructions'];
+      $_SESSION['Title'] = $row1['Title'];
+      $_SESSION['Marks'] = $row1['Marks'];
+      $_SESSION['Type'] = $row1['Type'];
     }
-  if(isset($_POST['frm_uploadlab'])){
-    $deadlinedate=$_POST["deadlinedate"];
-    $deadlinetime=$_POST["deadlinetime"];
-    $instructions=$_POST["instructions"];
-    $title=$_POST["title"];
-    $marks=$_POST["marks"];
-    $Deadline = $deadlinedate." ".$deadlinetime;
-    $date=  date("Y-m-d H:i");
     
-    $sql = "UPDATE `lab_reports_table` SET `Deadline` = ('" . $Deadline . "'), `Instructions` = ('" . $instructions . "'), `Title` = ('" . $title . "'), `Marks` = ('" . $marks . "') WHERE `lab_reports_table`.`Lab_Report_ID` = '$getid'";
+  if(isset($_POST['frm_uploadlab'])){
+    $deadlinedate = trim( $_POST["deadlinedate"] ); // remove spaces
+    $deadlinetime = trim( $_POST["deadlinetime"] ); // remove spaces
+    $instructions = $_POST["instructions"];
+    $title = $_POST["title"];
+    $marks = $_POST["marks"];
+    $type  = $_POST["type"];
+    $Deadline = $deadlinedate." ".$deadlinetime;
+    $date =  date("Y-m-d H:i");
+    
+    $sql = "UPDATE `lab_reports_table` SET `Deadline` = ('" . $Deadline . "'), `Instructions` = ('" . $instructions . "'), `Title` = ('" . $title . "'), `Marks` = ('" . $marks . "'), `Type` = ('" . $type . "') WHERE `lab_reports_table`.`Lab_Report_ID` = '$getid'";
     if ($con->query($sql) === TRUE) {
-      $_SESSION["info_Updated"]="Information Updated Successfull";
+      $_SESSION["info_Updated"]="Assignment information updated successfully.";
        
    } else {
-       echo "Error: " . $sql . "<br>" . $con->error;
+       // echo "Error: " . $sql . "<br>" . $con->error;
+       echo "Serious error happened whiling updating assignment information.";
    }
   }
+  
   if( $_SESSION['user_type']=="Lecturer"){   
-    $Date=$_SESSION['Date'];
-    $Time=$_SESSION['Time'];
-    $Instructions=$_SESSION['Instructions'];
-    $Title=$_SESSION['Title'];
-    $Marks=$_SESSION['Marks'];
-     
+    $Date = $_SESSION['Date'];
+    $Time = $_SESSION['Time'];
+    $Instructions = $_SESSION['Instructions'];
+    $Title = $_SESSION['Title'];
+    $Marks = $_SESSION['Marks'];
+    $Type = $_SESSION['Type'];
+    
    echo "  <h3><a href='Courses.php?course=".$url."'> Editing Lab Assignment </a></h3>";
       ?> 
       <form method='post'   enctype='multipart/form-data' action=''>
@@ -184,9 +182,16 @@ Attachment 3
 Attachment 4
 <input type='file'  name='attachment4' placeholder='Attachment 4' class='form-control' >
 <br>
-Submission Type  <input type='radio' name='type' value='Individual' required=''> Invidual
 
-<input type='radio' name='type' required='' value='Group'> Group
+<?php
+if ($Type == "Individual") {
+  echo "Submission Type  <input type='radio' name='type' value='Individual' checked /> Invidual  <input type='radio' name='type' value='Group' /> Group";
+} else {
+  echo "Submission Type  <input type='radio' name='type' value='Individual' /> Invidual  <input type='radio' name='type' value='Group' checked> Group";
+}		 
+?>
+
+
 <hr>
 <input type='submit' class='btn btn-primary' value='Post Lab Assignment'><br>
 </form><br><br><br><br>

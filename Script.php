@@ -105,9 +105,12 @@ if (!empty($_POST["frm_signup_1"])) {
        $_SESSION['user_fullname'] = $fullname;
        $_SESSION['user_type'] = "Student";
        $_SESSION['user_email'] = $email;
+
     // check confirmed password
     if ( strcasecmp( $password, $confirmpassword ) != 0 ){
         $_SESSION['info_signup2']="Password confirmation failed.";
+	$_SESSION['user_fullname'] = null;
+	$_SESSION['user_type'] = null;
         header("Location: signup.php");
         return;
     }
@@ -119,15 +122,15 @@ if (!empty($_POST["frm_signup_1"])) {
       return;
    }
    
-   $upperLetter  = preg_match('@[A-Z]@',    $password);
-   $smallLetter  = preg_match('@[a-z]@',    $password);
+   $upperLetter     = preg_match('@[A-Z]@',    $password);
+   $smallLetter     = preg_match('@[a-z]@',    $password);
    $containsDigit   = preg_match('@[0-9]@', $password);
    $containsSpecial = preg_match('@[^\w]@', $password);
    $containsAll = $upperLetter && $smallLetter && $containsDigit && $containsSpecial;
 
    // check for strong password
-   if($containsAll < 8) {
-      $_SESSION['info_signup2']="Password must have at least characters that include letters, numbers and sepcial characters.";
+   if(! $containsAll) {
+      $_SESSION['info_signup2'] = "Password must have at least characters that include lowercase letters, uppercase letters, numbers and sepcial characters (e.g., !?.,*^).";
       header("Location: signup.php");
       return;
     }
@@ -136,7 +139,9 @@ if (!empty($_POST["frm_signup_1"])) {
         "SELECT * FROM Users_Table WHERE email='$email'");
    if(mysqli_num_rows($result)!=0)
     {
-        $_SESSION["info_signup2"]="Email adress : ".$email."  already in use.";
+        $_SESSION["info_signup2"]="Email adress ".$email."  already in use.";
+	$_SESSION['user_fullname'] = null;
+	$_SESSION['user_type'] = null;	
         header("Location: signup.php"); 
         return;       
     }
