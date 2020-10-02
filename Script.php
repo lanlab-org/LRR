@@ -12,7 +12,8 @@ session_start();
 date_default_timezone_set('Asia/Shanghai');
 
 // Connect to MySQL database
-$con = mysqli_connect("localhost","username","password","lrr");
+include "get_mysql_credentials.php";
+$con = mysqli_connect("localhost",  $mysql_username, $mysql_password, "lrr");
 
 // Check connection
 if (mysqli_connect_errno())

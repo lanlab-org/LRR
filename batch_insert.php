@@ -2,9 +2,12 @@
 
 // Code contributed by Xu Xiaopeng and his team (https://github.com/lanlab-org/LRR/pull/39/files#diff-b69ba96bf0e469383b373e8c9de257c0)
 //数据库信息
+
+
+include "get_mysql_credentials.php";
 $servername = "localhost";
-$username = "username";
-$password = "password";
+$username = $mysql_username;
+$password = $mysql_password;
 $dbname = "lrr";
 
 // 创建连接
