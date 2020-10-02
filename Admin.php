@@ -1,4 +1,9 @@
 <?php
+  include 'NoDirectPhpAcess.php';
+?>
+
+
+<?php
 $page="admin";
 include 'Header.php';
 ?>
@@ -32,7 +37,7 @@ if ($_SESSION['user_type'] != "Lecturer") {
         <hr>
     -->
     <div class="col-md-6">
-       <h4> User account Management </h4><hr>
+       <h4> User Account Management </h4><hr>
         
         <b>Lecturer / TA Accounts </b><br>
   
