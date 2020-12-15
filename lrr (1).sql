@@ -405,11 +405,11 @@ ALTER TABLE `lab_report_submissions`
 ALTER TABLE `students_data`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
-  --
-  -- updading size of Course_Name`
-  --
-  ALTER TABLE 'courses_table'
-   MODIFY 'Course_Name' varchar(500);
+--
+-- updading size of Course_Name`
+--
+ALTER TABLE 'courses_table'
+MODIFY 'Course_Name' varchar(500);
 --
 -- AUTO_INCREMENT for table `users_table`
 --
