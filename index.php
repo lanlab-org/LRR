@@ -87,7 +87,7 @@ if (isset($_SESSION["user_fullname"])) {
     Student ID
     <input type="text" name="student_id" placeholder="Entre your Student ID" class="form-control" required="">
 
-    
+
     <br>
     
     <div class="btnsignup" style="padding-top:58px">
