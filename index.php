@@ -77,9 +77,9 @@ if (isset($_SESSION["user_fullname"])) {
 
 <div class="col-md-4 list-group">
 
-    <br>
+<br>
     <h4 class="list-group-item active"> Sign up </h4>
-    <div class="list-group-item">
+    <div class="list-group-item" style="height:235px">
 
     <form method="post" action="Script.php" name="frm_signup_1">
     <input type="hidden" name="frm_signup_1" value="true"/>
@@ -87,12 +87,13 @@ if (isset($_SESSION["user_fullname"])) {
     Student ID
     <input type="text" name="student_id" placeholder="Entre your Student ID" class="form-control" required="">
 
-    Your Passport / National ID
-    <input type="text" class="form-control"  name="passport" placeholder="(Optional)">
     <br>
-    <input type="submit" name="frm_signup_1" class="btn btn-primary" value="Next"> <br> Click Next to set up password
+    
+    <div class="btnsignup" style="padding-top:58px">
+    <input type="submit" name="frm_signup_1" class="btn btn-primary" value="Next"> <br> then Click Next to set up password
 
-
+    </div>
+    
     <?php 
     
     error_reporting(E_ALL);
