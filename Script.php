@@ -528,7 +528,7 @@ function checksize($file)
 {
     $result = $_FILES["$file"]['size']/(1024*1024);
       
-    if($result > 1)
+    if($result > 3)
     {
         return FALSE;
     }
