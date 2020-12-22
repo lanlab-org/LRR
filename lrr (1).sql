@@ -408,7 +408,7 @@ ALTER TABLE `students_data`
 --
 -- updading size of Course_Name`
 --
-ALTER TABLE 'courses_table'
+ALTER TABLE courses_table
 MODIFY 'Course_Name' varchar(500);
 --
 -- AUTO_INCREMENT for table `users_table`
