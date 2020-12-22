@@ -91,10 +91,9 @@ if (isset($_SESSION["user_fullname"])) {
     <br>
     
     <div class="btnsignup" style="padding-top:58px">
-    <input type="submit" name="frm_signup_1" class="btn btn-primary" value="Next"> <br> then Click Next to set up password
+    <input type="submit" name="frm_signup_1" class="btn btn-primary" value="Next"> <br>Click Next to set up password
 
     </div>
-    
     
     <?php 
     
