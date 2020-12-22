@@ -131,8 +131,11 @@ The original GitHub Repo is at https://github.com/EngMohamedNor/LabReportRepo
 
 # Contributor List
 
-
 (Please put your name and student number below.)
+
+RAHMANMDASHIKUR - Ashik Rahman - 202025800051
+
+ANJUMNAFIS - Nafis Anjum - 202025800052
 
 TanakaMichelle - Tanaka Michelle Sandati - 201732120134
 
