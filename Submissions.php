@@ -486,7 +486,7 @@ include 'Footer.php';
         {
        
 
-            $('<form id="frm" method="get" action="Script.php">'+title+'('+marks+' marks) <input type="hidden" name="savemarks" value="true">\n\
+            $('<form id="submit-form" method="get" action="Script.php">'+title+'('+marks+' marks) <input type="hidden" name="savemarks" value="true">\n\
  <input type="hidden" name="total" value="'+marks+'" > <input type="hidden" name="id" value="'+id+'" ><br> Marks <input type="text" name="marks">\n\
  Comments <textarea name="feedback"></textarea>  \n\
 <input type="hidden" name="labid" value="<?php echo $course_id; ?>"> <input type="hidden" name="header" value="<?php echo $header; ?>">  </form>').dialog({
@@ -494,7 +494,7 @@ include 'Footer.php';
                                                                                                                                                   title:'Mark Submission',
                                                                                                                                                   buttons: {
             'Submit Marking': function () {
-                $('#frm').submit();
+                $('#submit-form').submit();
      
                 $(this).dialog('close');
             },
@@ -520,7 +520,7 @@ function updatev(id)
     {
         
 
-        $('<form id="frm" method="get" action="Script.php"> <input type="hidden" name="updatevisibility" value="true">\n\
+        $('<form id="submit-form" method="get" action="Script.php"> <input type="hidden" name="updatevisibility" value="true">\n\
  <input type="hidden" name="id" value="'+id+'" > <br>\n\
 Update Visibility<br><select name="status"> <option> Public </option><option>Private</option> </select>  \n\
 <input type="hidden" name="labid" value="<?php echo $id; ?>"> <input type="hidden" name="total" value="<?php echo $total; ?>" > <input type="hidden" name="header" value="<?php echo $header; ?>">  </form>').dialog({
@@ -528,7 +528,7 @@ Update Visibility<br><select name="status"> <option> Public </option><option>Pri
                                                                                                                                                                                                              title:'Update Report Visibility',
                                                                                                                                                                                                              buttons: {
             'Update': function () {
-                $('#frm').submit();
+                $('#submit-form').submit();
      
                 $(this).dialog('close');
             },
