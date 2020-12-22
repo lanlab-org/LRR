@@ -94,7 +94,7 @@ if (isset($_SESSION["user_fullname"])) {
     <input type="submit" name="frm_signup_1" class="btn btn-primary" value="Next"> <br> then Click Next to set up password
 
     </div>
-    
+     
     <?php 
     
     error_reporting(E_ALL);
