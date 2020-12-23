@@ -495,7 +495,7 @@ include 'Footer.php';
                                                                                                                                                   buttons: {
             'Submit Marking': function () {
                 $('#submit-form').submit();
-                //$('input[type=submit].default').submit();
+
                 $(this).dialog('close');
             },
                                                                                                                                                   'X': function () {
@@ -520,7 +520,7 @@ function updatev(id)
     {
         
 
-        $('<form id="frm" method="get" action="Script.php"> <input type="hidden" name="updatevisibility" value="true">\n\
+        $('<form id="submit-form" method="get" action="Script.php"> <input type="hidden" name="updatevisibility" value="true">\n\
  <input type="hidden" name="id" value="'+id+'" > <br>\n\
 Update Visibility<br><select name="status"> <option> Public </option><option>Private</option> </select>  \n\
 <input type="hidden" name="labid" value="<?php echo $id; ?>"> <input type="hidden" name="total" value="<?php echo $total; ?>" > <input type="hidden" name="header" value="<?php echo $header; ?>">  </form>').dialog({
@@ -528,7 +528,10 @@ Update Visibility<br><select name="status"> <option> Public </option><option>Pri
                                                                                                                                                                                                              title:'Update Report Visibility',
                                                                                                                                                                                                              buttons: {
             'Update': function () {
+
                 $('#submit-form').submit()
+                $('#submit-form').submit();
+
      
                 $(this).dialog('close');
             },

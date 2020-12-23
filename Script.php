@@ -12,7 +12,8 @@ session_start();
 date_default_timezone_set('Asia/Shanghai');
 
 // Connect to MySQL database
-$con = mysqli_connect("localhost","username","password","lrr");
+include "get_mysql_credentials.php";
+$con = mysqli_connect("localhost",  $mysql_username, $mysql_password, "lrr");
 
 // Check connection
 if (mysqli_connect_errno())
@@ -527,7 +528,7 @@ function checksize($file)
 {
     $result = $_FILES["$file"]['size']/(1024*1024);
       
-    if($result > 1)
+    if($result > 3)
     {
         return FALSE;
     }
