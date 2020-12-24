@@ -528,11 +528,7 @@ Update Visibility<br><select name="status"> <option> Public </option><option>Pri
                                                                                                                                                                                                              title:'Update Report Visibility',
                                                                                                                                                                                                              buttons: {
             'Update': function () {
-
-                $('#submit-form').submit()
                 $('#submit-form').submit();
-
-     
                 $(this).dialog('close');
             },
                                                                                                                                                                                                              'X': function () {
