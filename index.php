@@ -12,36 +12,41 @@ if (isset($_SESSION["user_fullname"])) {
 ?>
 
 <br><br><br>
-<div class="row" style="width:80%;margin:auto;">
+<div class="row" style="width:85%;margin:auto;">
 
     <div class="col-md-4">
     <br><br>
-    <img src="logo_text.png" style="width">
-    <h1> Lab Report Repository  </h1>
+    <img src="logo_lrr.png" style="width:40%; position:relative; right:-200px; top:1px;">
+    <br><br>
+    <div style="width; position:relative; right:-90px; font-family: Poppins-Regular;">
+    <h1>Lab Report Repository</h1>
     <br><br>
     </div>
-    
-    
-    <div class="col-md-4 list-group">
-
+    </div>
     <br>
-   
-    <h4 class="list-group-item active"> Sign in </h4>
+    <div style = "position:relative; left:240px; top:-2px;">
+    <h4 class="list-group-item active" style="font-weight:normal;font-family: Poppins-Regular;"> Sign in </h4>
     <div class="list-group-item">
 
     <div class="panel-body">
-
 
     <form method="post" action="Script.php" name="frm_login">
     <input type="hidden" name="frm_login" value="true"/>
     Student ID / Email
     <input type="text" name="user" placeholder="Email / Student Number" class="form-control" required="required" />
- 
+    <br>
     Password
     <input type="password" class="form-control"  name="password" placeholder="password" required="required" />
-    <br> 
-    <input type="submit" class="btn btn-primary" value="Login"><br> <a href="recover_password.php" style="font-weight:normal;color:gray">Reset my password</a>
-
+    <div class="text-center">
+    <br><input type="submit" class="btn-primary" value="Login">
+    </div>
+    <br> <a href="recover_password.php" style="font-weight:normal;color:#2471A3font-family: Poppins-Regular;
+    font-size: 17px;">Reset my Password</a>
+    <div class="text-center">
+    <br><span class="txt1">Don't have an account?</span>
+         <a class="txt2" href="signup.php" style="font-weight:normal">Sign Up</a>
+        </a>
+    </div>
 
     <?php 
     
@@ -64,47 +69,11 @@ if (isset($_SESSION["user_fullname"])) {
         echo  '<hr><div class="alert alert-danger" role="alert">'.$_SESSION['infoChangePassword'].'</div>';
         $_SESSION['infoChangePassword']=null;
     }
-    
-
-    ?>
-
-    </form>
-
-</div>
-</div>
-</div>
-
-
-<div class="col-md-4 list-group">
-
-    <br>
-    <h4 class="list-group-item active"> Sign up </h4>
-    <div class="list-group-item" style="height:235px">
-
-    <form method="post" action="Script.php" name="frm_signup_1">
-    <input type="hidden" name="frm_signup_1" value="true"/>
-    
-    Student ID
-    <input type="text" name="student_id" placeholder="Entre your Student ID" class="form-control" required="">
-    <br>
-
-    <div class="btnsignup" style="padding-top:58px">
-    <input type="submit" name="frm_signup_1" class="btn btn-primary" value="Next"> <br> Click Next to set up password
-
-
-    <?php 
-    
-    error_reporting(E_ALL);
-    if(isset($_SESSION['info_signup1'])) {
-        echo  '<div class="alert alert-danger" role="alert">'.$_SESSION['info_signup1'].'</div>';
-        $_SESSION['info_signup1']=null;
-    }
-    
     ?>
       
     </div>
     </form>
-
+    </div>
 </div>
 </div>
 </div>
@@ -119,6 +88,19 @@ if (isset($_SESSION["user_fullname"])) {
     </body>
 
 <style>
+    /*------------------------------------------------------------------
+[ Login Button ]*/
+.btn-primary {
+            color: white;
+            border-radius: 5px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            background: rgb(75, 184, 240);
+            padding:5px 162px;
+            font-family: Poppins-Regular;
+            font-size: 23px;
+            line-height: 1.5;
+        }
+
 #footer{
 position:fixed;
 bottom:0;
@@ -128,5 +110,25 @@ color:#FFF;
 text-align:center;
 width:100%;
 }
+.txt1 {
+  font-family: Poppins-Regular;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #666666;
+}
+.txt2 {
+  font-family: Poppins-Regular;
+  font-size: 19px;
+  line-height: 1.5;
+  color: #2471A3;
+}
+body {
+            background-image: url("background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+         }
+
 </style>
 </html>
