@@ -314,7 +314,6 @@ if (!empty($_POST["frm_reset_password"])) {
 // ############################### CREATE Lecturer/TA USER ##################################
 if (!empty($_POST["frm_createlecturrer"])) {
     $email=mysqli_real_escape_string($con,$_POST["email"]);
-    $passport=mysqli_real_escape_string($con,$_POST["passport"]);
     $fullname=mysqli_real_escape_string($con,$_POST["fullname"]);
     $type=mysqli_real_escape_string($con,$_POST["type"]);
     $password=$passport;
@@ -326,8 +325,8 @@ if (!empty($_POST["frm_createlecturrer"])) {
         $_SESSION["info_Admin_Users"]="Email adress : ".$email." is already in use.";
         header("Location: Admin.php");        
     }
-    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Passport_Number`) VALUES "
-        . "('$email','$password','$fullname','$type','$passport')";
+    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`) VALUES "
+        . "('$email','$password','$fullname','$type')";
     
     if ($con->query($sql) === TRUE) {
         $_SESSION["info_Admin_Users"]=$type." user Created successfully : email ".$email." and $password as Password.";
@@ -515,7 +514,7 @@ function checksize($file)
 {
     $result = $_FILES["$file"]['size']/(1024*1024);
       
-    if($result > 3)
+    if($result > 1)
     {
         return FALSE;
     }
