@@ -219,13 +219,17 @@ if (!empty($_POST["frm_recover_password"])) {
 
     // validate student number
     if (strlen($student_id) != 12  || is_numeric($student_id) == FALSE) {
-        echo "Invalid student number.";
+        $_SESSION["info_recover_password"]="Invalid student number.";
+        #echo "Invalid student number.";
+        header("Location: recover_password.php");
         return;       
     }
 
     // validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email address.";
+        $_SESSION["info_recover_password"]="Invalid email address.";
+        // echo "Invalid email address.";
+        header("Location: recover_password.php");
         return;
     }
 
@@ -239,8 +243,7 @@ if (!empty($_POST["frm_recover_password"])) {
     } else 
     {
         $result = mysqli_query($con, "DELETE FROM users_table WHERE Email='$email' and Student_ID='$student_id'");
-        $_SESSION["info_recover_password"] = "<b>Reset done.  Please go to the sign up page and sign up again</b>.";
-        header("Location: recover_password.php");
+        header("Location: signup.php");
     }
 }
 
