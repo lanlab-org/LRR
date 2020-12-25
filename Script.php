@@ -76,12 +76,11 @@ if (!empty($_POST["frm_signup_1"])) {
 
 // ############################### CREATE STUDENT USER ##################################
 if (!empty($_POST["frm_signup_2"])) {
-    $fullname = mysqli_real_escape_string($con, $_POST["fullname"]);    
+    $fullname = mysqli_real_escape_string($con, $_POST["fullname"]);
+    $student_id = mysqli_real_escape_string ($con, $_POST["user_student_id"]);    
     $email = mysqli_real_escape_string($con, $_POST["email"]);
     $password = mysqli_real_escape_string($con, $_POST["password"]);
     $confirmpassword = mysqli_real_escape_string($con, $_POST["confirmpassword"]);
-    $student_id = $_SESSION['user_student_id'];
-    $passport =  $_SESSION['user_passport'];
     $_SESSION['user_fullname'] = $fullname;
     $_SESSION['user_type'] = "Student";
     $_SESSION['user_email'] = $email;
@@ -126,17 +125,15 @@ if (!empty($_POST["frm_signup_2"])) {
 
     // apply password_hash()
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`) VALUES "
-        . "('$email','$password_hash','$fullname','Student','$student_id','$passport')";
+    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`) VALUES "
+        . "('$email','$password_hash','$fullname','Student','$student_id')";
     
     if ($con->query($sql) === TRUE) {
         header("Location: Courses.php");    
     } else {
-        // echo "Error: " . $sql . "<br>" . $con->error;
         echo "Something really bad (SQL insertion error) happend during sign up.";
     }
 }
-
 
     
 
