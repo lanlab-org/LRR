@@ -34,7 +34,7 @@ if (mysqli_connect_errno()) {
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding-left:150px;padding-right:150px;margin:auto;">
-  <a class="navbar-brand" href="~\..\index.php"> <img src="logo.png" style="width:30px;heigh:30px;"> LRRS</a>
+  <a class="navbar-brand" href="~\..\index.php"> <img src="logo.png" style="width:30px;heigh:30px;"> LRR </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
