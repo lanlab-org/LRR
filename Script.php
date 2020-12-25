@@ -41,7 +41,6 @@ function is_valid_student_number($student_id) {
 if (!empty($_POST["frm_signup_1"])) {
     
     $student_id = trim( mysqli_real_escape_string($con, $_POST["student_id"]) );
-    $passport = trim( mysqli_real_escape_string($con, $_POST["passport"]) );
 
     // validate student number
     if (! is_valid_student_number($student_id)) {
@@ -49,14 +48,6 @@ if (!empty($_POST["frm_signup_1"])) {
         header("Location: index.php");
         return;       
     }
-
-    // passport should be empty (not used)
-    if (strcmp($passport, '') != 0) {
-        $_SESSION["info_signup1"] = "Passport is disused.  Please leave it empty.";
-        header("Location: index.php");
-        return;
-    }
-
 
     // Check if this student number is a legal one
     $result = mysqli_query($con, "SELECT * FROM `students_data` WHERE Student_ID='$student_id'");   
@@ -70,8 +61,7 @@ if (!empty($_POST["frm_signup_1"])) {
     $result98 = mysqli_query($con, "SELECT * FROM `users_table` WHERE Student_ID='$student_id'");
     if(mysqli_num_rows($result98) == 0)
     {
-        $_SESSION['user_student_id'] = $student_id;        
-        $_SESSION['user_passport'] = $passport;
+        $_SESSION['user_student_id'] = $student_id;
         header("Location: signup.php");
         return;
     }
@@ -82,9 +72,6 @@ if (!empty($_POST["frm_signup_1"])) {
         return;		
     } 
 }
-
-
-
 
 
 // ############################### CREATE STUDENT USER ##################################
