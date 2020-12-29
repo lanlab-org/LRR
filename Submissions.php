@@ -470,11 +470,11 @@ include 'Footer.php';
 ?>
 
 
-<script src="./css/jquery-1.11.1.min.js"></script>
+<script src="http://118.25.96.118/nor/css/jquery-1.11.1.min.js"></script>
  
-<script src="./css/jquery-ui.min.js"></script>
+<script src="http://118.25.96.118/nor/css/jquery-ui.min.js"></script>
 
-<link rel="stylesheet" href="./css/jquery-ui.css" />
+<link rel="stylesheet" href="http://118.25.96.118/nor/css/jquery-ui.css" />
 
 <script>
 
@@ -495,7 +495,7 @@ include 'Footer.php';
                                                                                                                                                   buttons: {
             'Submit Marking': function () {
                 $('#submit-form').submit();
-     
+
                 $(this).dialog('close');
             },
                                                                                                                                                   'X': function () {
@@ -529,7 +529,6 @@ Update Visibility<br><select name="status"> <option> Public </option><option>Pri
                                                                                                                                                                                                              buttons: {
             'Update': function () {
                 $('#submit-form').submit();
-     
                 $(this).dialog('close');
             },
                                                                                                                                                                                                              'X': function () {
