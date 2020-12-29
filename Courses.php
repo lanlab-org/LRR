@@ -554,9 +554,8 @@ if( $_SESSION['user_type']=="Student")
     $student_id= $_SESSION['user_student_id'];
     if(!empty($_GET["search"]) || !empty($_GET["faculty"]))
     {
-        $search=trim($_GET["search"]); 
-         //trim is use to remove whitespace/leading space before or after a string//
-         //http://118.25.96.118/bugzilla/show_bug.cgi?id=59//
+       //use trim to remove whitespaces//
+        $search=trim($_GET["search"]);  
         $faculty=$_GET["faculty"];
     
        
