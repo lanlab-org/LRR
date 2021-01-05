@@ -82,7 +82,7 @@ if (isset($_SESSION["user_fullname"])) {
 <hr>
 
 <div style="" id="footer">
-    LRRS was originally developed as a <a href="http://lanlab.org/course/2018f/se/homepage.html" style="color:white;">software engineering course project</a> by Mohamed Nor and Elmahdi Houzi.  Please submit your suggestions or bug reports to  lanhui _at_ zjnu.edu.cn.  Last updated on 18/04/2020 by Ashly. <a href="./homepage" style="color:white;">More information ...</a>
+    LRR was originally developed as a <a href="http://lanlab.org/course/2018f/se/homepage.html" style="color:white;">software engineering course project</a> by Mohamed Nor and Elmahdi Houzi.  Please submit your suggestions or bug reports to  lanhui _at_ zjnu.edu.cn.  Last updated on 18/04/2020 by Ashly. <a href="./homepage" style="color:white;">More information ...</a>
     </div>
 
     </body>
@@ -122,13 +122,6 @@ width:100%;
   line-height: 1.5;
   color: #2471A3;
 }
-body {
-            background-image: url("background.jpg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            
-         }
 
 </style>
 </html>
