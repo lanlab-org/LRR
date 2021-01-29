@@ -560,12 +560,13 @@ if( $_SESSION['user_type']=="Student")
        
         if($faculty=="")
         {
-            echo "<h4> Search Results for  Code : $search</h4><hr>";
+            echo "<h4> Search Results for Course Code $search</h4><hr>";
             $result = mysqli_query($con,"SELECT `Course_ID`, `Course_Name`, `Academic_Year`, `Faculty`,"
                                    . " `Lecturer_User_ID`, `TA_User_ID`, `Course_Code`, `URL`, `Verify_New_Members`  "
                                    . " , users_table.Full_Name  FROM `courses_table` INNER JOIN users_table"
-                                   . " ON users_table.User_ID=courses_table.Lecturer_User_ID where Course_Code='$search'  and courses_table.Course_ID not in (select course_id from course_students_table where Student_ID=$student_id)");
+                                   . " ON users_table.User_ID=courses_table.Lecturer_User_ID where Course_Code like '%{$search}%' and courses_table.Course_ID not in (select course_id from course_students_table where Student_ID=$student_id)");
         } 
+     
         else
         {
             echo "<h3> Find Courses under faculty $faculty</h3>";
