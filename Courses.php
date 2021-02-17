@@ -554,7 +554,7 @@ if( $_SESSION['user_type']=="Student")
     $student_id= $_SESSION['user_student_id'];
     if(!empty($_GET["search"]) || !empty($_GET["faculty"]))
     {
-        $search=$_GET["search"];
+        $search = trim($_GET["search"]);
         $faculty=$_GET["faculty"];
     
        
@@ -566,7 +566,6 @@ if( $_SESSION['user_type']=="Student")
                                    . " , users_table.Full_Name  FROM `courses_table` INNER JOIN users_table"
                                    . " ON users_table.User_ID=courses_table.Lecturer_User_ID where Course_Code like '%{$search}%' and courses_table.Course_ID not in (select course_id from course_students_table where Student_ID=$student_id)");
         } 
-     
         else
         {
             echo "<h3> Find Courses under faculty $faculty</h3>";
