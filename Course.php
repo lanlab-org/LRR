@@ -181,19 +181,14 @@ if( $_SESSION['user_type'] == "Student")
 
     
     <div id="menu2" class="container tab-pane"><br>
+
 <?php
     $group_id=$_SESSION['group_id'];
+    if($group_id == ""){$group_id = -1;} // Individual assignment does not require the student to have a group id.  Therefore, the group is an empty string. To make the following SQL statement work properly, initialize the group id to -1.
     $result  = mysqli_query($con,"SELECT Lab_Report_ID,Marks, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, lab_reports_table.Title, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`
           FROM `lab_reports_table`
-          where 
-          
-
-
-
-
-Lab_Report_ID not in 
-          (select Lab_Report_ID from lab_report_submissions where (Student_id=$student_id or Course_Group_id=$group_id)  and Course_ID=$course_id      )
-     and Course_ID=$course_id and deadline < '$c_date'    "
+          WHERE 
+Lab_Report_ID not in (select Lab_Report_ID from lab_report_submissions where (Student_id=$student_id or Course_Group_id=$group_id)) and Course_ID=$course_id and Deadline < '$c_date'"
                             . ""
                             . ""
                             . ""
@@ -238,17 +233,18 @@ Lab_Report_ID not in
             }
             ;   
    
-            echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
-  $title <br> <span style='font-size:8pt'> $ins</span> 
-   <br> <span style='font-size:8pt'>Posted : $posted  &nbsp; &nbsp; &nbsp; Deadline :   $deadline  &nbsp; &nbsp; &nbsp; ($marks Marks) &nbsp; &nbsp; <span class='btn-sm btn-warning' style='margin-left:50px;'><i class='fa fa-times-circle'></i>  Missed !</span><br> Attachments : $full_link </span>
-</div></k>";
+            echo "<div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'><span class='btn-sm btn-warning' style='margin-left:0px;'>MISSED</span> $title ($marks Marks) <br> <span style='font-size:8pt'> $ins</span> 
+   <br> <span style='font-size:8pt'>Posted: $posted<br> Deadline: $deadline  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br> Attachments : $full_link </span>
+</div>";
                 
         }}
     echo "";
     ?>  
            
-           
     </div>
+
+
+
     <div id="menu3" class="container tab-pane"><br>
 <?php
 
