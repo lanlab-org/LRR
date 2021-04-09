@@ -27,9 +27,9 @@ include 'Header.php';
       <div class="panel-body">
         <form method="post" action="Script.php">
         <input type="hidden" name="frm_recover_password" value="true"/>
-        Student number  <input type="text" name="sno" placeholder="Enter your student number" class="form-control" value="<?php echo $_SESSION['student_number']; ?>">
+        Student number  <input type="text" name="sno" placeholder="Enter your student number" class="form-control" required="required" value="<?php echo $_SESSION['student_number']; ?>">
 	<br/>
-        Email  <input type="text" name="email" placeholder="Enter your email address" class="form-control" value="<?php echo $_SESSION['user_email']; ?>">
+        Email  <input type="text" name="email" placeholder="Enter your email address" class="form-control" required="required" value="<?php echo $_SESSION['user_email']; ?>">
 	<br/>
         <input type="submit" class="btn-primary" value="Recover">
           
