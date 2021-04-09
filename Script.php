@@ -41,7 +41,6 @@ function is_valid_student_number($student_id) {
 if (!empty($_POST["frm_signup_1"])) {
     
     $student_id = trim( mysqli_real_escape_string($con, $_POST["student_id"]) );
-    $passport = trim( mysqli_real_escape_string($con, $_POST["passport"]) );
 
     // validate student number
     if (! is_valid_student_number($student_id)) {
@@ -49,14 +48,6 @@ if (!empty($_POST["frm_signup_1"])) {
         header("Location: index.php");
         return;       
     }
-
-    // passport should be empty (not used)
-    if (strcmp($passport, '') != 0) {
-        $_SESSION["info_signup1"] = "Passport is disused.  Please leave it empty.";
-        header("Location: index.php");
-        return;
-    }
-
 
     // Check if this student number is a legal one
     $result = mysqli_query($con, "SELECT * FROM `students_data` WHERE Student_ID='$student_id'");   
@@ -70,8 +61,7 @@ if (!empty($_POST["frm_signup_1"])) {
     $result98 = mysqli_query($con, "SELECT * FROM `users_table` WHERE Student_ID='$student_id'");
     if(mysqli_num_rows($result98) == 0)
     {
-        $_SESSION['user_student_id'] = $student_id;        
-        $_SESSION['user_passport'] = $passport;
+        $_SESSION['user_student_id'] = $student_id;
         header("Location: signup.php");
         return;
     }
@@ -84,17 +74,13 @@ if (!empty($_POST["frm_signup_1"])) {
 }
 
 
-
-
-
 // ############################### CREATE STUDENT USER ##################################
 if (!empty($_POST["frm_signup_2"])) {
-    $fullname = mysqli_real_escape_string($con, $_POST["fullname"]);    
+    $fullname = mysqli_real_escape_string($con, $_POST["fullname"]);
+    $student_id = mysqli_real_escape_string ($con, $_POST["user_student_id"]);    
     $email = mysqli_real_escape_string($con, $_POST["email"]);
     $password = mysqli_real_escape_string($con, $_POST["password"]);
     $confirmpassword = mysqli_real_escape_string($con, $_POST["confirmpassword"]);
-    $student_id = $_SESSION['user_student_id'];
-    $passport =  $_SESSION['user_passport'];
     $_SESSION['user_fullname'] = $fullname;
     $_SESSION['user_type'] = "Student";
     $_SESSION['user_email'] = $email;
@@ -139,17 +125,15 @@ if (!empty($_POST["frm_signup_2"])) {
 
     // apply password_hash()
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`) VALUES "
-        . "('$email','$password_hash','$fullname','Student','$student_id','$passport')";
+    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`) VALUES "
+        . "('$email','$password_hash','$fullname','Student','$student_id')";
     
     if ($con->query($sql) === TRUE) {
         header("Location: Courses.php");    
     } else {
-        // echo "Error: " . $sql . "<br>" . $con->error;
         echo "Something really bad (SQL insertion error) happend during sign up.";
     }
 }
-
 
     
 
@@ -235,13 +219,17 @@ if (!empty($_POST["frm_recover_password"])) {
 
     // validate student number
     if (strlen($student_id) != 12  || is_numeric($student_id) == FALSE) {
-        echo "Invalid student number.";
+        $_SESSION["info_recover_password"]="Invalid student number.";
+        #echo "Invalid student number.";
+        header("Location: recover_password.php");
         return;       
     }
 
     // validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email address.";
+        $_SESSION["info_recover_password"]="Invalid email address.";
+        // echo "Invalid email address.";
+        header("Location: recover_password.php");
         return;
     }
 
@@ -255,8 +243,7 @@ if (!empty($_POST["frm_recover_password"])) {
     } else 
     {
         $result = mysqli_query($con, "DELETE FROM users_table WHERE Email='$email' and Student_ID='$student_id'");
-        $_SESSION["info_recover_password"] = "<b>Reset done.  Please go to the sign up page and sign up again</b>.";
-        header("Location: recover_password.php");
+        header("Location: signup.php");
     }
 }
 
@@ -327,7 +314,6 @@ if (!empty($_POST["frm_reset_password"])) {
 // ############################### CREATE Lecturer/TA USER ##################################
 if (!empty($_POST["frm_createlecturrer"])) {
     $email=mysqli_real_escape_string($con,$_POST["email"]);
-    $passport=mysqli_real_escape_string($con,$_POST["passport"]);
     $fullname=mysqli_real_escape_string($con,$_POST["fullname"]);
     $type=mysqli_real_escape_string($con,$_POST["type"]);
     $password=$passport;
@@ -339,8 +325,8 @@ if (!empty($_POST["frm_createlecturrer"])) {
         $_SESSION["info_Admin_Users"]="Email adress : ".$email." is already in use.";
         header("Location: Admin.php");        
     }
-    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`, `Passport_Number`) VALUES "
-        . "('$email','$password','$fullname','$type','$passport')";
+    $sql= "INSERT INTO `users_table`(`Email`, `Password`, `Full_Name`, `UserType`) VALUES "
+        . "('$email','$password','$fullname','$type')";
     
     if ($con->query($sql) === TRUE) {
         $_SESSION["info_Admin_Users"]=$type." user Created successfully : email ".$email." and $password as Password.";
@@ -528,7 +514,7 @@ function checksize($file)
 {
     $result = $_FILES["$file"]['size']/(1024*1024);
       
-    if($result > 3)
+    if($result > 1)
     {
         return FALSE;
     }

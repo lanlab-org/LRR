@@ -24,6 +24,9 @@ include 'Header.php';
     Full Name
     <input type="text" name="fullname" placeholder="Your Full Name" class="form-control" value="<?php echo $_SESSION['user_fullname']; ?>"  required="required"/>
 
+    Student ID
+    <input type="text" name="user_student_id" placeholder="Entre your Student ID" class="form-control" value="<?php echo $_SESSION['user_student_id']; ?>" required="required">
+    
     Email
     <input type="text" name="email" placeholder="Email" class="form-control" value="<?php echo $_SESSION['user_email']; ?>"  required="required" />
  
@@ -33,7 +36,7 @@ include 'Header.php';
     Confirm Password
     <input type="password" class="form-control"  name="confirmpassword" placeholder="Confirm password" required="required" />
     <br>
-    <input type="submit" class="btn btn-primary" value="Sign up">
+    <input type="submit" class="btn-primary" value="Sign up">
 <?php 
 error_reporting(E_ALL);
 if(isset($_SESSION['info_signup2'])) {
@@ -48,3 +51,17 @@ if(isset($_SESSION['info_signup2'])) {
 </div>
 </div>
 </div>
+<style>
+     /*------------------------------------------------------------------
+[ Login Button ]*/
+.btn-primary {
+            color: white;
+            border-radius: 5px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            background: rgb(75, 184, 240);
+            padding:5px 105px;
+            font-family: Poppins-Regular;
+            font-size: 23px;
+            line-height: 1.5;
+        }
+</style>
