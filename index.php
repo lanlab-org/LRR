@@ -16,12 +16,11 @@ if (isset($_SESSION["user_fullname"])) {
 <div class="row" style="width:85%;margin:auto;">
   <div class="col-md-4">
     <br><br>
-    <img src="logo_lrr.png" style="width:40%; position:relative; right:-200px; top:1px;">
+    <img src="logo.png" style="width:40%; position:relative; right:-95px; top:1px;">
     <br><br>
-    <div style="width; position:relative; right:-90px; font-family: Poppins-Regular;">
+    <div style="width:20%; position:relative; right:-90px; font-family: Poppins-Regular;">
     <h1>Lab Report Repository</h1>
     <br><br>
-
     </div>
     </div>
     <br>
