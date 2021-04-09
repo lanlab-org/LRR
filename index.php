@@ -41,7 +41,7 @@ if (isset($_SESSION["user_fullname"])) {
     <br><input type="submit" class="btn-primary" value="Login">
     </div>
     <br> <a href="recover_password.php" style="font-weight:normal;color:#2471A3font-family: Poppins-Regular;
-    font-size: 17px;">Reset my Password</a>
+    font-size: 17px;">Reset my password</a>
     <div class="text-center">
     <br><span class="txt1">Don't have an account?</span>
          <a class="txt2" href="signup.php" style="font-weight:normal">Sign Up</a>
