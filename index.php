@@ -95,7 +95,7 @@ if (isset($_SESSION["user_fullname"])) {
             border-radius: 5px;
             text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
             background: rgb(75, 184, 240);
-            padding:5px 162px;
+            padding:5px 100px;
             font-family: Poppins-Regular;
             font-size: 23px;
             line-height: 1.5;
