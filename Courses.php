@@ -127,8 +127,19 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
                     $type  = $_POST["type"];
                     $Deadline = $deadlinedate." ".$deadlinetime;
                     $date =  date("Y-m-d H:i");
+                    $targetfile="";
+                    $targetfile2="";
+                    $targetfile3="";
+                    $targetfile4="";
+                    if($_FILES['attachment1']['name']!=""){   $targetfile  = "/".$title."/".$_FILES['attachment1']['name']; }
+                    if($_FILES['attachment2']['name']!=""){   $targetfile2 = "/".$title."/".$_FILES['attachment2']['name']; }
+                    if($_FILES['attachment3']['name']!=""){   $targetfile3 = "/".$title."/".$_FILES['attachment3']['name']; }
+                    if($_FILES['attachment4']['name']!=""){   $targetfile4 = "/".$title."/".$_FILES['attachment4']['name']; }
     
-                    $sql = "UPDATE `lab_reports_table` SET `Deadline` = ('" . $Deadline . "'), `Instructions` = ('" . $instructions . "'), `Title` = ('" . $title . "'), `Marks` = ('" . $marks . "'), `Type` = ('" . $type . "') WHERE `lab_reports_table`.`Lab_Report_ID` = '$getid'";
+                    $sql = "UPDATE `lab_reports_table` SET `Deadline` = ('" . $Deadline . "'), `Instructions` = ('" . $instructions . "'), `Title` = ('" . $title . "'),
+                             `Attachment_link_1` = ('" . $targetfile . "'), `Attachment_link_2` = ('" . $targetfile2 . "'), `Attachment_link_3` = ('" . $targetfile3 . "'),
+                              `Attachment_link_4` = ('" . $targetfile4 . "'),  `Marks` = ('" . $marks . "'), `Type` = ('" . $type . "') WHERE `lab_reports_table`.`Lab_Report_ID` = '$getid'";
+
                     if ($con->query($sql) === TRUE) {
                         $_SESSION["info_Updated"]="Assignment information updated successfully.";
        
@@ -166,17 +177,20 @@ New Date/Time <br><input type="date" name="date" required=""> <input type="time"
                     Marks
                         <input type='text'  name='marks' placeholder='Marks' class='form-control' required='' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $Marks : ""; ?>">
                     Attachment 1
-                        <input type='file'  name='attachment1' placeholder='Attachment 1' class='form-control'>
+                        <input type='file'  name='attachment1' placeholder='Attachment 1' class='form-control' value="<?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $targetfile : ""; ?>">
 
                     Attachment 2
-                        <input type='file' name='attachment2' placeholder='Attachment 1' class='form-control'>
+                        <input type='file' name='attachment2' placeholder='Attachment 1' class='form-control' value=" <?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $targetfile2 : ""; ?>">
+
 
                     Attachment 3
-                        <input type='file'  name='attachment3' placeholder='Attachment 1' class='form-control' >
+                        <input type='file'  name='attachment3' placeholder='Attachment 1' class='form-control' value=" <?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $targetfile3 : ""; ?>">
+
 
 
                     Attachment 4
-                        <input type='file'  name='attachment4' placeholder='Attachment 4' class='form-control' >
+                        <input type='file'  name='attachment4' placeholder='Attachment 4' class='form-control' value=" <?php echo isset($_GET['act']) && $_GET['act']=="edit" ? $targetfile4 : ""; ?>">
+
                     <br>
 
 <?php
