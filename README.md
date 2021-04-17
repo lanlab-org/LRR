@@ -131,8 +131,9 @@ The original GitHub Repo is at https://github.com/EngMohamedNor/LabReportRepo
 
 # Contributor List
 
+*Important contributors are highlighted.*
 
-(Please put your name and student number below.)
+GitHub Account - Full Name - Student number
 
 CODEwithZAKI - Omar Mohamud Mohamed - 202025800041
 
@@ -140,10 +141,9 @@ BloudYoussef - Khayat Youssef - 202025800042
 
 TanakaMichelle - Tanaka Michelle Sandati - 201732120134
 
-WhyteAsamoah   - Yeboah Martha Asamoah   - 201732120135
+WhyteAsamoah  - Yeboah Martha Asamoah   - 201732120135
 
 xiaoyusoil - ZhengXiaoyu - 201732120110
-
 
 Benny123-cell - ZhangBin - 201732120127
 
@@ -161,7 +161,9 @@ yutengYing - YingYuteng - 201732120126
 
 Samrusike  - Samantha Rusike  - 201632120140
 
-Teecloudy  - Ashly Tafadzwa Dhani - 201632120150
+*enockkays* <enockkhondowe94@yahoo.com>
+
+*Teecloudy*  - Ashly Tafadzwa Dhani - 201632120150
 
 GuedaliaBonheurSPM - Guedalia Youma - 201925800221
 
@@ -176,3 +178,4 @@ pkkumson  - Kumson Princewill Kum - 201925800166
 Twizere  -  Twizere Pacifique  -  201925800174
 
 Nicole-Rutagengwa  - Nicole Rutagengwa  - 201925800169
+
