@@ -9,6 +9,7 @@
  */
 
 session_start();
+
 date_default_timezone_set('Asia/Shanghai');
 
 // Connect to MySQL database
@@ -862,56 +863,64 @@ if (!empty($_GET["creategroup"])) {
   
 if (!empty($_GET["groupinvite"])) {
 	   
+
     $student_id=$_GET["student_id"];
     $url=$_GET["url"];
     $courseid=$_GET["courseid"];
     $groupid=$_GET["groupid"];
-               
-    // if(($_SESSION['Group_Member4']=='0') or ($_SESSION['Group_Member3']=='0') or ($_SESSION['Group_Member2']=='0') or ($_SESSION['Group_Member']=='0')){
-    $sql="INSERT INTO `course_group_members_table`( `Course_Group_id`, `Student_ID`, `Status`) 
-                          VALUES ($groupid,$student_id,'Invited')";
+           
+    $result = mysqli_query($con,"SELECT * FROM course_group_members_table where Course_Group_id = '$groupid' and Student_ID = '$student_id'");
+    if(mysqli_num_rows($result)>0){
+        $_SESSION["info_ReMarking"]=$student_id . " has already been invited";
+        header("Location: Course.php?url=".$url);
+    }else{
+        $sql="INSERT INTO `course_group_members_table`( `Course_Group_id`, `Student_ID`, `Status`)
+                      VALUES ($groupid,$student_id,'Invited')";
+    }
+	   
+	   
     if ($con->query($sql) === TRUE) {
-
         $resultx1 = mysqli_query($con,"SELECT * FROM course_groups_table where Course_Group_id ='$groupid'");
-   
+	      
         while($row = mysqli_fetch_assoc($resultx1)) 
-        {
-            $Group_Member=$row['Group_Member']; 
-            $Group_Member4=$row['Group_Member4'];
-            $Group_Member2=$row['Group_Member2'];
-            $Group_Member3=$row['Group_Member3'];
-            $_SESSION['Group_Member4']=$Group_Member4;
-            $_SESSION['Group_Member3']=$Group_Member3;
-            $_SESSION['Group_Member2']=$Group_Member2;
-            $_SESSION['Group_Member']=$Group_Member;
-
-            if($Group_Member=='0'){ 
-                mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
-                $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-                header("Location: Course.php?url=".$url);
-            }elseif($Group_Member2=='0'){
-                mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member2` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
-                $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-                header("Location: Course.php?url=".$url);
-            }elseif($Group_Member3=='0'){
-                mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member3` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
-                $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-                header("Location: Course.php?url=".$url);
-            }elseif($Group_Member4=='0'){
-                mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member4` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
-                $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-                header("Location: Course.php?url=".$url);
-            } else {
-                $_SESSION["info_ReMarking"]= " You cant add any more members";
-                header("Location: Course.php?url=".$url);
-     
+            {
+                $Group_Member=$row['Group_Member']; 
+                $Group_Member4=$row['Group_Member4'];
+                $Group_Member2=$row['Group_Member2'];
+                $Group_Member3=$row['Group_Member3'];
+                $_SESSION['Group_Member4']=$Group_Member4;
+                $_SESSION['Group_Member3']=$Group_Member3;
+                $_SESSION['Group_Member2']=$Group_Member2;
+                $_SESSION['Group_Member']=$Group_Member;
+	   
+                if($Group_Member=='0'){ 
+                    mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
+                    $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+                    header("Location: Course.php?url=".$url);
+                }elseif($Group_Member2=='0'){
+                    mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member2` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
+                    $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+                    header("Location: Course.php?url=".$url);
+                }elseif($Group_Member3=='0'){
+                    mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member3` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
+                    $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+                    header("Location: Course.php?url=".$url);
+                }elseif($Group_Member4=='0'){
+                    mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member4` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
+                    $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+                    header("Location: Course.php?url=".$url);
+                } else {
+                    $_SESSION["info_ReMarking"]= " You cant add any more members";
+                    header("Location: Course.php?url=".$url);
+	        
+                }
             }
-        }
+        $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+        header("Location: Course.php?url=".$url); 
+    } else {
+        echo "Error: " . $sql . "<br>" . $con->error;
     }
 }
-
-
-
 
 
 #Accept deny Group Invite
