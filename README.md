@@ -57,7 +57,7 @@ http://118.25.96.118/bugzilla/describecomponents.cgi?product=Lab%20Report%20Repo
 
 -  *How assignements should be stored?*  Creating sub-directories on all student submissions course-code/semester/section-number.  (/student-number/course-code/semester/section-number/assignement-title/submission.txt)
 
--  *Feature request*. Editing the assignment title after uploading a new assignment (instructor).
+-  [SOLVED] *Feature request*. Editing the assignment title after uploading a new assignment (instructor).
 
 -  [SOLVED] A new user could not login immediately after sign up.
 
