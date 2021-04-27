@@ -9,12 +9,11 @@
  */
 
 session_start();
-
 date_default_timezone_set('Asia/Shanghai');
 
 // Connect to MySQL database
 include "get_mysql_credentials.php";
-$con = mysqli_connect("localhost",  $mysql_username, $mysql_password, "lrr");
+$con = mysqli_connect("localhost", "username", "password", "lrr");
 
 // Check connection
 if (mysqli_connect_errno())
@@ -349,14 +348,13 @@ function is_valid_file_format($file) {
  
     $allowed =  array('pdf', 'rtf', 'jpg','png', 'doc', 'docx', 'xls', 'xlsx','sql','txt','md','py','css','html',
                       'cvc','c','class','cpp','h','java','sh','swift','zip','rar','ods','xlr','bak','ico','swf');
-   
+
     $filename = $_FILES[$file]['name'];
     $ext = pathinfo($filename, PATHINFO_EXTENSION);
-    $result = in_array($ext,$allowed);
+    $result=in_array($ext,$allowed);
     return $result;
+
 }
-
-
 
 
 
@@ -400,7 +398,6 @@ function mkdirs($path)
 // ############################### #Post Assignment ##################################
 if (!empty($_POST["frm_uploadlab"])) {
         
-     
         
     $course_id=mysqli_real_escape_string($con,$_POST["course_id"]);
     $deadlinedate=$_POST["deadlinedate"];
@@ -408,20 +405,15 @@ if (!empty($_POST["frm_uploadlab"])) {
     $instructions=mysqli_real_escape_string($con,$_POST["instructions"]);
     $title=mysqli_real_escape_string($con,$_POST["title"]);
     $marks=mysqli_real_escape_string($con,$_POST["marks"]);
-    //  $url=mysqli_real_escape_string($con,$_POST["url"]);
+    //$url=mysqli_real_escape_string($con,$_POST["url"]);
     $url = $_SESSION['url']; //using real_escape_string was failing to redirect to the main page
-    $type = mysqli_real_escape_string($con, $_POST["type"]);
-         
-         
+    $type = mysqli_real_escape_string($con, $_POST["type"]);            
     $deadline = $deadlinedate." ".$deadlinetime;
     $date =  date("Y-m-d H:i");
-            
-       
-       
+                 
     // GET UPLOADED FILES
        
     $target_dir = Create_dir("Lab_Report_Assignments/".$title."/");
-
 
     $rnd=rand(10,1000);
     $rnd=""; // no more required , creating folder for each lab
@@ -430,11 +422,10 @@ if (!empty($_POST["frm_uploadlab"])) {
     $targetfile3 = $target_dir.$rnd.$_FILES['attachment3']['name'];
     $targetfile4 = $target_dir.$rnd.$_FILES['attachment4']['name'];
              
-          
+    $count=0;  
+    
 
-    $count=0;           
-           
- 
+
     if(!is_valid_file_format("attachment1") && $_FILES["attachment1"]["name"]!="")
     {
         echo "Invalid File Type for Attachment 1";
@@ -485,8 +476,9 @@ if (!empty($_POST["frm_uploadlab"])) {
     $targetfile2="";
     $targetfile3="";
     $targetfile4="";
+
       
-    if($_FILES['attachment1']['name']!=""){   $targetfile  = "/".$title."/".$_FILES['attachment1']['name']; }
+    if($_FILES['attachment1']['name']!="" ){  $targetfile  = "/".$title."/".$_FILES['attachment1']['name']; }
     if($_FILES['attachment2']['name']!=""){   $targetfile2 = "/".$title."/".$_FILES['attachment2']['name']; }
     if($_FILES['attachment3']['name']!=""){   $targetfile3 = "/".$title."/".$_FILES['attachment3']['name']; }
     if($_FILES['attachment4']['name']!=""){   $targetfile4 = "/".$title."/".$_FILES['attachment4']['name']; }
@@ -510,7 +502,6 @@ if (!empty($_POST["frm_uploadlab"])) {
 
 
 
-
 function checksize($file)
 {
     $result = $_FILES["$file"]['size']/(1024*1024);
@@ -522,20 +513,17 @@ function checksize($file)
     return TRUE;
 }
  
- 
+
  
 // ############################### Submit Assignment ##################################
 if (!empty($_POST["frm_submitlab"])) {
         
     $lab_id = mysqli_real_escape_string($con, $_POST["lab_id"]);
     $student_id = $_POST["student_id"];
-    $group_id = $_POST["group_id"];
-  
+    $group_id = $_POST["group_id"]; 
     $instructions = mysqli_real_escape_string($con, $_POST["instructions"]);
-    $title = mysqli_real_escape_string($con, $_POST["title"]);
-    
-    $url = mysqli_real_escape_string($con, $_POST["url"]);
-    
+    $title = mysqli_real_escape_string($con, $_POST["title"]);  
+    $url = mysqli_real_escape_string($con, $_POST["url"]);   
     $deadline = $deadlinedate." ".$deadlinetime;
     $date = date("Y-m-d H:i");
     
@@ -550,13 +538,16 @@ if (!empty($_POST["frm_submitlab"])) {
     $upload_folder = "Lab_Report_Submisions"; // old place for storing students' submissions
     $upload_folder = "./../../lrr_submission";
     $target_dir = mkdirs($upload_folder."/".$student_id."/".$url."/".$lab_name."/"); # url is actually course code plus academic year, e.g., CSC3122020
+  
     $targetfile  = $target_dir.$_FILES['attachment1']['name'];
+  
     $targetfile2 = $target_dir.$_FILES['attachment2']['name'];
     $targetfile3 = $target_dir.$_FILES['attachment3']['name'];
     $targetfile4 = $target_dir.$_FILES['attachment4']['name'];
           
     $count = 0;
-        
+
+
     //check zise
     if(!checksize("attachment1"))
     {
@@ -569,13 +560,12 @@ if (!empty($_POST["frm_submitlab"])) {
         return;
     }
     if(!checksize("attachment3") && $_FILES["attachment3"]["name"] != "")
-    {
+    { 
         echo "1 MB is the maximum file size allowed";
         return;
     }
 
 
-    
     if(!is_valid_file_format("attachment1"))
     {
         echo "Invalid File Type for Attachment 1";
@@ -623,7 +613,6 @@ if (!empty($_POST["frm_submitlab"])) {
         echo $_FILES['attachment4']['error'];
     }
 
-
     echo $count." File(s) uploaded";
 
     //CLEAN
@@ -631,19 +620,21 @@ if (!empty($_POST["frm_submitlab"])) {
     $targetfile2 = "";
     $targetfile3 = "";  
     $targetfile4 = "";
+    //$filena = preg_replace("/[^a-z0-9\_\.]/");  
 
-    if(strlen($_FILES['attachment1']['name']) > 2 ) { // why greater than 2???
-        $targetfile = "/".$student_id."/".$url."/".$lab_name."/".$_FILES['attachment1']['name'];
+    if(strlen($_FILES['attachment1']['name']) > 2 ) { // why greater than 2??? 
+
+        $targetfile = "/".$student_id."/".$url."/".$lab_name."/".urlencode($_FILES['attachment1']['name']);
     }
    
     if(strlen($_FILES['attachment2']['name']) > 2 ) {
-        $targetfile2 = "/".$student_id."/".$url."/".$lab_name."/".$_FILES['attachment2']['name']; }
+        $targetfile2 = "/".$student_id."/".$url."/".$lab_name."/".urlencode($_FILES['attachment2']['name']); }
  
     if(strlen($_FILES['attachment3']['name']) > 2 ) {
-        $targetfile3 = "/".$student_id."/".$url."/".$lab_name."/".$_FILES['attachment3']['name'];}
+        $targetfile3 = "/".$student_id."/".$url."/".$lab_name."/".urlencode($_FILES['attachment3']['name']);}
    
     if(strlen($_FILES['attachment4']['name']) > 2 ) {
-        $targetfile4 = "/".$student_id."/".$url."/".$lab_name."/".$_FILES['attachment4']['name'];
+        $targetfile4 = "/".$student_id."/".$url."/".$lab_name."/".urlencode($_FILES['attachment4']['name']);
     }
 
     // When $group_id is not properly initialized, use integer 0 as its value.
@@ -863,64 +854,56 @@ if (!empty($_GET["creategroup"])) {
   
 if (!empty($_GET["groupinvite"])) {
 	   
-
     $student_id=$_GET["student_id"];
     $url=$_GET["url"];
     $courseid=$_GET["courseid"];
     $groupid=$_GET["groupid"];
-           
-    $result = mysqli_query($con,"SELECT * FROM course_group_members_table where Course_Group_id = '$groupid' and Student_ID = '$student_id'");
-    if(mysqli_num_rows($result)>0){
-        $_SESSION["info_ReMarking"]=$student_id . " has already been invited";
-        header("Location: Course.php?url=".$url);
-    }else{
-        $sql="INSERT INTO `course_group_members_table`( `Course_Group_id`, `Student_ID`, `Status`)
-                      VALUES ($groupid,$student_id,'Invited')";
-    }
-	   
-	   
+               
+    // if(($_SESSION['Group_Member4']=='0') or ($_SESSION['Group_Member3']=='0') or ($_SESSION['Group_Member2']=='0') or ($_SESSION['Group_Member']=='0')){
+    $sql="INSERT INTO `course_group_members_table`( `Course_Group_id`, `Student_ID`, `Status`) 
+                          VALUES ($groupid,$student_id,'Invited')";
     if ($con->query($sql) === TRUE) {
+
         $resultx1 = mysqli_query($con,"SELECT * FROM course_groups_table where Course_Group_id ='$groupid'");
-	      
+   
         while($row = mysqli_fetch_assoc($resultx1)) 
-            {
-                $Group_Member=$row['Group_Member']; 
-                $Group_Member4=$row['Group_Member4'];
-                $Group_Member2=$row['Group_Member2'];
-                $Group_Member3=$row['Group_Member3'];
-                $_SESSION['Group_Member4']=$Group_Member4;
-                $_SESSION['Group_Member3']=$Group_Member3;
-                $_SESSION['Group_Member2']=$Group_Member2;
-                $_SESSION['Group_Member']=$Group_Member;
-	   
-                if($Group_Member=='0'){ 
-                    mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
-                    $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-                    header("Location: Course.php?url=".$url);
-                }elseif($Group_Member2=='0'){
-                    mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member2` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
-                    $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-                    header("Location: Course.php?url=".$url);
-                }elseif($Group_Member3=='0'){
-                    mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member3` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
-                    $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-                    header("Location: Course.php?url=".$url);
-                }elseif($Group_Member4=='0'){
-                    mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member4` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
-                    $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-                    header("Location: Course.php?url=".$url);
-                } else {
-                    $_SESSION["info_ReMarking"]= " You cant add any more members";
-                    header("Location: Course.php?url=".$url);
-	        
-                }
+        {
+            $Group_Member=$row['Group_Member']; 
+            $Group_Member4=$row['Group_Member4'];
+            $Group_Member2=$row['Group_Member2'];
+            $Group_Member3=$row['Group_Member3'];
+            $_SESSION['Group_Member4']=$Group_Member4;
+            $_SESSION['Group_Member3']=$Group_Member3;
+            $_SESSION['Group_Member2']=$Group_Member2;
+            $_SESSION['Group_Member']=$Group_Member;
+
+            if($Group_Member=='0'){ 
+                mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
+                $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+                header("Location: Course.php?url=".$url);
+            }elseif($Group_Member2=='0'){
+                mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member2` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
+                $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+                header("Location: Course.php?url=".$url);
+            }elseif($Group_Member3=='0'){
+                mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member3` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
+                $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+                header("Location: Course.php?url=".$url);
+            }elseif($Group_Member4=='0'){
+                mysqli_query($con,"UPDATE `course_groups_table` SET `Group_Member4` = ('" . $student_id . "') WHERE `course_groups_table`.`Course_Group_id` = '$groupid'");
+                $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
+                header("Location: Course.php?url=".$url);
+            } else {
+                $_SESSION["info_ReMarking"]= " You cant add any more members";
+                header("Location: Course.php?url=".$url);
+     
             }
-        $_SESSION["info_ReMarking"]=$student_id . " was invited to the group";
-        header("Location: Course.php?url=".$url); 
-    } else {
-        echo "Error: " . $sql . "<br>" . $con->error;
+        }
     }
 }
+
+
+
 
 
 #Accept deny Group Invite
