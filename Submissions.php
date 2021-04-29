@@ -160,19 +160,19 @@ where Lab_Report_ID=$id and lab_report_submissions.Status='Pending' order by Sub
                 $att4=$row['Attachment4'];
                 $labid=$row['Lab_Report_ID'];
                                      
-                $submitted_std=$row['Student_id'];
+                $submitter_student_number=$row['Student_id'];
                 $submitted_group=$row['Course_Group_id'];
                 $Submission_ID=$row['Submission_ID'];
-                $names=$row['Full_Name'];
+                $student_name=$row['Full_Name'];
                 $groupname=$row['Group_Name'];
                 $groupleader=$row['Group_Leader'];  
                 $student_id=$row['sub_std'];
                                 
                 if($submitted_group==0)
                 {
-                    $submitted_by= $names."(".$student_id.")";
+                    $submitted_by= $student_name."(".$student_id.")";
                 } else {
-                    $submitted_by="$names $submitted_std <i>(GROUP)</i> $groupname ";
+                    $submitted_by="$student_name ($submitter_student_number) for group $groupname ";
                 }
 
                     $base_att1 = basename($att1);
@@ -196,7 +196,7 @@ where Lab_Report_ID=$id and lab_report_submissions.Status='Pending' order by Sub
                                        
                 echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
   $title  <br> by: <b> $submitted_by </b>
-   <br> <span style='font-size:8pt'>Submitted at $posted   <button class='btn-sm btn-info' style='margin-left:50px;' onclick='mark($Submission_ID,\"$title\",$total)'>  Mark Submission</button><br> Attachments : $full_link </span>  
+   <br> <span style='font-size:8pt'>Submitted : $posted   <button class='btn-sm btn-info' style='margin-left:50px;' onclick='mark($Submission_ID,\"$title\",$total)'>  Mark Submission</button><br> Attachments : $full_link </span>  
 </div></k>";
                 
             }
@@ -256,17 +256,17 @@ where Lab_Report_ID=$id and lab_report_submissions.Status='Marked'  Order by lab
                 $att4=$row['Attachment4'];
                 $labid=$row['Lab_Report_ID'];
                                      
-                $submitted_std=$row['Student_id'];
+                $submitter_student_number=$row['Student_id'];
                 $submitted_group=$row['Course_Group_id'];
                 $Submission_ID=$row['Submission_ID'];
-                $names=$row['Full_Name'];
+                $student_name=$row['Full_Name'];
                 $student_id=$row['sub_std'];
                 $Visibility=$row['Visibility'];
                 $notes=$row['Notes'];
                                 
                 if($submitted_group==0)
                 {
-                    $submitted_by= $names."(".$student_id.")";
+                    $submitted_by= $student_name."(".$student_id.")";
                 } else {
                     $submitted_by="<i>(GROUP)</i> Group X " ;
                 }
@@ -352,16 +352,16 @@ where Lab_Report_ID=$id and lab_report_submissions.Status='Remarking'");
                                      
                 $remarking_reason=$row['Remarking_Reason'];
 
-                $submitted_std=$row['Student_id'];
+                $submitter_student_number=$row['Student_id'];
                 $submitted_group=$row['Course_Group_id'];
                 $Submission_ID=$row['Submission_ID'];
-                $names=$row['Full_Name'];
+                $student_name=$row['Full_Name'];
                 $student_id=$row['sub_std'];
                 $gname=$row['Group_Name '];
                                 
                 if($submitted_group==0)
                 {
-                    $submitted_by= $names."(".$student_id.")";
+                    $submitted_by= $student_name."(".$student_id.")";
                 } else {
                     $submitted_by="<i>(GROUP)</i> $gname" ;
                 }
