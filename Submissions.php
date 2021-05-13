@@ -29,16 +29,18 @@ if(!empty($_GET["total"]))
 }
        
   
-$resultx1 = mysqli_query($con,"SELECT `Lab_Report_ID`,Title, `Course_ID`, `Posted_Date`, `Deadline`, `Marks`, `Type` FROM `lab_reports_table` WHERE Lab_Report_ID=$id");
+$resultx1 = mysqli_query($con,"SELECT `Lab_Report_ID`,Title, lab_reports_table.Course_ID, `Posted_Date`, `Deadline`, `Marks`, `Type` , courses_table.URL FROM `lab_reports_table` INNER JOIN courses_table ON courses_table.Course_ID=lab_reports_table.Course_ID WHERE Lab_Report_ID=$id");
 while($row = mysqli_fetch_assoc($resultx1)) {
     $Report_Type = $row['Type'];
     $c_id = $row['Course_ID'];
     $Report_Title = $row['Title'];
+    $url = $row['URL'];
 }  
-  
+
+
  
   
-echo "<div class='alert' style='margin-left:20px;border-bottom:2px solid #1D91EF;'> <a href='#'>
+echo "<div class='alert' style='margin-left:20px;border-bottom:2px solid #1D91EF;'> <a href='Courses.php?course=$url'>
  $header 
 </a></div>
  ";
