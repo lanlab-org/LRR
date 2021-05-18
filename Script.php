@@ -132,7 +132,7 @@ if (!empty($_POST["frm_signup_2"])) {
     if ($con->query($sql) === TRUE) {
         header("Location: Courses.php");    
     } else {
-        echo "Something really bad (SQL insertion error) happened during sign up.";
+        echo "Something really bad (SQL insertion error) happend during sign up.";
     }
 }
 
