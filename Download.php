@@ -23,7 +23,7 @@ $time = time();
 if ( (isset($_SESSION["user_student_id"]) && strpos($file, $_SESSION["user_student_id"])) || $_SESSION['user_type'] == "Lecturer" || $_SESSION['user_type'] == "TA") {
     // 发送文件头部
     header("Content-type: $type");
-    header("Content-Disposition: attachment;filename=$filename");
+    header('Content-Disposition: attachment;filename="'.urldecode($filename).'"');
     header("Content-Transfer-Encoding: binary");
     header('Pragma: no-cache');
     header('Expires: 0');
