@@ -99,6 +99,119 @@ if( $_SESSION['user_type'] == "Student")
     <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#menu4">Marked</a>
     </li>
+    
+    <!----------Delete Course----------->
+
+    <li style="padding-left:15em">
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+                                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"crossorigin="anonymous">
+    </head>
+
+<body>
+
+<div class="modal fade" id="delcourse">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Please confirm!</h2>
+                    <button type="button" class="close red" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure about deleting this course? This action can not be reversed!</p>
+                </div>
+                    <div class="modal-footer"> 
+                    <form method="POST" action="">
+                        <button type="button" class="btn action-button shadow animate blue" data-dismiss="modal">Cancel</button>
+                        <input type="submit" name="submit" class="action-button shadow animate red" value="Delete Course" />
+                    </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn action-button shadow animate red" data-toggle="modal" data-target="#delcourse">Delete Course</button>
+            </div>
+        </div>
+    </div>
+    
+ <?php
+// Connect to MySQL database
+$con = mysqli_connect("localhost","username","password","lrr");
+
+// Check connection
+if (mysqli_connect_errno())
+{
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+if(isset($_POST['submit'])){
+    header("Location: Courses.php");
+    $result = mysqli_query($con, "DELETE FROM course_students_table WHERE Course_ID='$course_id'");
+    
+}
+
+ ?>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+  <style>
+
+    /*--------------------[ Delete Course Button ]*/
+
+.animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+a:hover { text-decoration: none; 
+}
+.action-button {
+	position: relative;
+	padding: 5px 15px;
+    margin: 0px 5px 5px 0px;
+    float: left;
+	border-radius: 5px;
+	font-family: 'Pacifico', cursive;
+	font-size: 18px;
+	color: #FFF;
+	text-decoration: none;	
+}
+
+.red
+{
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+}
+.blue
+{
+	background-color: #4d4dff;
+	border-bottom: 5px solid #4d4dff;
+	text-shadow: 0px -2px #4d4dff;
+}
+.action-button:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+</style>
+
+</body>
+</html>
+</li>
     </ul>
     
     <div class="tab-content">
