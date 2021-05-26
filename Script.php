@@ -427,7 +427,7 @@ if (!empty($_POST["frm_uploadlab"])) {
          
          
     $deadline = $deadlinedate." ".$deadlinetime;
-    $date =  date("Y-m-d H:i");
+    $date =  date("Y-m-d H:i:s");
             
        
        
@@ -550,7 +550,7 @@ if (!empty($_POST["frm_submitlab"])) {
     $url = mysqli_real_escape_string($con, $_POST["url"]);
     
     $deadline = $deadlinedate." ".$deadlinetime;
-    $date = date("Y-m-d H:i");
+    $date = date("Y-m-d H:i:s");
     
     // GET UPLOADED FILES
     $labName = mysqli_query($con,"SELECT * FROM `lab_reports_table` WHERE Lab_Report_ID=$lab_id");
@@ -742,7 +742,7 @@ if (!empty($_GET["savemarks"])) {
         echo " Marks could not be greater than total";
         return;
     }
-    $date=  date("Y-m-d H:i");
+    $date=  date("Y-m-d H:i:s");
     $feedback="<br>@$date : ".$feedback;
         
     $sql="UPDATE `lab_report_submissions` SET `Marks`='$marks',`Status`='$status',"
