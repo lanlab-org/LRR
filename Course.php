@@ -139,7 +139,7 @@ if( $_SESSION['user_type'] == "Student")
  <?php
 
 // Connect to MySQL database
-$con = mysqli_connect("localhost","username","password","lrr");
+$con = mysqli_connect("localhost",  $mysql_username, $mysql_password, "lrr");
 
 // Check connection
 if (mysqli_connect_errno())
