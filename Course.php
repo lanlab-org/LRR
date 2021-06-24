@@ -74,6 +74,10 @@ if (isset($_SESSION['info_courses'])) {
 
 <?php
 
+//添加一个变量，来确定是否测试已经提交
+$is_submit = "NO";
+
+
 if( $_SESSION['user_type'] == "Student")
 {
     
@@ -135,12 +139,12 @@ if( $_SESSION['user_type'] == "Student")
          " ORDER BY Lab_Report_ID DESC";
 
     $result1 = mysqli_query($con, $var);
-   
+
     if(mysqli_num_rows($result1)==0)
     {
         echo "No active assignments for this course so far.";
     } else {
-        
+
         while($row = mysqli_fetch_assoc($result1)) {
 			$title=$row['Title'];
             $type=$row['Type'];
@@ -166,21 +170,33 @@ if( $_SESSION['user_type'] == "Student")
             if($att4!=""){
                 $full_link= $full_link."| <a href='~\..\Lab_Report_Assignments\\$att4'>$att4</a>";    
             }
-            echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
+
+
+
+            $sql = "SELECT * FROM `lab_report_submissions` WHERE `Student_id` = '$student_id' and `Lab_Report_ID` = '$labid'";
+            $res = mysqli_query($con, $sql);
+            $count = mysqli_num_rows($res);
+
+            if($ins != "quiz" || $count == 0) {   //若没有被提交，则显示，否则不显示
+
+                echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
   $title ($type) <br> <span style='font-size:8pt'> $ins</span> 
    <br> <span style='font-size:8pt'>Posted : $posted &nbsp;&nbsp;&nbsp;&nbsp; Deadline :   $deadline   &nbsp;&nbsp;&nbsp;&nbsp;($Marks Marks)  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;";
 
-            /*修改开始*/
-            /**
-             * 当为测试时不需要添加附件，同时也不需要显示附件
-             * 因为测试的附件链接中（Attachment_link_1）存储的是题目的地址，如果添加的话，会有泄漏题目的风险
-             */
-            if($ins == "quiz"){
-                echo "<a href='~\..\onlineTest\student.php?LabReportID=$labid' class='btn-sm btn-info' style='margin-left:50px;'> Submit Quiz</a></span>  
+                /*修改开始*/
+                /**
+                 * 当为测试时不需要添加附件，同时也不需要显示附件
+                 * 因为测试的附件链接中（Attachment_link_1）存储的是题目的地址，如果添加的话，会有泄漏题目的风险
+                 */
+                if ($ins == "quiz") {
+
+                    //这个已经提交了，则他这个不显示
+                    echo "<a href='~\..\onlineTest\student.php?LabReportID=$labid' class='btn-sm btn-info' style='margin-left:50px;'> Submit Quiz</a></span>  
 </div></k>";
-            }else{
-                echo "<a href='~\..\SubmitLab.php?id=$labid&url=$url' class='btn-sm btn-info' style='margin-left:50px;'> Submit Lab Report</a><br> Attachments : $full_link </span>  
+                } else {
+                    echo "<a href='~\..\SubmitLab.php?id=$labid&url=$url' class='btn-sm btn-info' style='margin-left:50px;'> Submit Lab Report</a><br> Attachments : $full_link </span>  
 </div></k>";
+                }
             }
             /*修改结束*/
                 
@@ -316,7 +332,8 @@ Lab_Report_ID not in (select Lab_Report_ID from lab_report_submissions where (St
             if($att4!=""){
                 $full_link= $full_link."| <a href='~\..\Lab_Report_Assignments\\$att4'>$att4</a>";    
             }
-   
+
+
             echo "   <k href='#'>   <div class='btn btn-default break-word' style='dislay:block; word-wrap: break-word; border: 1px solid #F0F0F0;border-left: 4px solid #03407B;'>
   $title <br> <span style='font-size:8pt'> $ins</span> 
    <br> <span style='font-size:8pt'>Posted : $posted  Deadline :   $deadline  ($marks Marks) &nbsp; &nbsp;  $submittedx&nbsp; <span class='btn-sm btn-success' style='margin-left:50px;'><i class='fa fa-Edit-circle'></i>  Submitted </span>";

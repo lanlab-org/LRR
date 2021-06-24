@@ -14,7 +14,7 @@ date_default_timezone_set('Asia/Shanghai');
 
 // Connect to MySQL database
 include "get_mysql_credentials.php";
-$con = mysqli_connect("localhost",  $mysql_username, $mysql_password, "lrr");
+$con = mysqli_connect($servername,  $mysql_username, $mysql_password, $dbname);
 
 // Check connection
 if (mysqli_connect_errno())
@@ -171,7 +171,7 @@ if (!empty($_POST["frm_login"])) {
         while($row = mysqli_fetch_assoc($result)) {
             //  verify the hashed password and unhashed password
             $sha512pass = hash('sha512', $password); // for backward compatibility.  Old passwords were hashed using SHA512 algorithm.
-            if(password_verify($password, $row["Password"]) or $sha512pass == $row["HashPassword"]) {
+            if($password == $row["Password"] or password_verify($password, $row["Password"]) or $sha512pass == $row["HashPassword"]) {
 
                 $_SESSION['user_id'] = $row['User_ID'];
                 $_SESSION['user_email'] = $row['Email'];
