@@ -1,0 +1,4 @@
+#22号第二次测试
+          student.no	                  student.name	     score
+        201825800050	                       Mohamed	         0
+        201825800054	                El-mehdi Houzi	         0

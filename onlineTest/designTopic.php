@@ -168,9 +168,10 @@
     <div class="div_all_top">
         <div class="div_all_title">在线考试系统</div>
       	<div class="div_all_ke" style="text-align: center">
+            <!--<a style="text-decoration: none;cursor: pointer;" href="releaseTest.php"><span style="margin-left:60px;border: 1px solid;border-radius: 5px">BACK</span></a>-->
             <span>请选择要添加的题目类型</span>
 
-            <a style="text-decoration: none;cursor: pointer;" href="releaseTest.php"><span style="margin-left:60px;border: 1px solid;border-radius: 5px">BACK</span></a>
+
 
         </div>
 		<div class="div_all_ke">
@@ -201,10 +202,7 @@
                         <img src="./img/sub.png" alt="删除" style="margin-left: 5%;width: 20px;height: 20px;" onClick="Delete(1);answer(1)"/>
                     </h4>
 					<span id="xuanxiang1">
-<!--                    <div><input type="radio" value="A" name="singleChoice" id="input1_1" onClick="answer(1)"/><label>选项A：</label><input type="text" name="optionA" size="40"/></div>-->
-<!--                    <div><input type="radio" value="B" name="singleChoice" id="input1_2" onClick="answer(1)"/><label>选项B：</label><input type="text" name="optionB" size="40"/></div>-->
-<!--                    <div><input type="radio" value="C" name="singleChoice" id="input1_3" onClick="answer(1)"/><label>选项C：</label><input type="text" name="optionC" size="40"/></div>-->
-<!--                    <div><input type="radio" value="D" name="singleChoice" id="input1_4" onClick="answer(1)"/><label>选项D：</label><input type="text" size="40"/></div>-->
+
                     </span>
 					<h4 style="color: #FF0004">正确答案：<span id="answer1"></span></h4>
 				</div>

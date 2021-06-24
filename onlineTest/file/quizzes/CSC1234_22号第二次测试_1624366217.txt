@@ -1,0 +1,6 @@
+quizName:22号第二次测试	
+quizTime:5	
+totalPoint:2	
+	
+[SINGLE]	
+title:1.测试一下A:2B:3score:2answer:A	

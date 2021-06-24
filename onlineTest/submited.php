@@ -20,7 +20,7 @@ if(!session_id())
 // Connect to MySQL database
 include "../get_mysql_credentials.php";
 
-$conn = new mysqli("localhost",$mysql_username,$mysql_password,"lrr");
+$conn = new mysqli($servername,$mysql_username,$mysql_password,$dbname);
 if($conn->connect_error){
     die("连接失败：".$conn->connect_error);
 }
@@ -158,15 +158,11 @@ if ($conn->query($sqlInsert) === TRUE) {
 }
 
 //查询测试的成绩单的txt文件保存路径
-//echo "<br>",$labReportID;
 $sqlSelect = "SELECT * from `lab_reports_table` where `Lab_Report_ID` = '$labReportID'";
 $result = $conn->query($sqlSelect);
 if($result->num_rows > 0){
     while ($row = $result->fetch_assoc()){
         $quizResultPath = $row['Attachment_link_2'];       //Attachment_link_2保存成绩结果
-//        echo "<br>";
-//        echo $quizResultPath;
-//        echo "<br>";
     }
 }
 
@@ -178,7 +174,7 @@ $file = fopen($quizResultPath,"w");     //在打开写文件
 //以"\n"为分割符
 $quizResultArr = explode("\n",$quizResult);
 //print_r($quizResultArr);
-$studentName = isset($_SESSION['user_fullname'])?$_SESSION['user_fullname']:"Mohamed";
+$studentName = isset($_SESSION['user_fullname'])?$_SESSION['user_fullname']:"null";
 //echo "<br>",$studentID,"---",$studentName,"<br>";
 foreach ($quizResultArr as $value){
     //trim($value);
@@ -186,10 +182,7 @@ foreach ($quizResultArr as $value){
 
         if(strstr($value,$studentID) != FALSE and strstr($value,$studentName) != FALSE ){
             $stuInfo = array_unique(explode("\t",$value));     //将所有的空格元素进行合并
-            //print_r($stuInfo);
-            //第一个为学号，第二个为名称
-            //$stuInfo[count($stuInfo)-1] = $achievement;     //更新学生的成绩
-            //break;  //结束循环
+
             //进行数据写入
             $len = fwrite($file,sprintf("%20s\t",$stuInfo[0]).sprintf("%30s\t",$stuInfo[1]).sprintf("%10d\n",$achievement));
         }else{
@@ -225,13 +218,13 @@ unset($_SESSION['LabReportID']);
             if(x >= 0){
                 document.getElementById("sp").innerHTML=x + "秒后自动返回";  //每次设置的x的值都不一样了。
             }else{
-                location.href='~\..\Courses.php';    //应该返回课程主页
+                location.href='../Courses.php';    //应该返回课程主页
             }
         }
     </script>
 
 
-    <a href="~\..\Courses.php">点击返回</a>
+    <a href="../Courses.php">点击返回</a>
     <br><br>
     <span id="sp">5秒后自动返回</span>
 </body>

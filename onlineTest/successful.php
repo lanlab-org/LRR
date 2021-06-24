@@ -106,7 +106,7 @@ if($file != null){
 //将文件夹名称，数据，插入数据库中
 date_default_timezone_set('Asia/Shanghai');
 
-$conn = new mysqli("localhost",$mysql_username,$mysql_password,"lrr");
+$conn = new mysqli($servername,$mysql_username,$mysql_password,$dbname);
 if($conn->connect_error){
     die("连接失败：".$conn->connect_error);
 }
@@ -177,7 +177,7 @@ $conn->close();
 unset($_SESSION['Single']);
 unset($_SESSION['Mul']);
 unset($_SESSION['Fill']);
-
+unset($_SESSION['score']);
 ?>
 </body>
 </html>

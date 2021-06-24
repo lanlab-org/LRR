@@ -12,7 +12,7 @@
             session_start();
 
         // Connect to MySQL database
-        $conn = new mysqli("localhost",$mysql_username,$mysql_password,"lrr");
+        $conn = new mysqli($servername,$mysql_username,$mysql_password,$dbname);
         if($conn->connect_error){
             die("连接失败：".$conn->connect_error);
         }
@@ -22,8 +22,10 @@
 
         $studentID = isset($_SESSION['user_student_id'])?$_SESSION['user_student_id']:"-1";
         //echo $labReportID,"--",$studentID;
-        if($labReportID == "-1" || $studentID == "-1"){
+        if($studentID == "-1"){
             die("<a href='../index.php'>点击重新登录</a><br><br>你的信息已过期");
+        }else if($labReportID == "-1"){
+            die("<a href='../Courses.php'>点击返回</a><br><br>没有任何可提交的测试");
         }
 
         //如果这个报道不存在则直接提示返回
@@ -68,54 +70,60 @@
 
         //将读取到的文件内容存入数组中——数组每个单元存储的是一个问题的选项，标题和答案
         $arrQuiz = explode("\t\n",$quizContents);
-        $singList = array(null);
+        $singleList = array(null);
         $mulList = array(null);
         $fillList = array(null);
+
         //将元素进行分割，然后存入对应的题型的数组中
-        for($i = 0;$i < count($arrQuiz);$i ++) {
+        $Qlength = count($arrQuiz);
+        for($i = 0;$i < $Qlength;$i ++) {
             $value = $arrQuiz[$i];  //获取当前元素
 
-            if(strpos($value,"quizTime:") === 0){
+            if(strlen(strstr($value,"quizTime:")) != 0){
                 $str = trim(str_replace("quizTime:","",$value));
                 $quizTime = intval($str);   //考试时间
 
-            }elseif (strpos($value,"totalPoint:") === 0){
+            }elseif (strlen(strstr($value,"totalPoint:")) != 0){
                 $str = trim(str_replace("totalPoint:","",$value));
                 $totalPoint = intval($str);     //考试总分数
-            }elseif(strpos($value,"[SINGLE]") === 0){
-                //开始做单选和多选了
-                $i++;   //$i开始读取数组中的数据
-                $j = 1;
-                do{
-                    $value = $arrQuiz[$i++];
-                    //如果有title证明匹配到了问题
-                    if(strpos($value,"title:") === 0){
-                        //将问题分割后，存入数组中
-                        $singList[$j++] = explode("\r",$value);
-                    }
-                }while(!(strpos($arrQuiz[$i],"[MUL]") === false));      //当他的下一个不是[MUL]的时候继续执行
+            }else{
+                if(strlen(strstr($value,"[SINGLE]")) > 0){
 
-                //开始做多选题了
-                $i++;
-                $j = 1;
-                do{
-                    $value = $arrQuiz[$i++];
-                    //如果有title证明匹配到了问题
-                    if(strpos($value,"title:") === 0){
-                        //将问题分割后，存入数组中
-                        $mulList[$j++] = explode("\r",$value);
-                    }
-                }while(!(strpos($arrQuiz[$i],"[FILL]") === 0));     //当他的下一个不是[FILL]的时候继续执行
+                    $i++;   //$i开始读取数组中的数据
+                    $j = 1;
+                    while($i < $Qlength && $arrQuiz[$i] != null && !strlen(strstr($arrQuiz[$i],"[MUL]")) > 0){
+                        $value = $arrQuiz[$i++];
+                        //如果有title证明匹配到了问题
+                        if(strlen(strstr($value,"title:")) > 0){
+                            //将问题分割后，存入数组中
+                            $singleList[$j++] = explode("\r",$value);
+                        }
+                    }      //当他的下一个不是[MUL]的时候继续执行
 
-                //将填空题的数据填充到集合中
-                $i++;
-                $j = 1;
-                while($i < count($arrQuiz)){
-                    $value = $arrQuiz[$i++];
-                    //如果有title证明匹配到了问题
-                    if(strpos($value,"title:") === 0){
-                        //将问题分割后，存入数组中
-                        $fillList[$j++] = explode("\r",$value);
+                }elseif(strlen(strstr($value,"[MUL]")) > 0){
+                    //开始做多选题了
+                    $i++;
+                    $j = 1;
+                    while($i < $Qlength && $arrQuiz[$i] != null && !strlen(strstr($arrQuiz[$i],"[FILL]")) > 0){
+                        $value = $arrQuiz[$i++];
+                        //如果有title证明匹配到了问题
+                        if(strlen(strstr($value,"title:")) > 0){
+                            //将问题分割后，存入数组中
+                            $mulList[$j++] = explode("\r",$value);
+                        }
+                    }     //当他的下一个不是[FILL]的时候继续执行
+
+                }elseif (strlen(strstr($value,"[FILL]")) > 0){
+                    //将填空题的数据填充到集合中
+                    $i++;
+                    $j = 1;
+                    while($i < $Qlength && $arrQuiz[$i] != null){
+                        $value = $arrQuiz[$i++];
+                        //如果有title证明匹配到了问题
+                        if(strlen(strstr($value,"title:")) > 0){
+                            //将问题分割后，存入数组中
+                            $fillList[$j++] = explode("\r",$value);
+                        }
                     }
                 }
             }
@@ -126,19 +134,6 @@
 <script type="text/javascript">
 	function Submit(){
 		var result=window.confirm("是否确认提交？");
-		/*if(r==true){
-			var i=1;
-			var a='answer'+i;
-			while(window.document.getElementById(a)!=null){
-				var a='answer'+i;
-				window.document.getElementById(a).style.display="block";
-				i+=1;
-			}
-		}
-		var textarea = document.getElementsByTagName("textarea");
-		for(var i = 0;i<textarea.length;i++){
-			textarea[i].readOnly=true;
-		}*/
         return result;
 	}
 
@@ -164,7 +159,7 @@
             }
         }else{
             //考试结束，自动提交试卷
-            //location.href='submited.php';
+            location.href='submited.php';
         }
     }
 </script>
@@ -210,8 +205,8 @@
 
                 <?php
 
-                    for($i = 1;$i < count($singList);$i++){
-                        $option = $singList[$i];    //options也是个一维数组
+                    for($i = 1;$i < count($singleList);$i++){
+                        $option = $singleList[$i];    //options也是个一维数组
 
                         $quizTitle = str_replace("title:","",$option[0]);
                         echo "<li><div class='div_radio'><h4><a name='selected$i'>$quizTitle</a></h4>";  //得到标题
@@ -226,32 +221,11 @@
                         $answerValue = trim(str_replace("answer:","",$option[$j]));
                         echo "<input type='hidden' name='$score' value='$scoreValue'>";
                         echo "<input type='hidden' name='$answer' value='$answerValue'>";
-                        /*$_POST[$score] = trim(str_replace("score:","",$option[$j++]));
-                        $_POST[$answer] = trim(str_replace("answer:","",$option[$j]));*/   //将正确答案保存到post请求头中方便后面进行评分
+
                         echo "</div></li>";
                     }
                 ?>
 
-			<!--<li>
-			<div class="div_radio">
-			  <h4><a name="selected1">单选题第一题</a></h4>
-			  	<div><input type="radio" value="A" name="danxuan1"/><span>选项A</span></div>
-				<div><input type="radio" value="B" name="danxuan1"/><span>选项B</span></div>
-				<div><input type="radio" value="C" name="danxuan1"/><span>选项C</span></div>
-				<div><input type="radio" value="D" name="danxuan1"/><span>选项D</span></div>
-			  <h4 style="color: #FF0004">正确答案：<a id="answer1" style="display: none">A</a></h4>
-			</div>
-			</li>
-			<li>
-			<div class="div_radio">
-			  <h4><a name="selected2">单选题第二题</a></h4>
-			  	<div><input type="radio" value="A" name="danxuan2"/><span>选项A</span></div>
-				<div><input type="radio" value="B" name="danxuan2"/><span>选项B</span></div>
-				<div><input type="radio" value="C" name="danxuan2"/><span>选项C</span></div>
-				<div><input type="radio" value="D" name="danxuan2"/><span>选项D</span></div>
-			  <h4 style="color: #FF0004" >正确答案：<a id="answer2" style="display: none">A</a></h4>
-			</div>
-			</li>-->
 			</ul>
         </div>
         <div style="margin-top:20px;background-color: #999999;height: 50px;width: 80%;margin-left: 10%;line-height: 50px;font-weight: bold;">
@@ -278,21 +252,11 @@
                     $answerValue = trim(str_replace("answer:","",$option[$j]));
                     echo "<input type='hidden' name='$score' value='$scoreValue'>";
                     echo "<input type='hidden' name='$answer' value='$answerValue'>";
-                    /*$_POST[$score] = trim(str_replace("score:","",$option[$j++]));
-                    $_POST[$answer] = trim(str_replace("answer:","",$option[$j]));*/  //将答案保存到post请求头中方便后面进行评分
+
                     echo "</div></li>";
                 }
                 ?>
-			<!--<li>
-			<div class="div_radio">
-			  <h4><a name="more1">多选题第一题</a></h4>
-			  	<div><input type="checkbox" value="A" name="duoxuan1"/><span>选项A</span></div>
-				<div><input type="checkbox" value="B" name="duoxuan1"/><span>选项B</span></div>
-				<div><input type="checkbox" value="C" name="duoxuan1"/><span>选项C</span></div>
-				<div><input type="checkbox" value="D" name="duoxuan1"/><span>选项D</span></div>
-			  <h4 style="color: #FF0004" >正确答案：<a id="answer3" style="display: none">A B</a></h4>
-			</div>
-			</li>-->
+
 			</ul>
         </div>
         <!--填空题-->
@@ -316,18 +280,11 @@
                     $answerValue = trim(str_replace("answer:","",$option[2]));
                     echo "<input type='hidden' name='$score' value='$scoreValue'>";
                     echo "<input type='hidden' name='$answer' value='$answerValue'>";
-                    /*$_POST[$score] = trim(str_replace("score:","",$option[1]));
-                    $_POST[$answer] = trim(str_replace("answer:","",$option[2]));*/   //将答案保存到post请求头中中方便后面进行评分
+
                     echo "</div></li>";
                 }
                 ?>
-			<!--<li>
-			<div class="div_input_text_area">
-				<h4><a name="input1">填空题第一题</a></h4>
-				<div><textarea placeholder="请输入您的答案……" class="text_area" name="tiankong1"></textarea></div>
-				<h4 style="color: #FF0004" >正确答案：<a id="answer4" style="display: none">标准答案</a></h4>
-			</div>
-			</li>-->
+
 			</ul>
         </div>
     </div>

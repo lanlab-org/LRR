@@ -56,7 +56,7 @@ if(!session_id())
         // }
         return res;
 	}
-	function Delete(id,keyName,itemIndex){
+	function Delete(id,keyName,itemIndex,score){
 	    alert(id+"  " + keyName);
         //发送ajax请求对应的session内容
         if (window.XMLHttpRequest)
@@ -71,15 +71,17 @@ if(!session_id())
         {
             if (xmlhttp.readyState==4 && xmlhttp.status==200)
             {
+                var scoreObj = document.getElementById("score");
+                scoreObj.value = parseInt(scoreObj.value) - parseInt(score);
+
                 //删除对应的选项内容
-                alert(xmlhttp.responseText);
                 window.document.getElementById(id).parentNode.removeChild(window.document.getElementById(id));
             }
         }
 
         xmlhttp.open("POST","LocalRefresh.php",true);
         xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        var data = "key=" + keyName+"&itemIndex="+itemIndex;
+        var data = "key=" + keyName+"&itemIndex="+itemIndex + "&rmscore=" + score;
         xmlhttp.send(data);
 
 	}
@@ -104,17 +106,17 @@ if(!session_id())
     <div class="div_all_top">
         <div class="div_all_title">在线考试系统</div>
       	<div class="div_all_ke">
-            <span style="margin-left: 10%">考试名称：<input type="text" class="test_name" name="quizname" required/></span>
+            <span style="margin-left:50px;border: 1px solid;border-radius: 5px"><a style="text-decoration: none;cursor: pointer;" href="../Courses.php">课程主页</a></span>
+
+            <span style="margin-left: 5%">考试名称：<input type="text" class="test_name" name="quizname" required/></span>
             <span style="margin-left: 30px;">时间：<input type="number" class="test_time" style="width: 100px;" name="quiztime" required/>分钟</span>
             <span style="margin-left: 30px;">截至时间：<input type="datetime-local" class="test_time" name="deadTime" required/></span>
             <!--总分随着加入的题目自动变化-->
-            <span style="margin-left:20px;color: #d43c3c;">总分：<input type="number" class="test_time" style="width: 50px;" required name="totalpoints" value="<?php
+            <span style="margin-left:20px;color: #d43c3c;">总分：<input type="number" id="score" class="test_time" style="width: 50px;" required name="totalpoints" value="<?php
                 $score = isset($_SESSION['score'])?intval($_SESSION['score']):0;
                 $score += intval(isset($_POST['score'])?$_POST['score']:0);  //得到分数
                 $_SESSION['score'] = $score;
-                echo $score ?>" readonly></span>
-
-            <a style="text-decoration: none;cursor: pointer;" href="../Courses.php"><span style="margin-left:50px;border: 1px solid;border-radius: 5px">HOME</span></a>
+                echo $score ?>" readonly/></span>
 
         </div>
         <div class="div_all_ke">
@@ -130,7 +132,7 @@ if(!session_id())
 
                         /*$mysql_username = "root";
                         $mysql_password = "root";*/
-                        $conn = new mysqli("localhost",$mysql_username,$mysql_password,"lrr");
+                        $conn = new mysqli($servername,$mysql_username,$mysql_password,$dbname);
                         if($conn->connect_error){
                             die("连接失败：".$conn->connect_error);
                         }
@@ -151,11 +153,11 @@ if(!session_id())
                 </span>
             </span>
             <span style="display: inline-block;" >
-                submitType:
-                <span style="border: 1px solid;border-radius: 5px;cursor: pointer;">
-                    <input type='radio' name='subType' checked style="cursor: pointer;" value='Individual' required=''> Invidual
-                    <input type='radio' name='subType' style="cursor: pointer;" value='Group' required=''> Group
-                </span>
+                作业形式:
+                    <select name="subType">
+                        <option value="Individual">个人</option>
+                        <option value="Group">小组</option>
+                    </select>
             </span>
 
 			<a href="designTopic.php" style="text-decoration: none"><span class="div_span_submit" style="margin-left: 5%">添加题目</span></a>
@@ -186,9 +188,10 @@ if(!session_id())
                                 //将session中的所有选项全部输出到浏览器
                                 echo "<li id='qu1_$i'><div class='div_radio'>";
                                 //拼凑函数
+                                $singScore =$quizObj->getScore();
                                 echo "<h4><a name='selected1'>";
                                 echo $quizObj->getTitle();
-                                echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu1_$i','Single','$i')\"></h4>";
+                                echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu1_$i','Single','$i','$singScore')\"></h4>";
                                 //拼凑选项
                                 $optionList = $quizObj->getOptionList();
                                 for($j = 1;$j <= count($optionList);$j++){
@@ -217,10 +220,11 @@ if(!session_id())
                             //将本次传递过来的值添加到页面并保存到session中
                             $i = count($quizList);  //因为按照下标从0开始算的
                             echo "<li id='qu1_$i'><div class='div_radio'>";
+                            $singScore = isset($_POST['score'])?$_POST['score']:0;
                             //拼凑函数
                             echo "<h4><a name='selected1'>";
                             echo isset($_POST['singleChoicetitle'])?$_POST['singleChoicetitle']:"";
-                            echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu1_$i','Single','$i')\"></h4>";
+                            echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu1_$i','Single','$i','$singScore')\"></h4>";
 
                             //拼凑选项
                             $index = 1;
@@ -260,26 +264,7 @@ if(!session_id())
                     }
 
                 ?>
-			<!--<li id="qu1_1">
-                <div class="div_radio">
-                  <h4><a name="selected1">单选题第一题</a><img src="./img/delete.png" alt="删除" style="margin-left: 80%;width: 30px;height: 30px;" onClick="Delete('qu1_1')"></h4>
-                    <div><input type="radio" value="A" name="danxuan1"/><span>选项A</span></div>
-                    <div><input type="radio" value="B" name="danxuan1"/><span>选项B</span></div>
-                    <div><input type="radio" value="C" name="danxuan1"/><span>选项C</span></div>
-                    <div><input type="radio" value="D" name="danxuan1"/><span>选项D</span></div>
-                  <h4 style="color: #FF0004">正确答案：<a id="answer1">A</a></h4>
-                </div>
-			</li>
-			<li id="qu1_2">
-                <div class="div_radio">
-                  <h4><a name="selected1">单选题第二题</a><img src="./img/delete.png" alt="删除" style="margin-left: 80%;width: 30px;height: 30px;" onClick="Delete('qu1_2')"></h4>
-                    <div><input type="radio" value="A" name="danxuan1"/><span>选项A</span></div>
-                    <div><input type="radio" value="B" name="danxuan1"/><span>选项B</span></div>
-                    <div><input type="radio" value="C" name="danxuan1"/><span>选项C</span></div>
-                    <div><input type="radio" value="D" name="danxuan1"/><span>选项D</span></div>
-                  <h4 style="color: #FF0004">正确答案：<a id="answer2">A</a></h4>
-                </div>
-			</li>-->
+
 			</ul>
         </div>
         <div style="margin-top:20px;background-color: #999999;height: 50px;width: 80%;margin-left: 10%;line-height: 50px;font-weight: bold;">
@@ -292,17 +277,17 @@ if(!session_id())
                     //读取session中保存的多选选项的值
                     try {
                         $quizList = isset($_SESSION['Mul'])?$_SESSION['Mul']:array(null);   //得到单选的所有数组
-                        //echo count($quizList);
-                        //echo implode(",",$quizList);
+
                         if($quizList != null && count($quizList) > 1){
                             for($i = 1;$i< count($quizList);$i++){
                                 $quizObj = $quizList[$i];
                                 //将session中的所有选项全部输出到浏览器
                                 echo "<li id='qu2_$i'><div class='div_radio'>";
+                                $singScore = $quizObj->getScore();
                                 //拼凑函数
                                 echo "<h4><a name='more1'>";
                                 echo $quizObj->getTitle();
-                                echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu2_$i','Mul','$i')\"></h4>";
+                                echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu2_$i','Mul','$i','$singScore')\"></h4>";
                                 //拼凑选项
                                 $optionList = $quizObj->getOptionList();
                                 for($j = 1;$j <= count($optionList);$j++){
@@ -333,10 +318,11 @@ if(!session_id())
                             //将本次传递过来的值添加到页面并保存到session中
                             $i = count($quizList) ;  //因为按照下标从0开始算的
                             echo "<li id='qu2_$i'><div class='div_radio'>";
+                            $singScore = isset($_POST['score'])?$_POST['score']:0;
                             //拼凑函数
                             echo "<h4><a name='selected1'>";
                             echo isset($_POST['mulChoicetitle'])?$_POST['mulChoicetitle']:"";
-                            echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu2_$i','Mul','$i')\"></h4>";
+                            echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu2_$i','Mul','$i','$singScore')\"></h4>";
 
                             //拼凑选项
                             $index = 1;     //当做下标为了获取选项文本框
@@ -380,16 +366,7 @@ if(!session_id())
                     }
 
                 ?>
-                <!--<li id="qu2_1">
-                <div class="div_radio">
-                  <h4><a name="more1">多选题第一题</a><img src="./img/delete.png" alt="删除" style="margin-left: 80%;width: 30px;height: 30px;" onClick="Delete('qu2_1')"></h4>
-                    <div><input type="checkbox" value="A" name="duoxuan1"/><span>选项A</span></div>
-                    <div><input type="checkbox" value="B" name="duoxuan1"/><span>选项B</span></div>
-                    <div><input type="checkbox" value="C" name="duoxuan1"/><span>选项C</span></div>
-                    <div><input type="checkbox" value="D" name="duoxuan1"/><span>选项D</span></div>
-                  <h4 style="color: #FF0004" >正确答案：<a id="answer3">A B</a></h4>
-                </div>
-                </li>-->
+
 			</ul>
         </div>
         <!--填空题-->
@@ -407,11 +384,11 @@ if(!session_id())
                             for($i = 1;$i < count($quizList);$i++){
                                 $quizObj = $quizList[$i];
                                 echo "<li id='qu3_$i'><div class='div_input_text_area'>";
+                                $singScore = $quizObj->getScore();
                                 //拼凑函数
                                 echo "<h4><a name='input1'>";
                                 echo $quizObj->getTitle();
-                                echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete(";
-                                echo "'qu3_$i','Fill','$i')\"></h4>";
+                                echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu3_$i','Fill','$i','$singScore')\"></h4>";
                                 //拼凑答题框
                                 /*echo "<div><textarea placeholder='请输入您的答案……' class='text_area' name='fill$i'></textarea></div>";*/
                                 echo "<h4 style='color: #FF0004'>题目分值：<a>";
@@ -433,10 +410,11 @@ if(!session_id())
                         if(strcmp(strval($type),"Fill")==0){
                             $i = count($quizList);  //因为按照下标从0开始算的
                             echo "<li id='qu3_$i'><div class='div_input_text_area'>";
+                            $singScore = isset($_POST['score'])?$_POST['score']:0;
                             //拼凑函数
                             echo "<h4><a name='input1'>";
                             echo isset($_POST['fillBlanktitle'])?$_POST['fillBlanktitle']:"";
-                            echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu3_$i','Fill','$i')\"></h4>";
+                            echo "</a><img src='./img/delete.png' alt='删除' style='margin-left: 80%;width: 30px;height: 30px;' onClick=\"Delete('qu3_$i','Fill','$i','$singScore')\"></h4>";
                             //拼凑答题框
                             //echo "<div><textarea placeholder='请输入您的答案……' class='text_area' name='fill$i'></textarea></div>";
                             echo "<h4 style='color: #FF0004'>题目分值：<a>";
@@ -464,13 +442,7 @@ if(!session_id())
                     }
 
                 ?>
-                <!--<li id="qu3_1">
-                    <div class="div_input_text_area">
-                        <h4><a name="input1">填空题第一题</a><img src="./img/delete.png" alt="删除" style="margin-left: 80%;width: 30px;height: 30px;" onClick="Delete('qu3_1')"></h4>
-                        <div><textarea placeholder="请输入您的答案……" class="text_area" name="tiankong1"></textarea></div>
-                        <h4 style="color: #FF0004" >正确答案：<a id="answer4">标准答案</a></h4>
-                    </div>
-                </li>-->
+
 			</ul>
         </div>
 		

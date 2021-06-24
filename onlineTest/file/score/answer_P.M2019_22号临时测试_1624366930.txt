@@ -1,0 +1,3 @@
+#22号临时测试
+          student.no	                  student.name	     score
+        201831990236	                     肖灵星	         0

@@ -13,7 +13,7 @@ if($type == "showQuiz"){
     // Connect to MySQL database
     include "../get_mysql_credentials.php";
 
-    $conn = new mysqli("localhost",$mysql_username,$mysql_password,"lrr");
+    $conn = new mysqli($servername,$mysql_username,$mysql_password,$dbname);
     if($conn->connect_error){
         die("连接失败：".$conn->connect_error);
     }
@@ -60,19 +60,24 @@ if($type == "showQuiz"){
     $itemIndex = $_POST['itemIndex'];
     echo $keyName;
     echo $itemIndex;
-//$itemIndex = intval(); //session中的子项的数据
     $quizArr = isset($_SESSION["$keyName"])?$_SESSION["$keyName"]:array();
     $quizArr[0] = "";   //占用1号空位，防止结构被改变
     array_splice($quizArr,$itemIndex,1);
     $quizArr[0] = null;
-//unset($quizArr[0]);     //恢复一号空位的数据
-//array_values();
+
 //更新session中保存的数字
     $_SESSION["$keyName"] = $quizArr;
 
 //清空post中的数据
     unset($_POST['key']);
     unset($_POST['itemIndex']);
+
+    $subscore = intval(isset($_POST['rmscore'])?$_POST['rmscore']:0);  //得到要移除题目的分数
+    $srcscore = isset($_SESSION['score'])?intval($_SESSION['score']):0;
+    if($srcscore > $subscore){
+        $score = $srcscore - $subscore;
+        $_SESSION['score'] = $score;
+    }
 
     $item = count($_SESSION["$keyName"]);
     echo print_r($quizArr);
