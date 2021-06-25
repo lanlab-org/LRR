@@ -1,383 +1,248 @@
--- phpMyAdmin SQL Dump
--- version 4.7.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Jan 21, 2019 at 05:08 AM
--- Server version: 5.7.17
--- PHP Version: 7.1.3
+/*
+Navicat MySQL Data Transfer
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+Source Server         : centosMySQL
+Source Server Version : 80015
+Source Host           : 121.5.38.33:8255
+Source Database       : lrr
 
+Target Server Type    : MYSQL
+Target Server Version : 80015
+File Encoding         : 65001
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+Date: 2021-06-25 08:50:39
+*/
 
---
--- Database: `lrr`
---
+SET FOREIGN_KEY_CHECKS=0;
 
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `count_submissions` (OUT `s_count` DECIMAL)  BEGIN
-    select count(Student_id) into s_count from lab_report_submissions;
-
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllListings` ()  BEGIN
- SELECT nid, type, title  FROM node where type = 'lms_listing' order by nid desc;
-END$$
-
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `courses_table`
---
-
-CREATE TABLE `courses_table` (
-  `Course_ID` int(11) NOT NULL,
-  `Course_Name` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `Academic_Year` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Faculty` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Lecturer_User_ID` int(11) DEFAULT NULL,
-  `TA_User_ID` int(11) DEFAULT NULL,
-  `Course_Code` varchar(100) COLLATE utf8mb4_bin NOT NULL,
-  `URL` varchar(100) COLLATE utf8mb4_bin NOT NULL,
-  `Verify_New_Members` varchar(10) COLLATE utf8mb4_bin NOT NULL DEFAULT 'No'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
---
--- Dumping data for table `courses_table`
---
-
-INSERT INTO `courses_table` (`Course_ID`, `Course_Name`, `Academic_Year`, `Faculty`, `Lecturer_User_ID`, `TA_User_ID`, `Course_Code`, `URL`, `Verify_New_Members`) VALUES
-(10, 'Software Engineering', '2018', 'Computing', 8, 0, 'CSC1234', 'CSC12342018', '1'),
-(11, 'Project Management', '2019', 'Computing', 8, 0, 'P.M2019', 'P.M20192019', '0');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course_groups_table`
---
-
-CREATE TABLE `course_groups_table` (
-  `Course_Group_id` int(11) NOT NULL,
-  `Group_Name` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Group_Leader` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Course_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
---
--- Dumping data for table `course_groups_table`
---
-
-INSERT INTO `course_groups_table` (`Course_Group_id`, `Group_Name`, `Group_Leader`, `Course_id`) VALUES
-(1, 'Group 1', '201825800050', 10);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course_group_members_table`
---
-
+-- ----------------------------
+-- Table structure for course_group_members_table
+-- ----------------------------
+DROP TABLE IF EXISTS `course_group_members_table`;
 CREATE TABLE `course_group_members_table` (
-  `ID` int(11) NOT NULL,
-  `Course_Group_id` int(11) DEFAULT NULL,
-  `Student_ID` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Status` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Course_Group_id` int(11) NOT NULL,
+  `Student_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
---
--- Dumping data for table `course_group_members_table`
---
+-- ----------------------------
+-- Records of course_group_members_table
+-- ----------------------------
+INSERT INTO `course_group_members_table` VALUES ('1', '1', '201825800050', 'Created');
 
-INSERT INTO `course_group_members_table` (`ID`, `Course_Group_id`, `Student_ID`, `Status`) VALUES
-(1, 1, '201825800050', 'Created');
+-- ----------------------------
+-- Table structure for course_groups_table
+-- ----------------------------
+DROP TABLE IF EXISTS `course_groups_table`;
+CREATE TABLE `course_groups_table` (
+  `Course_Group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Group_Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Group_Leader` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Course_id` int(11) NOT NULL,
+  PRIMARY KEY (`Course_Group_id`),
+  UNIQUE KEY `Group_Name` (`Group_Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of course_groups_table
+-- ----------------------------
+INSERT INTO `course_groups_table` VALUES ('1', 'Group 1', '201825800050', '10');
 
---
--- Table structure for table `course_students_table`
---
-
+-- ----------------------------
+-- Table structure for course_students_table
+-- ----------------------------
+DROP TABLE IF EXISTS `course_students_table`;
 CREATE TABLE `course_students_table` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Course_ID` int(11) NOT NULL,
-  `Student_ID` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `ID` int(11) NOT NULL,
-  `Status` varchar(100) COLLATE utf8mb4_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `Student_ID` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Status` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
---
--- Dumping data for table `course_students_table`
---
+-- ----------------------------
+-- Records of course_students_table
+-- ----------------------------
+INSERT INTO `course_students_table` VALUES ('12', '9', '201825800050', 'Joined');
+INSERT INTO `course_students_table` VALUES ('13', '10', '201825800050', 'Joined');
+INSERT INTO `course_students_table` VALUES ('14', '10', '201825800054', 'Joined');
+INSERT INTO `course_students_table` VALUES ('15', '11', '201831990236', 'Joined');
 
-INSERT INTO `course_students_table` (`Course_ID`, `Student_ID`, `ID`, `Status`) VALUES
-(9, '201825800050', 12, 'Joined'),
-(10, '201825800050', 13, 'Joined'),
-(10, '201825800054', 14, 'Joined');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course_ta`
---
-
+-- ----------------------------
+-- Table structure for course_ta
+-- ----------------------------
+DROP TABLE IF EXISTS `course_ta`;
 CREATE TABLE `course_ta` (
   `Course_ID` int(11) NOT NULL,
   `TA` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
---
--- Dumping data for table `course_ta`
---
+-- ----------------------------
+-- Records of course_ta
+-- ----------------------------
+INSERT INTO `course_ta` VALUES ('10', '11');
+INSERT INTO `course_ta` VALUES ('10', '10');
+INSERT INTO `course_ta` VALUES ('11', '10');
 
-INSERT INTO `course_ta` (`Course_ID`, `TA`) VALUES
-(10, 11),
-(10, 10),
-(11, 10);
+-- ----------------------------
+-- Table structure for courses_table
+-- ----------------------------
+DROP TABLE IF EXISTS `courses_table`;
+CREATE TABLE `courses_table` (
+  `Course_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Course_Name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `Academic_Year` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Faculty` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Lecturer_User_ID` int(11) DEFAULT NULL,
+  `TA_User_ID` int(11) DEFAULT NULL,
+  `Course_Code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `URL` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Verify_New_Members` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT 'No',
+  PRIMARY KEY (`Course_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of courses_table
+-- ----------------------------
+INSERT INTO `courses_table` VALUES ('10', 'Software Engineering', '2018', 'Computing', '8', '0', 'CSC1234', 'CSC12342018', '1');
+INSERT INTO `courses_table` VALUES ('11', 'Project Management', '2019', 'Computing', '8', '0', 'P.M2019', 'P.M20192019', '0');
 
---
--- Table structure for table `extended_deadlines_table`
---
-
+-- ----------------------------
+-- Table structure for extended_deadlines_table
+-- ----------------------------
+DROP TABLE IF EXISTS `extended_deadlines_table`;
 CREATE TABLE `extended_deadlines_table` (
-  `ID` int(11) NOT NULL,
-  `Student_ID` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Student_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `Lab_Report_ID` int(11) DEFAULT NULL,
   `Extended_Deadline_Date` date DEFAULT NULL,
-  `ReasonsForExtension` longtext COLLATE utf8mb4_bin
+  `ReasonsForExtension` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of extended_deadlines_table
+-- ----------------------------
 
---
--- Table structure for table `lab_reports_table`
---
-
-CREATE TABLE `lab_reports_table` (
-  `Lab_Report_ID` int(11) NOT NULL,
-  `Course_ID` int(11) DEFAULT NULL,
-  `Posted_Date` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Deadline` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Instructions` longtext COLLATE utf8mb4_bin,
-  `Title` longtext COLLATE utf8mb4_bin,
-  `Attachment_link_1` longtext COLLATE utf8mb4_bin,
-  `Attachment_link_2` longtext COLLATE utf8mb4_bin,
-  `Attachment_link_3` longtext COLLATE utf8mb4_bin,
-  `Attachment_link_4` longtext COLLATE utf8mb4_bin,
-  `Marks` varchar(10) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Type` varchar(30) COLLATE utf8mb4_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
---
--- Dumping data for table `lab_reports_table`
---
-
-INSERT INTO `lab_reports_table` (`Lab_Report_ID`, `Course_ID`, `Posted_Date`, `Deadline`, `Instructions`, `Title`, `Attachment_link_1`, `Attachment_link_2`, `Attachment_link_3`, `Attachment_link_4`, `Marks`, `Type`) VALUES
-(1, 10, '2019-01-11 16:52', '2019-02-11 17:00', 'Description of the lab....', 'Reading 1', '700IMPORTANT WORDS.txt', '', '', '', '4', 'Individual'),
-(2, 10, '2019-01-17 11:12', '2019-01-25 23:59', 'Read this paper http://sunnyday.mit.edu/16.355/budgen-david.pdf', 'Reading 2', '586LRR-Test-caseS.pdf', '', '', '', '6', 'Individual');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `lab_report_submissions`
---
-
+-- ----------------------------
+-- Table structure for lab_report_submissions
+-- ----------------------------
+DROP TABLE IF EXISTS `lab_report_submissions`;
 CREATE TABLE `lab_report_submissions` (
-  `Submission_ID` int(11) NOT NULL,
+  `Submission_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Submission_Date` datetime DEFAULT NULL,
   `Lab_Report_ID` int(11) DEFAULT NULL,
-  `Student_id` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `Student_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `Course_Group_id` int(11) DEFAULT NULL,
-  `Attachment1` longtext COLLATE utf8mb4_bin,
-  `Notes` longtext COLLATE utf8mb4_bin,
-  `Attachment2` varchar(1000) COLLATE utf8mb4_bin NOT NULL,
-  `Attachment3` varchar(1000) COLLATE utf8mb4_bin NOT NULL,
-  `Attachment4` varchar(1000) COLLATE utf8mb4_bin NOT NULL,
+  `Attachment1` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `Notes` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `Attachment2` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Attachment3` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Attachment4` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `Marks` double DEFAULT NULL,
-  `Status` varchar(100) COLLATE utf8mb4_bin NOT NULL,
-  `Title` varchar(500) COLLATE utf8mb4_bin NOT NULL,
-  `Visibility` varchar(30) COLLATE utf8mb4_bin NOT NULL DEFAULT 'Private'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `Status` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Title` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Visibility` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT 'Private',
+  PRIMARY KEY (`Submission_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=373 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
---
--- Dumping data for table `lab_report_submissions`
---
+-- ----------------------------
+-- Records of lab_report_submissions
+-- ----------------------------
+INSERT INTO `lab_report_submissions` VALUES ('1', '2019-01-17 00:00:00', '1', '201825800050', '0', 'Reading list.txt', '-', '', '', '', '5', 'Marked', 'Reading 1 submission', 'Public');
+INSERT INTO `lab_report_submissions` VALUES ('5', '2019-01-21 08:31:00', '2', '201825800050', '0', 'Trial Balance.txt', ' - @2019-01-21 09:35 : Sorry I missed some details from your report', 'Boorka.jpg', '', '', '6', 'Marked', 'Submission x', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('6', '2019-01-21 09:31:00', '2', '201825800054', '0', 'Mohamed-201825800050-Backup & Recovery Report.pdf', '@2019-01-21 09:34 : Good work', 'Mohamed-201825800050-Database Replication Report.pdf', '', '', '4', 'Marked', 'My Submission for reading 2', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('361', '2021-04-30 12:25:00', '13', '201825800050', '1', null, null, '[null,\"A\"]', '[null,[\"A\",\"B\",\"C\"]]', '[null,\"\\u9762\\u5411\\u5bf9\\u8c61\\u8bed\\u8a00\"]', '7', 'Marked', '第一次测试', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('364', '2021-05-01 12:16:00', '17', '201831990236', '0', null, null, '[null,\"C\"]', '[null,[\"A\",\"B\",\"D\"]]', '[null,\"\\u673a\\u5668\\u8bed\\u8a00\"]', '5', 'Marked', '第3次测试', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('365', '2021-06-21 22:40:00', '19', '201831990236', '0', null, null, '[null,\"C\"]', '[null,[\"A\",\"B\",\"C\"]]', '[null,\"\\u84dd\\u7070\"]', '7', 'Marked', '第三次测试', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('366', '2021-06-22 20:25:00', '24', '201831990236', '0', null, null, '[null,\"B\"]', '[null,[\"A\",\"B\",\"C\"]]', '[null,\"\\u84dd\\u7070\"]', '10', 'Marked', '22号第一次测试', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('367', '2021-06-22 20:42:00', '23', '201831990236', '0', null, null, '[null,\"B\"]', '[null,[\"A\",\"B\",\"C\"]]', '[null,\"\\u84dd\\u7070\"]', '8', 'Marked', '第四次测试', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('368', '2021-06-22 23:02:00', '26', '201831990236', '0', null, null, '[null]', '[null]', '[null]', '0', 'Marked', '', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('369', '2021-06-23 20:58:00', '25', '201825800054', '0', null, null, '[null,\"B\"]', '[null]', '[null]', '0', 'Marked', '22号第二次测试', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('370', '2021-06-24 10:30:00', '29', '201831990236', '0', null, null, '[null,\"C\"]', '[null,[\"A\",\"B\",\"D\"]]', '[null,\"\\u84dd\\u7070\"]', '10', 'Marked', '22号第三次测试', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('371', '2021-06-24 11:02:00', '30', '201831990236', '0', null, null, '[null,\"C\"]', '[null,[\"A\",\"B\",\"D\"]]', '[null,\"\\u84dd\\u7070\"]', '29', 'Marked', '23号第三次测试', 'Private');
+INSERT INTO `lab_report_submissions` VALUES ('372', '2021-06-24 21:12:00', '28', '201831990236', '0', null, null, '[null,\"A\"]', '[null,[\"A\"]]', '[null,\"$QmBCMiz(R\"]', '0', 'Marked', '23号第二次测试', 'Private');
 
-INSERT INTO `lab_report_submissions` (`Submission_ID`, `Submission_Date`, `Lab_Report_ID`, `Student_id`, `Course_Group_id`, `Attachment1`, `Notes`, `Attachment2`, `Attachment3`, `Attachment4`, `Marks`, `Status`, `Title`, `Visibility`) VALUES
-(1, '2019-01-17 00:00:00', 1, '201825800050', 0, 'Reading list.txt', '-', '', '', '', 5, 'Marked', 'Reading 1 submission', 'Public'),
-(5, '2019-01-21 08:31:00', 2, '201825800050', 0, 'Trial Balance.txt', ' - @2019-01-21 09:35 : Sorry I missed some details from your report', 'Boorka.jpg', '', '', 6, 'Marked', 'Submission x', 'Private'),
-(6, '2019-01-21 09:31:00', 2, '201825800054', 0, 'Mohamed-201825800050-Backup & Recovery Report.pdf', '@2019-01-21 09:34 : Good work', 'Mohamed-201825800050-Database Replication Report.pdf', '', '', 4, 'Marked', 'My Submission for reading 2', 'Private');
+-- ----------------------------
+-- Table structure for lab_reports_table
+-- ----------------------------
+DROP TABLE IF EXISTS `lab_reports_table`;
+CREATE TABLE `lab_reports_table` (
+  `Lab_Report_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Course_ID` int(11) DEFAULT NULL,
+  `Posted_Date` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Deadline` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Instructions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Attachment_link_1` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Attachment_link_2` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Attachment_link_3` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Attachment_link_4` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Marks` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`Lab_Report_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of lab_reports_table
+-- ----------------------------
+INSERT INTO `lab_reports_table` VALUES ('1', '10', '2019-01-11 16:52', '2019-02-11 17:00', 0x4465736372697074696F6E206F6620746865206C61622E2E2E2E, 0x52656164696E672031, 0x373030494D504F5254414E5420574F5244532E747874, '', '', '', '4', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('2', '10', '2019-01-17 11:12', '2019-01-25 23:59', 0x52656164207468697320706170657220687474703A2F2F73756E6E796461792E6D69742E6564752F31362E3335352F62756467656E2D64617669642E706466, 0x52656164696E672032, 0x3538364C52522D546573742D63617365532E706466, '', '', '', '6', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('13', '10', '2021-04-29 21:21', '2021-04-29 21:41', 0x7175697A, 0xE7ACACE4B880E6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F435343313233345FE7ACACE4B880E6ACA1E6B58BE8AF955F313631393730323438342E747874, 0x2E2F66696C652F73636F72652F616E737765725F435343313233345FE7ACACE4B880E6ACA1E6B58BE8AF955F313631393730323438342E747874, null, null, '9', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('16', '11', '2021-04-30 21:19', '2021-04-30 21:25', 0x7175697A, 0xE7ACAC32E6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F435343313233345FE7ACAC32E6ACA1E6B58BE8AF955F313631393738383736372E747874, 0x2E2F66696C652F73636F72652F616E737765725F435343313233345FE7ACAC32E6ACA1E6B58BE8AF955F313631393738383736372E747874, null, null, '6', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('17', '11', '2021-05-01 10:50', '2021-05-03 10:50', 0x7175697A, 0xE7ACAC33E6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F502E4D323031395FE7ACAC33E6ACA1E6B58BE8AF955F313631393833373435372E747874, 0x2E2F66696C652F73636F72652F616E737765725F502E4D323031395FE7ACAC33E6ACA1E6B58BE8AF955F313631393833373435372E747874, null, null, '8', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('19', '11', '2021-06-21 22:39', '2021-07-11 22:39', 0x7175697A, 0xE7ACACE4B889E6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F502E4D323031395FE7ACACE4B889E6ACA1E6B58BE8AF955F313632343238363339342E747874, 0x2E2F66696C652F73636F72652F616E737765725F502E4D323031395FE7ACACE4B889E6ACA1E6B58BE8AF955F313632343238363339342E747874, null, null, '10', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('23', '11', '2021-06-22 20:10', '2021-07-22 20:09', 0x7175697A, 0xE7ACACE59B9BE6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F502E4D323031395FE7ACACE59B9BE6ACA1E6B58BE8AF955F313632343336333830342E747874, 0x2E2F66696C652F73636F72652F616E737765725F502E4D323031395FE7ACACE59B9BE6ACA1E6B58BE8AF955F313632343336333830342E747874, null, null, '10', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('24', '11', '2021-06-22 20:24', '2021-07-12 20:24', 0x7175697A, 0x3232E58FB7E7ACACE4B880E6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F502E4D323031395F3232E58FB7E7ACACE4B880E6ACA1E6B58BE8AF955F313632343336343639382E747874, 0x2E2F66696C652F73636F72652F616E737765725F502E4D323031395F3232E58FB7E7ACACE4B880E6ACA1E6B58BE8AF955F313632343336343639382E747874, null, null, '10', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('25', '10', '2021-06-22 20:50', '2021-06-27 20:50', 0x7175697A, 0x3232E58FB7E7ACACE4BA8CE6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F435343313233345F3232E58FB7E7ACACE4BA8CE6ACA1E6B58BE8AF955F313632343336363231372E747874, 0x2E2F66696C652F73636F72652F616E737765725F435343313233345F3232E58FB7E7ACACE4BA8CE6ACA1E6B58BE8AF955F313632343336363231382E747874, null, null, '2', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('26', '11', '2021-06-22 21:02', '2021-07-10 21:01', 0x7175697A, 0x3232E58FB7E4B8B4E697B6E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F502E4D323031395F3232E58FB7E4B8B4E697B6E6B58BE8AF955F313632343336363932392E747874, 0x2E2F66696C652F73636F72652F616E737765725F502E4D323031395F3232E58FB7E4B8B4E697B6E6B58BE8AF955F313632343336363933302E747874, null, null, '10', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('27', '10', '2021-06-23 21:00', '2021-06-27 20:59', 0x7175697A, 0x3233E58FB7E7ACACE4B880E6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F435343313233345F3233E58FB7E7ACACE4B880E6ACA1E6B58BE8AF955F313632343435333231302E747874, 0x2E2F66696C652F73636F72652F616E737765725F435343313233345F3233E58FB7E7ACACE4B880E6ACA1E6B58BE8AF955F313632343435333231302E747874, null, null, '3', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('28', '11', '2021-06-24 08:45', '2021-07-31 08:45', 0x7175697A, 0x3233E58FB7E7ACACE4BA8CE6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F502E4D323031395F3233E58FB7E7ACACE4BA8CE6ACA1E6B58BE8AF955F313632343439353535322E747874, 0x2E2F66696C652F73636F72652F616E737765725F502E4D323031395F3233E58FB7E7ACACE4BA8CE6ACA1E6B58BE8AF955F313632343439353535322E747874, null, null, '10', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('29', '11', '2021-06-24 10:29', '2021-07-30 10:29', 0x7175697A, 0x3232E58FB7E7ACACE4B889E6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F502E4D323031395F3232E58FB7E7ACACE4B889E6ACA1E6B58BE8AF955F313632343530313738302E747874, 0x2E2F66696C652F73636F72652F616E737765725F502E4D323031395F3232E58FB7E7ACACE4B889E6ACA1E6B58BE8AF955F313632343530313738302E747874, null, null, '10', 'Individual');
+INSERT INTO `lab_reports_table` VALUES ('30', '11', '2021-06-24 11:01', '2021-07-31 11:01', 0x7175697A, 0x3233E58FB7E7ACACE4B889E6ACA1E6B58BE8AF95, 0x2E2F66696C652F7175697A7A65732F502E4D323031395F3233E58FB7E7ACACE4B889E6ACA1E6B58BE8AF955F313632343530333638322E747874, 0x2E2F66696C652F73636F72652F616E737765725F502E4D323031395F3233E58FB7E7ACACE4B889E6ACA1E6B58BE8AF955F313632343530333638322E747874, null, null, '29', 'Individual');
 
---
--- Table structure for table `students_data`
---
-
+-- ----------------------------
+-- Table structure for students_data
+-- ----------------------------
+DROP TABLE IF EXISTS `students_data`;
 CREATE TABLE `students_data` (
-  `ID` int(11) NOT NULL,
-  `Student_ID` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Passport_Number` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Student_ID` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Passport_Number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
---
--- Dumping data for table `students_data`
---
+-- ----------------------------
+-- Records of students_data
+-- ----------------------------
+INSERT INTO `students_data` VALUES ('1', '201825800054', 'LJ7951632');
+INSERT INTO `students_data` VALUES ('2', '201825800050', 'P00581929');
 
-INSERT INTO `students_data` (`ID`, `Student_ID`, `Passport_Number`) VALUES
-(1, '201825800054', 'LJ7951632'),
-(2, '201825800050', 'P00581929');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users_table`
---
-
+-- ----------------------------
+-- Table structure for users_table
+-- ----------------------------
+DROP TABLE IF EXISTS `users_table`;
 CREATE TABLE `users_table` (
-  `User_ID` int(11) NOT NULL,
-  `Email` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Password` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `Full_Name` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `UserType` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Student_ID` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Passport_Number` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
-  `Status` varchar(30) COLLATE utf8mb4_bin NOT NULL DEFAULT 'Active'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `User_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Email` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Full_Name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `UserType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Student_ID` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Passport_Number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Status` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT 'Active',
+  PRIMARY KEY (`User_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
---
--- Dumping data for table `users_table`
---
-
-INSERT INTO `users_table` (`User_ID`, `Email`, `Password`, `Full_Name`, `UserType`, `Student_ID`, `Passport_Number`, `Status`) VALUES
-(3, 'admin@qq.com', '123', 'Kamal', 'Admin', '0', NULL, 'Active'),
-(8, 'lanhui@qq.com', '1234', 'Lanhui', 'Lecturer', NULL, '123', 'Active'),
-(9, 'mohamed@qq.com', '123', 'Mohamed', 'Student', '201825800050', 'P00581929', 'Active'),
-(10, 'mark@qq.com', '123', 'Mark ', 'TA', NULL, '123', 'Active'),
-(11, 'john@qq.com', '123', 'John', 'TA', NULL, '123', 'Active'),
-(12, 'mehdi@qq.com', '123', 'El-mehdi Houzi', 'Student', '201825800054', 'LJ7951632', 'Active');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `courses_table`
---
-ALTER TABLE `courses_table`
-  ADD PRIMARY KEY (`Course_ID`);
-
---
--- Indexes for table `course_groups_table`
---
-ALTER TABLE `course_groups_table`
-  ADD PRIMARY KEY (`Course_Group_id`),
-  ADD UNIQUE KEY `Group_Name` (`Group_Name`);
-
---
--- Indexes for table `course_group_members_table`
---
-ALTER TABLE `course_group_members_table`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `course_students_table`
---
-ALTER TABLE `course_students_table`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `extended_deadlines_table`
---
-ALTER TABLE `extended_deadlines_table`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `lab_reports_table`
---
-ALTER TABLE `lab_reports_table`
-  ADD PRIMARY KEY (`Lab_Report_ID`);
-
---
--- Indexes for table `lab_report_submissions`
---
-ALTER TABLE `lab_report_submissions`
-  ADD PRIMARY KEY (`Submission_ID`);
-
---
--- Indexes for table `students_data`
---
-ALTER TABLE `students_data`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `users_table`
---
-ALTER TABLE `users_table`
-  ADD PRIMARY KEY (`User_ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `courses_table`
---
-ALTER TABLE `courses_table`
-  MODIFY `Course_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `course_groups_table`
---
-ALTER TABLE `course_groups_table`
-  MODIFY `Course_Group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `course_group_members_table`
---
-ALTER TABLE `course_group_members_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `course_students_table`
---
-ALTER TABLE `course_students_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
---
--- AUTO_INCREMENT for table `extended_deadlines_table`
---
-ALTER TABLE `extended_deadlines_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `lab_reports_table`
---
-ALTER TABLE `lab_reports_table`
-  MODIFY `Lab_Report_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `lab_report_submissions`
---
-ALTER TABLE `lab_report_submissions`
-  MODIFY `Submission_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `students_data`
---
-ALTER TABLE `students_data`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `users_table`
---
-ALTER TABLE `users_table`
-  MODIFY `User_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- ----------------------------
+-- Records of users_table
+-- ----------------------------
+INSERT INTO `users_table` VALUES ('3', 0x61646D696E4071712E636F6D, '123', 'Kamal', 'Admin', '0', null, 'Active');
+INSERT INTO `users_table` VALUES ('8', 0x6C616E6875694071712E636F6D, '1234', 'Lanhui', 'Lecturer', null, '123', 'Active');
+INSERT INTO `users_table` VALUES ('9', 0x6D6F68616D65644071712E636F6D, '123', 'Mohamed', 'Student', '201825800050', 'P00581929', 'Active');
+INSERT INTO `users_table` VALUES ('10', 0x6D61726B4071712E636F6D, '123', 'Mark ', 'TA', null, '123', 'Active');
+INSERT INTO `users_table` VALUES ('11', 0x6A6F686E4071712E636F6D, '123', 'John', 'TA', null, '123', 'Active');
+INSERT INTO `users_table` VALUES ('12', 0x6D656864694071712E636F6D, '123', 'El-mehdi Houzi', 'Student', '201825800054', 'LJ7951632', 'Active');
+INSERT INTO `users_table` VALUES ('13', 0x686568654071712E636F6D, '123', '肖灵星', 'Student', '201831990236', '123', 'Active');
