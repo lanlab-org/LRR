@@ -5,10 +5,10 @@
 
 
 include "get_mysql_credentials.php";
-$servername = "localhost";
+//$servername = "localhost";
 $username = $mysql_username;
 $password = $mysql_password;
-$dbname = "lrr";
+/*$dbname = "lrr";*/
 
 // 创建连接
 $conn = mysqli_connect($servername, $username, $password, $dbname);

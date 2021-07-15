@@ -1,0 +1,6 @@
+quizName:23号第一次测试	
+quizTime:10	
+totalPoint:3	
+	
+[MUL]	
+title:1.四条腿的动物A:猪B:狗C:鸡score:3answer:AB	

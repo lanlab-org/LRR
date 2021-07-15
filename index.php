@@ -3,6 +3,9 @@
   require 'Header.php';
   session_start();
 ?>
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
 <?php
   // if the user has already logged in, then clicking the LRRS icon should not display the login page (i.e., index.php).

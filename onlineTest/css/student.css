@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+.div_all {
+	width: 100%;
+	height: 100%;
+	min-width: 1200px;
+	margin-bottom: 50px;
+}
+
+.div_all_title {
+	width: 100%;
+	height: 60px;
+	text-align: center;
+	line-height: 60px;
+	font-size: 26px;
+	font-weight: bold;
+}
+
+.div_all_ke {
+	width: 80%;
+	height: 40px;
+	margin-left: 10%;
+	border: 1px solid #999999;
+	line-height: 40px;
+	font-weight: bold;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.div_all_selected, .div_all_more, .div_all_input {
+	width: 80%;
+	margin-left: 10%;
+}
+
+.div_span_submit {
+	margin-left: 5%;
+	color: #ff0000;
+	font-weight: bold;
+	border: 1px solid #ff0000;
+	padding: 1px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.div_span_submit:hover {
+	background-color: #d43c3c;
+	color: #FFFFFF;
+}
+
+.div_radio div {
+	height: 30px;
+	margin-top: 10px;
+}
+
+.div_radio h4 {
+	font-family: "宋体";
+}
+
+.div_all_top {
+	width: 100%;
+	min-width: 1200px;
+	top: 0px;
+	background-color: #FFFFFF;
+}
+
+.div_input_text_area textarea {
+	width: 100%;
+	height: 50px;
+	resize: none;
+}
+
+.div_input_text_area h4{
+	font-family: "宋体";
+}
+

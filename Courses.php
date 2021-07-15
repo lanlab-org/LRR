@@ -464,6 +464,14 @@ WHERE  Lecturer_User_ID=$lecturer_id and course_students_table.Status='Pending'"
 
 
 
+    <!--新增加的代码-->
+    <b>Create New Quiz</b>
+    <div>
+        <a href="./onlineTest/releaseTest.php" class='btn btn-primary' onclick=return confirm(\"Do you want to create a new test?\")' > Create Quiz </a>
+        &nbsp;&nbsp;
+        <a href="./onlineTest/answerResult.php" class='btn-sm btn-success' onclick=return confirm(\"Do you want to see the test results?\")' > Show Quiz </a>
+    </div>
+    <!--新增加的代码结束-->
 
 
      
