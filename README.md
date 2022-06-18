@@ -133,49 +133,49 @@ The original GitHub Repo is at https://github.com/EngMohamedNor/LabReportRepo
 
 *Important contributors are highlighted.*
 
-GitHub Account - Full Name - Student number
+GitHub Account - Full Name
 
-CODEwithZAKI - Omar Mohamud Mohamed - 202025800041
+CODEwithZAKI - Omar Mohamud Mohamed
 
-BloudYoussef - Khayat Youssef - 202025800042 
+BloudYoussef - Khayat Youssef
 
-TanakaMichelle - Tanaka Michelle Sandati - 201732120134
+TanakaMichelle - Tanaka Michelle Sandati
 
-WhyteAsamoah  - Yeboah Martha Asamoah   - 201732120135
+WhyteAsamoah  - Yeboah Martha Asamoah  
 
-xiaoyusoil - ZhengXiaoyu - 201732120110
+xiaoyusoil - ZhengXiaoyu
 
-Benny123-cell - ZhangBin - 201732120127
+Benny123-cell
 
-421281726 - LiJiaxing - 201732120118
+421281726 - LiJiaxing
 
-zhenghongyu-david - ZhengHongyu - 201732120128
+zhenghongyu-david
 
-wkytz - YeHantao - 201732120125
+wkytz - YeHantao
 
-zego000 - GaoZeng - 201732120117
+zego000 - GaoZeng
 
-Richard1427 - XieJiacong - 201732120123
+Richard1427 - XieJiacong
 
-yutengYing - YingYuteng - 201732120126
+yutengYing - YingYuteng
 
-Samrusike  - Samantha Rusike  - 201632120140
+Samrusike  - Samantha Rusike 
 
 *enockkays* <enockkhondowe94@yahoo.com>
 
-*Teecloudy*  - Ashly Tafadzwa Dhani - 201632120150
+*Teecloudy*  - Ashly Tafadzwa Dhani
 
-GuedaliaBonheurSPM - Guedalia Youma - 201925800221
+GuedaliaBonheurSPM - Guedalia Youma
 
-ACorneille - Alimasi Corneille - 201925800168
+ACorneille - Alimasi Corneille
 
-Tabithakipanga - Kipanga Dorcas - 201925800170
+Tabithakipanga - Kipanga Dorcas
 
-Mary-AK  - Mary Akussah Doe - 201925800173
+Mary-AK 
 
-pkkumson  - Kumson Princewill Kum - 201925800166
+pkkumson  - Kumson Princewill Kum
 
-Twizere  -  Twizere Pacifique  -  201925800174
+Twizere  -  Twizere Pacifique 
 
-Nicole-Rutagengwa  - Nicole Rutagengwa  - 201925800169
+Nicole-Rutagengwa 
 
